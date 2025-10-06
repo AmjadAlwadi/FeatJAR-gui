@@ -1,19 +1,17 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: GLSP Tasklist Example Server
-Bundle-SymbolicName: org.eclipse.glsp.example.javaemf.server
-Bundle-Version: 2.5.0
-Automatic-Module-Name: org.eclipse.glsp.example.javaemf.server
-Export-Package: org.eclipse.glsp.example.javaemf.server,org.eclipse.glsp
- .example.javaemf.server.handler,org.eclipse.glsp.example.javaemf.server
- .launch,org.eclipse.glsp.example.javaemf.server.model,org.eclipse.glsp.
- example.javaemf.server.palette,org.eclipse.glsp.example.tasklist.model,
- org.eclipse.glsp.example.tasklist.model.impl,org.eclipse.glsp.example.t
- asklist.model.util
-Bundle-Vendor: Eclipse GLSP
+Bundle-Name: %pluginName
+Bundle-SymbolicName: FeatJAR;singleton:=true
+Automatic-Module-Name: FeatJAR
+Bundle-Version: 2.5.0.202510061258
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Export-Package: featJAR,featJAR.impl,featJAR.util
 Require-Bundle: org.eclipse.glsp.server;bundle-version="[2.0.0,3.0.0)",o
  rg.eclipse.glsp.server.emf;bundle-version="[2.0.0,3.0.0)",org.eclipse.e
  mf.edit,org.eclipse.emf.ecore.edit,org.eclipse.emf.ecore.xmi
+Bundle-ActivationPolicy: lazy
 Bundle-License: Eclipse Public License - v 2.0;link="http://www.eclipse.
  org/legal/epl-v20.html"
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=17))"
