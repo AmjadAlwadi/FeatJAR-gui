@@ -14,9 +14,9 @@ dependencies {
     api 'de.featjar:uvl'
     api testFixtures('de.featjar:formula')
 
-    implementation files("$rootDir/glsp-server/org.eclipse.glsp.example.javaemf.server/target/org.eclipse.glsp.example.javaemf.server-2.5.0.jar")
-    implementation files("$rootDir/glsp-server/org.eclipse.glsp.example.javaemf.editor/target/org.eclipse.glsp.example.javaemf.editor-2.5.0.jar")
-    implementation files("$rootDir/glsp-server/org.eclipse.glsp.example.javaemf.parent/target/org.eclipse.glsp.example.javaemf.parent-2.5.0.jar")
+    implementation files("$rootDir/glsp-dependencies/glsp-server/org.eclipse.glsp.example.javaemf.server/target/org.eclipse.glsp.example.javaemf.server-2.5.0.jar")
+    implementation files("$rootDir/glsp-dependencies/glsp-server/org.eclipse.glsp.example.javaemf.editor/target/org.eclipse.glsp.example.javaemf.editor-2.5.0.jar")
+    implementation files("$rootDir/glsp-dependencies/glsp-server/org.eclipse.glsp.example.javaemf.parent/target/org.eclipse.glsp.example.javaemf.parent-2.5.0.jar")
 }
 
 license {
