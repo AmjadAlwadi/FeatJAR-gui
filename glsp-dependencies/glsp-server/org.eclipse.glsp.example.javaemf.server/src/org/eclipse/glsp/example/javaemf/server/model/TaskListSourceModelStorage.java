@@ -7,7 +7,7 @@
  *
  * This Source Code may also be made available under the following Secondary
  * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: 
+ * Public License v. 2.0 are satisfied:
  * -- GNU General Public License, version 2 with the GNU Classpath Exception
  * which is available at https://www.gnu.org/software/classpath/license.html
  * -- MIT License which is available at https://opensource.org/license/mit.
@@ -17,13 +17,14 @@
 package org.eclipse.glsp.example.javaemf.server.model;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.glsp.example.tasklist.model.ModelPackage;
 import org.eclipse.glsp.server.emf.notation.EMFNotationSourceModelStorage;
+
+import featJAR.FeatJARPackage;
 
 public class TaskListSourceModelStorage extends EMFNotationSourceModelStorage {
    @Override
    protected ResourceSet setupResourceSet(final ResourceSet resourceSet) {
-      resourceSet.getPackageRegistry().put(ModelPackage.eINSTANCE.getNsURI(), ModelPackage.eINSTANCE);
+      resourceSet.getPackageRegistry().put(FeatJARPackage.eINSTANCE.getNsURI(), FeatJARPackage.eINSTANCE);
       return super.setupResourceSet(resourceSet);
    }
 }

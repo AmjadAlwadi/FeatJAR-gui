@@ -16,9 +16,6 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server;
 
-import org.eclipse.glsp.example.javaemf.server.handler.CreateConstraintHandler;
-import org.eclipse.glsp.example.javaemf.server.handler.CreateObligatoryFeatureNodeHandler;
-import org.eclipse.glsp.example.javaemf.server.handler.CreateOptionalFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.CreateTaskNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.DeleteTaskNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.model.TaskListGModelFactory;
@@ -69,9 +66,6 @@ public class TaskListDiagramModule extends EMFNotationDiagramModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
       binding.add(CreateTaskNodeHandler.class);
-      binding.add(CreateConstraintHandler.class);
-      binding.add(CreateOptionalFeatureNodeHandler.class);
-      binding.add(CreateObligatoryFeatureNodeHandler.class);
       binding.add(DeleteTaskNodeHandler.class);
    }
 

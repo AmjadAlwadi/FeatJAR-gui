@@ -25,10 +25,6 @@ import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
-import org.eclipse.glsp.example.tasklist.model.ModelFactory;
-import org.eclipse.glsp.example.tasklist.model.ModelPackage;
-import org.eclipse.glsp.example.tasklist.model.Task;
-import org.eclipse.glsp.example.tasklist.model.TaskList;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GraphPackage;
@@ -45,6 +41,10 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
+
+import featJAR.FeatJARFactory;
+import featJAR.FeatJARPackage;
+import featJAR.Feature;
 
 public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
 
@@ -72,13 +72,13 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
    public String getLabel() { return "Feature"; }
 
    protected Command createTaskAndShape(final Optional<GPoint> relativeLocation) {
-      TaskList taskList = modelState.getSemanticModel(TaskList.class).orElseThrow();
+      Feature taskList = modelState.getSemanticModel(Feature.class).orElseThrow();
       Diagram diagram = modelState.getNotationModel();
       EditingDomain editingDomain = modelState.getEditingDomain();
 
-      Task newTask = createTask();
+      Feature newTask = createTask();
       Command taskCommand = AddCommand.create(editingDomain, taskList,
-         ModelPackage.Literals.TASK_LIST__TASKS, newTask);
+         FeatJARPackage.Literals.class, newTask);
 
       Shape shape = createShape(idGenerator.getOrCreateId(newTask), relativeLocation);
       Command shapeCommand = AddCommand.create(editingDomain, diagram,
@@ -90,15 +90,15 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
       return compoundCommand;
    }
 
-   protected Task createTask() {
-      Task newTask = ModelFactory.eINSTANCE.createTask();
+   protected Feature createTask() {
+      Feature newTask = FeatJARFactory.eINSTANCE.createFeature();
       newTask.setName(getLabel());
       newTask.setId(UUID.randomUUID().toString());
       setInitialName(newTask);
       return newTask;
    }
 
-   protected void setInitialName(final Task task) {
+   protected void setInitialName(final Feature task) {
       Function<Integer, String> nameProvider = i -> "New " + task.getName() + i;
       int nodeCounter = modelState.getIndex().getCounter(GraphPackage.Literals.GNODE, nameProvider);
       task.setName(nameProvider.apply(nodeCounter));
