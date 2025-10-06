@@ -1,6 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<example-model:TaskList xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:example-model="http://www.eclipse.org/glsp/examples/tasklist" id="root" name="Task List">
-  <tasks id="2f4667d1-97ac-4d40-92de-581ebfa12cbb" name="New Feautre3"/>
-  <tasks id="0be70207-1f24-4213-98fb-433506118b52" name="New Obligatory Feautre4"/>
-  <tasks id="2525269f-c7c6-48cd-9c0e-552c6228f13d" name="New Optional Feautre5"/>
+<example-model:TaskList xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" id="root" name="Feature List">
 </example-model:TaskList>

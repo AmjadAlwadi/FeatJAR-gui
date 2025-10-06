@@ -57,116 +57,6 @@ public interface FeatJARPackage extends EPackage {
 	FeatJARPackage eINSTANCE = featJAR.impl.FeatJARPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link featJAR.impl.rootImpl <em>root</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see featJAR.impl.rootImpl
-	 * @see featJAR.impl.FeatJARPackageImpl#getroot()
-	 * @generated
-	 */
-	int ROOT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Core</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROOT__CORE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Group</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROOT__GROUP = 1;
-
-	/**
-	 * The number of structural features of the '<em>root</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROOT_FEATURE_COUNT = 2;
-
-	/**
-	 * The number of operations of the '<em>root</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ROOT_OPERATION_COUNT = 0;
-
-	/**
-	 * The meta object id for the '{@link featJAR.impl.GroupImpl <em>Group</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see featJAR.impl.GroupImpl
-	 * @see featJAR.impl.FeatJARPackageImpl#getGroup()
-	 * @generated
-	 */
-	int GROUP = 1;
-
-	/**
-	 * The feature id for the '<em><b>Root</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__ROOT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Feature</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__FEATURE = 1;
-
-	/**
-	 * The feature id for the '<em><b>Optional</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__OPTIONAL = 2;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP__NAME = 3;
-
-	/**
-	 * The number of structural features of the '<em>Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP_FEATURE_COUNT = 4;
-
-	/**
-	 * The number of operations of the '<em>Group</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int GROUP_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link featJAR.impl.FeatureImpl <em>Feature</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -174,25 +64,16 @@ public interface FeatJARPackage extends EPackage {
 	 * @see featJAR.impl.FeatJARPackageImpl#getFeature()
 	 * @generated
 	 */
-	int FEATURE = 2;
+	int FEATURE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Group</b></em>' reference list.
+	 * The feature id for the '<em><b>ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE__GROUP = 0;
-
-	/**
-	 * The feature id for the '<em><b>Optional</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int FEATURE__OPTIONAL = 1;
+	int FEATURE__ID = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -201,7 +82,43 @@ public interface FeatJARPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE__NAME = 2;
+	int FEATURE__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__OPTIONAL = 2;
+
+	/**
+	 * The feature id for the '<em><b>Root</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__ROOT = 3;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__CHILDREN = 4;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__PARENT = 5;
 
 	/**
 	 * The number of structural features of the '<em>Feature</em>' class.
@@ -210,7 +127,7 @@ public interface FeatJARPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE_FEATURE_COUNT = 3;
+	int FEATURE_FEATURE_COUNT = 6;
 
 	/**
 	 * The number of operations of the '<em>Feature</em>' class.
@@ -220,92 +137,6 @@ public interface FeatJARPackage extends EPackage {
 	 * @ordered
 	 */
 	int FEATURE_OPERATION_COUNT = 0;
-
-	/**
-	 * Returns the meta object for class '{@link featJAR.root <em>root</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>root</em>'.
-	 * @see featJAR.root
-	 * @generated
-	 */
-	EClass getroot();
-
-	/**
-	 * Returns the meta object for the attribute '{@link featJAR.root#getCore <em>Core</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Core</em>'.
-	 * @see featJAR.root#getCore()
-	 * @see #getroot()
-	 * @generated
-	 */
-	EAttribute getroot_Core();
-
-	/**
-	 * Returns the meta object for the reference list '{@link featJAR.root#getGroup <em>Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Group</em>'.
-	 * @see featJAR.root#getGroup()
-	 * @see #getroot()
-	 * @generated
-	 */
-	EReference getroot_Group();
-
-	/**
-	 * Returns the meta object for class '{@link featJAR.Group <em>Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Group</em>'.
-	 * @see featJAR.Group
-	 * @generated
-	 */
-	EClass getGroup();
-
-	/**
-	 * Returns the meta object for the reference '{@link featJAR.Group#getRoot <em>Root</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Root</em>'.
-	 * @see featJAR.Group#getRoot()
-	 * @see #getGroup()
-	 * @generated
-	 */
-	EReference getGroup_Root();
-
-	/**
-	 * Returns the meta object for the reference list '{@link featJAR.Group#getFeature <em>Feature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Feature</em>'.
-	 * @see featJAR.Group#getFeature()
-	 * @see #getGroup()
-	 * @generated
-	 */
-	EReference getGroup_Feature();
-
-	/**
-	 * Returns the meta object for the attribute '{@link featJAR.Group#isOptional <em>Optional</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Optional</em>'.
-	 * @see featJAR.Group#isOptional()
-	 * @see #getGroup()
-	 * @generated
-	 */
-	EAttribute getGroup_Optional();
-
-	/**
-	 * Returns the meta object for the attribute '{@link featJAR.Group#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see featJAR.Group#getName()
-	 * @see #getGroup()
-	 * @generated
-	 */
-	EAttribute getGroup_Name();
 
 	/**
 	 * Returns the meta object for class '{@link featJAR.Feature <em>Feature</em>}'.
@@ -318,15 +149,26 @@ public interface FeatJARPackage extends EPackage {
 	EClass getFeature();
 
 	/**
-	 * Returns the meta object for the reference list '{@link featJAR.Feature#getGroup <em>Group</em>}'.
+	 * Returns the meta object for the attribute '{@link featJAR.Feature#getID <em>ID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Group</em>'.
-	 * @see featJAR.Feature#getGroup()
+	 * @return the meta object for the attribute '<em>ID</em>'.
+	 * @see featJAR.Feature#getID()
 	 * @see #getFeature()
 	 * @generated
 	 */
-	EReference getFeature_Group();
+	EAttribute getFeature_ID();
+
+	/**
+	 * Returns the meta object for the attribute '{@link featJAR.Feature#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see featJAR.Feature#getName()
+	 * @see #getFeature()
+	 * @generated
+	 */
+	EAttribute getFeature_Name();
 
 	/**
 	 * Returns the meta object for the attribute '{@link featJAR.Feature#isOptional <em>Optional</em>}'.
@@ -340,15 +182,37 @@ public interface FeatJARPackage extends EPackage {
 	EAttribute getFeature_Optional();
 
 	/**
-	 * Returns the meta object for the attribute '{@link featJAR.Feature#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link featJAR.Feature#isRoot <em>Root</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see featJAR.Feature#getName()
+	 * @return the meta object for the attribute '<em>Root</em>'.
+	 * @see featJAR.Feature#isRoot()
 	 * @see #getFeature()
 	 * @generated
 	 */
-	EAttribute getFeature_Name();
+	EAttribute getFeature_Root();
+
+	/**
+	 * Returns the meta object for the reference list '{@link featJAR.Feature#getChildren <em>Children</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Children</em>'.
+	 * @see featJAR.Feature#getChildren()
+	 * @see #getFeature()
+	 * @generated
+	 */
+	EReference getFeature_Children();
+
+	/**
+	 * Returns the meta object for the reference '{@link featJAR.Feature#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent</em>'.
+	 * @see featJAR.Feature#getParent()
+	 * @see #getFeature()
+	 * @generated
+	 */
+	EReference getFeature_Parent();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -374,74 +238,6 @@ public interface FeatJARPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link featJAR.impl.rootImpl <em>root</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see featJAR.impl.rootImpl
-		 * @see featJAR.impl.FeatJARPackageImpl#getroot()
-		 * @generated
-		 */
-		EClass ROOT = eINSTANCE.getroot();
-
-		/**
-		 * The meta object literal for the '<em><b>Core</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ROOT__CORE = eINSTANCE.getroot_Core();
-
-		/**
-		 * The meta object literal for the '<em><b>Group</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ROOT__GROUP = eINSTANCE.getroot_Group();
-
-		/**
-		 * The meta object literal for the '{@link featJAR.impl.GroupImpl <em>Group</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see featJAR.impl.GroupImpl
-		 * @see featJAR.impl.FeatJARPackageImpl#getGroup()
-		 * @generated
-		 */
-		EClass GROUP = eINSTANCE.getGroup();
-
-		/**
-		 * The meta object literal for the '<em><b>Root</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GROUP__ROOT = eINSTANCE.getGroup_Root();
-
-		/**
-		 * The meta object literal for the '<em><b>Feature</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference GROUP__FEATURE = eINSTANCE.getGroup_Feature();
-
-		/**
-		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute GROUP__OPTIONAL = eINSTANCE.getGroup_Optional();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute GROUP__NAME = eINSTANCE.getGroup_Name();
-
-		/**
 		 * The meta object literal for the '{@link featJAR.impl.FeatureImpl <em>Feature</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -452,12 +248,20 @@ public interface FeatJARPackage extends EPackage {
 		EClass FEATURE = eINSTANCE.getFeature();
 
 		/**
-		 * The meta object literal for the '<em><b>Group</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference FEATURE__GROUP = eINSTANCE.getFeature_Group();
+		EAttribute FEATURE__ID = eINSTANCE.getFeature_ID();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FEATURE__NAME = eINSTANCE.getFeature_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
@@ -468,12 +272,28 @@ public interface FeatJARPackage extends EPackage {
 		EAttribute FEATURE__OPTIONAL = eINSTANCE.getFeature_Optional();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Root</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute FEATURE__NAME = eINSTANCE.getFeature_Name();
+		EAttribute FEATURE__ROOT = eINSTANCE.getFeature_Root();
+
+		/**
+		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEATURE__CHILDREN = eINSTANCE.getFeature_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEATURE__PARENT = eINSTANCE.getFeature_Parent();
 
 	}
 

@@ -10,7 +10,8 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-21
 Export-Package: featJAR,
  featJAR.impl,
- featJAR.util
+ featJAR.util,
+ org.eclipse.glsp.example.javaemf.server
 Require-Bundle: org.eclipse.glsp.server;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.glsp.server.emf;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.edit,

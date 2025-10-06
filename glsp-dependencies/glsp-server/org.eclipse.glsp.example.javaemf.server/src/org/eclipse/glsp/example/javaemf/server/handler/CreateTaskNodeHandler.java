@@ -17,7 +17,6 @@
 package org.eclipse.glsp.example.javaemf.server.handler;
 
 import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Function;
 
 import org.eclipse.emf.common.command.Command;
@@ -93,7 +92,7 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
    protected Feature createTask() {
       Feature newTask = FeatJARFactory.eINSTANCE.createFeature();
       newTask.setName(getLabel());
-      newTask.setId(UUID.randomUUID().toString());
+      newTask.setID(1);
       setInitialName(newTask);
       return newTask;
    }

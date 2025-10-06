@@ -22,24 +22,6 @@ public interface FeatJARFactory extends EFactory {
 	FeatJARFactory eINSTANCE = featJAR.impl.FeatJARFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>root</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>root</em>'.
-	 * @generated
-	 */
-	root createroot();
-
-	/**
-	 * Returns a new object of class '<em>Group</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Group</em>'.
-	 * @generated
-	 */
-	Group createGroup();
-
-	/**
 	 * Returns a new object of class '<em>Feature</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

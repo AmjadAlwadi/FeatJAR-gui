@@ -15,9 +15,12 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link featJAR.Feature#getGroup <em>Group</em>}</li>
- *   <li>{@link featJAR.Feature#isOptional <em>Optional</em>}</li>
+ *   <li>{@link featJAR.Feature#getID <em>ID</em>}</li>
  *   <li>{@link featJAR.Feature#getName <em>Name</em>}</li>
+ *   <li>{@link featJAR.Feature#isOptional <em>Optional</em>}</li>
+ *   <li>{@link featJAR.Feature#isRoot <em>Root</em>}</li>
+ *   <li>{@link featJAR.Feature#getChildren <em>Children</em>}</li>
+ *   <li>{@link featJAR.Feature#getParent <em>Parent</em>}</li>
  * </ul>
  *
  * @see featJAR.FeatJARPackage#getFeature()
@@ -26,18 +29,48 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Feature extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Group</b></em>' reference list.
-	 * The list contents are of type {@link featJAR.Group}.
-	 * It is bidirectional and its opposite is '{@link featJAR.Group#getFeature <em>Feature</em>}'.
+	 * Returns the value of the '<em><b>ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Group</em>' reference list.
-	 * @see featJAR.FeatJARPackage#getFeature_Group()
-	 * @see featJAR.Group#getFeature
-	 * @model opposite="feature" required="true"
+	 * @return the value of the '<em>ID</em>' attribute.
+	 * @see #setID(int)
+	 * @see featJAR.FeatJARPackage#getFeature_ID()
+	 * @model required="true"
 	 * @generated
 	 */
-	EList<Group> getGroup();
+	int getID();
+
+	/**
+	 * Sets the value of the '{@link featJAR.Feature#getID <em>ID</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>ID</em>' attribute.
+	 * @see #getID()
+	 * @generated
+	 */
+	void setID(int value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see featJAR.FeatJARPackage#getFeature_Name()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link featJAR.Feature#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Optional</b></em>' attribute.
@@ -62,25 +95,59 @@ public interface Feature extends EObject {
 	void setOptional(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * Returns the value of the '<em><b>Root</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see featJAR.FeatJARPackage#getFeature_Name()
+	 * @return the value of the '<em>Root</em>' attribute.
+	 * @see #setRoot(boolean)
+	 * @see featJAR.FeatJARPackage#getFeature_Root()
 	 * @model required="true"
 	 * @generated
 	 */
-	String getName();
+	boolean isRoot();
 
 	/**
-	 * Sets the value of the '{@link featJAR.Feature#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link featJAR.Feature#isRoot <em>Root</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
+	 * @param value the new value of the '<em>Root</em>' attribute.
+	 * @see #isRoot()
 	 * @generated
 	 */
-	void setName(String value);
+	void setRoot(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Children</b></em>' reference list.
+	 * The list contents are of type {@link featJAR.Feature}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Children</em>' reference list.
+	 * @see featJAR.FeatJARPackage#getFeature_Children()
+	 * @model
+	 * @generated
+	 */
+	EList<Feature> getChildren();
+
+	/**
+	 * Returns the value of the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent</em>' reference.
+	 * @see #setParent(Feature)
+	 * @see featJAR.FeatJARPackage#getFeature_Parent()
+	 * @model
+	 * @generated
+	 */
+	Feature getParent();
+
+	/**
+	 * Sets the value of the '{@link featJAR.Feature#getParent <em>Parent</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent</em>' reference.
+	 * @see #getParent()
+	 * @generated
+	 */
+	void setParent(Feature value);
 
 } // Feature

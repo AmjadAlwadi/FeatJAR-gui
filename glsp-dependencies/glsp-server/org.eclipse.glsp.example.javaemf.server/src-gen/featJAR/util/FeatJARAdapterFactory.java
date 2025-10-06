@@ -67,16 +67,6 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected FeatJARSwitch<Adapter> modelSwitch = new FeatJARSwitch<Adapter>() {
 		@Override
-		public Adapter caseroot(root object) {
-			return createrootAdapter();
-		}
-
-		@Override
-		public Adapter caseGroup(Group object) {
-			return createGroupAdapter();
-		}
-
-		@Override
 		public Adapter caseFeature(Feature object) {
 			return createFeatureAdapter();
 		}
@@ -98,34 +88,6 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	@Override
 	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.root <em>root</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see featJAR.root
-	 * @generated
-	 */
-	public Adapter createrootAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.Group <em>Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see featJAR.Group
-	 * @generated
-	 */
-	public Adapter createGroupAdapter() {
-		return null;
 	}
 
 	/**

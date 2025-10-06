@@ -5,8 +5,6 @@ package featJAR.impl;
 import featJAR.FeatJARFactory;
 import featJAR.FeatJARPackage;
 import featJAR.Feature;
-import featJAR.Group;
-import featJAR.root;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -22,20 +20,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * @generated
  */
 public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass rootEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass groupEClass = null;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -113,86 +97,6 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getroot() {
-		return rootEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getroot_Core() {
-		return (EAttribute) rootEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getroot_Group() {
-		return (EReference) rootEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EClass getGroup() {
-		return groupEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getGroup_Root() {
-		return (EReference) groupEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getGroup_Feature() {
-		return (EReference) groupEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getGroup_Optional() {
-		return (EAttribute) groupEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getGroup_Name() {
-		return (EAttribute) groupEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EClass getFeature() {
 		return featureEClass;
 	}
@@ -203,18 +107,8 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getFeature_Group() {
-		return (EReference) featureEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getFeature_Optional() {
-		return (EAttribute) featureEClass.getEStructuralFeatures().get(1);
+	public EAttribute getFeature_ID() {
+		return (EAttribute) featureEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -224,7 +118,47 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 */
 	@Override
 	public EAttribute getFeature_Name() {
+		return (EAttribute) featureEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getFeature_Optional() {
 		return (EAttribute) featureEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getFeature_Root() {
+		return (EAttribute) featureEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getFeature_Children() {
+		return (EReference) featureEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getFeature_Parent() {
+		return (EReference) featureEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -257,20 +191,13 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		rootEClass = createEClass(ROOT);
-		createEAttribute(rootEClass, ROOT__CORE);
-		createEReference(rootEClass, ROOT__GROUP);
-
-		groupEClass = createEClass(GROUP);
-		createEReference(groupEClass, GROUP__ROOT);
-		createEReference(groupEClass, GROUP__FEATURE);
-		createEAttribute(groupEClass, GROUP__OPTIONAL);
-		createEAttribute(groupEClass, GROUP__NAME);
-
 		featureEClass = createEClass(FEATURE);
-		createEReference(featureEClass, FEATURE__GROUP);
-		createEAttribute(featureEClass, FEATURE__OPTIONAL);
+		createEAttribute(featureEClass, FEATURE__ID);
 		createEAttribute(featureEClass, FEATURE__NAME);
+		createEAttribute(featureEClass, FEATURE__OPTIONAL);
+		createEAttribute(featureEClass, FEATURE__ROOT);
+		createEReference(featureEClass, FEATURE__CHILDREN);
+		createEReference(featureEClass, FEATURE__PARENT);
 	}
 
 	/**
@@ -304,33 +231,21 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 		// Add supertypes to classes
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(rootEClass, root.class, "root", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getroot_Core(), ecorePackage.getEString(), "core", null, 1, 1, root.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getroot_Group(), this.getGroup(), this.getGroup_Root(), "group", null, 0, -1, root.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGroup_Root(), this.getroot(), this.getroot_Group(), "root", null, 1, 1, Group.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getGroup_Feature(), this.getFeature(), this.getFeature_Group(), "feature", null, 0, -1,
-				Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroup_Optional(), ecorePackage.getEBoolean(), "optional", null, 1, 1, Group.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getGroup_Name(), ecorePackage.getEString(), "name", null, 1, 1, Group.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(featureEClass, Feature.class, "Feature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getFeature_Group(), this.getGroup(), this.getGroup_Feature(), "group", null, 1, -1,
-				Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getFeature_Optional(), ecorePackage.getEBoolean(), "optional", null, 1, 1, Feature.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFeature_ID(), ecorePackage.getEInt(), "ID", null, 1, 1, Feature.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getFeature_Name(), ecorePackage.getEString(), "name", null, 1, 1, Feature.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFeature_Optional(), ecorePackage.getEBoolean(), "optional", null, 1, 1, Feature.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getFeature_Root(), ecorePackage.getEBoolean(), "root", null, 1, 1, Feature.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFeature_Children(), this.getFeature(), null, "children", null, 0, -1, Feature.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFeature_Parent(), this.getFeature(), null, "parent", null, 0, 1, Feature.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

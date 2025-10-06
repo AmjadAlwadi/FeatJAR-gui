@@ -56,37 +56,11 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case FeatJARPackage.ROOT:
-			return createroot();
-		case FeatJARPackage.GROUP:
-			return createGroup();
 		case FeatJARPackage.FEATURE:
 			return createFeature();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public root createroot() {
-		rootImpl root = new rootImpl();
-		return root;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Group createGroup() {
-		GroupImpl group = new GroupImpl();
-		return group;
 	}
 
 	/**
