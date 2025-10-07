@@ -21,10 +21,10 @@ import org.eclipse.glsp.graph.DefaultTypes;
 public final class TaskListModelTypes {
    private TaskListModelTypes() {}
 
-   public static final String TASK = DefaultTypes.NODE;
-   public static final String OPTIONAL = "Optional Node";
-   public static final String OBLIGATORY = "Obligatory Node";
-   public static final String CONSTRAINT = "Constraint Node";
+   // public static final String TASK = DefaultTypes.NODE;
+   public static final String OPTIONAL_FEATURE = DefaultTypes.NODE;
+   public static final String OBLIGATORY_FEATURE = DefaultTypes.NODE;
+   public static final String CONSTRAINT = DefaultTypes.EDGE;
    public static final String TRANSITION = DefaultTypes.EDGE;
 
 }

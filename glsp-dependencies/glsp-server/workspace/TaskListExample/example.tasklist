@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<featJAR:root xmi:version="2.0"
+<xmi:XMI xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:featJAR="http://www.example.org/featJAR"
-    ID="1"
-    core="CoreFeature">
-
-  <!-- One group under root -->
-  <group ID="2" name="Group 1" optional="false">
-    <!-- Features contained in this group -->
-    <feature ID="3" name="Feature 1" optional="false"/>
-    <feature ID="4" name="Feature 2" optional="true"/>
-  </group>
-
-  <!-- Another group example -->
-  <group ID="5" name="Group 2" optional="true">
-    <feature ID="6" name="Feature 3" optional="false"/>
-  </group>
-
-</featJAR:root>
+    xmlns:featJAR="http://www.example.org/featJAR">   
+    <featJAR:Feature Id=1 Name="CoreFeature" Root="true" Optional="false"/> 
+</xmi:XMI>

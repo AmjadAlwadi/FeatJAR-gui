@@ -53,8 +53,10 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
    @Inject
    protected EMFIdGenerator idGenerator;
 
+   public static int generalId = 10;
+
    public CreateTaskNodeHandler() {
-      super(TaskListModelTypes.TASK);
+      super(TaskListModelTypes.OBLIGATORY_FEATURE);
    }
 
    @Override
@@ -77,7 +79,7 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
 
       Feature newTask = createTask();
       Command taskCommand = AddCommand.create(editingDomain, taskList,
-         FeatJARPackage.Literals.class, newTask);
+         FeatJARPackage.Literals.FEATURE__CHILDREN, newTask);
 
       Shape shape = createShape(idGenerator.getOrCreateId(newTask), relativeLocation);
       Command shapeCommand = AddCommand.create(editingDomain, diagram,
@@ -90,9 +92,12 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
    }
 
    protected Feature createTask() {
+
       Feature newTask = FeatJARFactory.eINSTANCE.createFeature();
       newTask.setName(getLabel());
-      newTask.setID(1);
+      newTask.setID(++generalId);
+      newTask.setOptional(false);
+      newTask.setRoot(false);
       setInitialName(newTask);
       return newTask;
    }

@@ -16,9 +16,18 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server.model;
 
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
+import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
 
@@ -31,41 +40,53 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       Feature feature = Feature.class.cast(semanticModel);
       GGraph graph = GGraph.class.cast(newRoot);
 
-      // if (notationModel.getSemanticElement() != null
-      // && notationModel.getSemanticElement().getResolvedSemanticElement() != null) {
-      // taskList.getTasks().stream()
-      // .map(this::createFeatureNode)
-      // .forEachOrdered(graph.getChildren()::add);
-      // }
+      if (notationModel.getSemanticElement() != null
+         && notationModel.getSemanticElement().getResolvedSemanticElement() != null) {
+         feature.getChildren().stream().map(this::createFeatureNode)
+            .forEachOrdered(graph.getChildren()::add);
+      }
 
-      String featureName = feature.getName();
-      // feature.isOptional();
-      System.out.println(featureName);
+      // Feature f1 = Feature.class.cast(semanticModel);
+      // f1.setName("Amjad");
+      // f1.setOptional(false);
+      // f1.setRoot(true);
+      // f1.setID(10);
+      //
+      // createFeatureNode(f1);
 
    }
 
-   // protected GNode createOptionalFeatureNode(final Feature feature) {
-   //
-   // GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.TASK)
-   // .id(idGenerator.getOrCreateId(task))
-   // .addCssClass("feature-node-root")
-   // .add(new GLabelBuilder(DefaultTypes.LABEL).text(task.getName()).id(task.getId() + "_label").build())
-   // .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
-   //
-   // applyShapeData(task, taskNodeBuilder);
-   // return taskNodeBuilder.build();
-   // }
-   //
-   // protected GNode createObligatoryFeatureNode(final Feature feature) {
-   //
-   // GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.TASK)
-   // .id(idGenerator.getOrCreateId(task))
-   // .addCssClass("feature-node-root")
-   // .add(new GLabelBuilder(DefaultTypes.LABEL).text(task.getName()).id(task.getId() + "_label").build())
-   // .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
-   //
-   // applyShapeData(task, taskNodeBuilder);
-   // return taskNodeBuilder.build();
-   // }
+   protected GNode createFeatureNode(final Feature feature) {
+
+      if (feature.isOptional()) {
+         return createOptionalFeatureNode(feature);
+      }
+      return createObligatoryFeatureNode(feature);
+
+   }
+
+   protected GNode createOptionalFeatureNode(final Feature feature) {
+
+      GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OPTIONAL_FEATURE)
+         .id(idGenerator.getOrCreateId(feature))
+         // .addCssClass("feature-node-root")
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getID() + "_label").build())
+         .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+
+      applyShapeData(feature, taskNodeBuilder);
+      return taskNodeBuilder.build();
+   }
+
+   protected GNode createObligatoryFeatureNode(final Feature feature) {
+
+      GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OBLIGATORY_FEATURE)
+         .id(idGenerator.getOrCreateId(feature))
+         // .addCssClass("feature-node-root")
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getID() + "_label").build())
+         .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+
+      applyShapeData(feature, taskNodeBuilder);
+      return taskNodeBuilder.build();
+   }
 
 }

@@ -33,12 +33,10 @@ public class TaskListToolPaletteItemProvider implements ToolPaletteItemProvider 
    }
 
    private PaletteItem nodes() {
-      PaletteItem createFeature = node(TaskListModelTypes.TASK, "Feature");
-      PaletteItem createOptionalFeature = node(TaskListModelTypes.OPTIONAL, "Optional Feature");
-      PaletteItem createObligatoryFeature = node(TaskListModelTypes.OBLIGATORY, "Obligatory Feature");
+      PaletteItem createOptionalFeature = node(TaskListModelTypes.OPTIONAL_FEATURE, "Optional Feature");
+      PaletteItem createObligatoryFeature = node(TaskListModelTypes.OBLIGATORY_FEATURE, "Obligatory Feature");
       PaletteItem createConstraint = node(TaskListModelTypes.CONSTRAINT, "Constraint");
       List<PaletteItem> nodes = new ArrayList<>();
-      nodes.add(createFeature);
       nodes.add(createOptionalFeature);
       nodes.add(createObligatoryFeature);
       nodes.add(createConstraint);
