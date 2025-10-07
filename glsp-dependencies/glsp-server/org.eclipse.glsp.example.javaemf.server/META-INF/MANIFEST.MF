@@ -1,20 +1,25 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
-Bundle-SymbolicName: FeatJAR;singleton:=true
-Automatic-Module-Name: FeatJAR
-Bundle-Version: 0.1.0.qualifier
-Bundle-ClassPath: .
-Bundle-Vendor: %providerName
-Bundle-Localization: plugin
+Bundle-Name: FeatJAR Server
+Bundle-SymbolicName: org.eclipse.glsp.example.javaemf.server;singleton:=true
+Bundle-Version: 2.5.0
 Bundle-RequiredExecutionEnvironment: JavaSE-21
+Automatic-Module-Name: org.eclipse.glsp.example.javaemf.server
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Bundle-Vendor: Eclipse GLSP
 Export-Package: featJAR,
  featJAR.impl,
  featJAR.util,
- org.eclipse.glsp.example.javaemf.server
+ org.eclipse.glsp.example.javaemf.server,
+ org.eclipse.glsp.example.javaemf.server.handler,
+ org.eclipse.glsp.example.javaemf.server.launch,
+ org.eclipse.glsp.example.javaemf.server.model,
+ org.eclipse.glsp.example.javaemf.server.palette
 Require-Bundle: org.eclipse.glsp.server;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.glsp.server.emf;bundle-version="[2.0.0,3.0.0)",
  org.eclipse.emf.edit,
  org.eclipse.emf.ecore.edit,
- org.eclipse.emf.ecore.xmi
-Bundle-ActivationPolicy: lazy
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.ecore;visibility:=reexport,
+ org.eclipse.core.runtime
