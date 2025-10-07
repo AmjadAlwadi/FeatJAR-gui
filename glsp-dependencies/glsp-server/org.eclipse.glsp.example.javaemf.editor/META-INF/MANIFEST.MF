@@ -30,5 +30,6 @@ Bundle-Activator: org.eclipse.glsp.example.javaemf.editor.Activator
 Bundle-Vendor: Eclipse GLSP
 Import-Package: jakarta.annotation;version="[2.1.0,3.0.0)",
  jakarta.websocket;version="[2.2.0,3.0.0)",
- org.apache.logging.log4j;version="2.19.0"
+ org.apache.logging.log4j;version="2.19.0",
+ org.eclipse.glsp.example.javaemf.server
 Export-Package: org.eclipse.glsp.example.javaemf.editor
