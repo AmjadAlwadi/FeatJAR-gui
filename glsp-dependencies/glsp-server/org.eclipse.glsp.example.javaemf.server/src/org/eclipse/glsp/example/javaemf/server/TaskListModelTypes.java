@@ -25,6 +25,6 @@ public final class TaskListModelTypes {
    public static final String OPTIONAL_FEATURE = DefaultTypes.NODE;
    public static final String OBLIGATORY_FEATURE = DefaultTypes.NODE;
    public static final String CONSTRAINT = DefaultTypes.EDGE;
-   public static final String TRANSITION = DefaultTypes.EDGE;
+   public static final String LINK = DefaultTypes.EDGE;
 
 }

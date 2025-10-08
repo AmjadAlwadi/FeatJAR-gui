@@ -37,4 +37,13 @@
 	</scm>
 
 
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.glsp.example</groupId>
+			<artifactId>
+				org.eclipse.glsp.example.javaemf.editor
+			</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+	</dependencies>
 </project>

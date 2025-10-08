@@ -16,19 +16,25 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
 import org.eclipse.glsp.graph.DefaultTypes;
+import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.glsp.graph.util.GConstants.Layout;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
 
@@ -41,11 +47,15 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
+   private final List<GEdge> edges = new ArrayList<>();
+   int pos_x = 0;
+
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
       FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
       Feature emfRoot = emfFeatureModel.getRoot();
 
+      edges.clear();
       GNode gRoot = createRootNode(emfRoot);
 
       for (Feature child : emfRoot.getFeatures()) {
@@ -55,6 +65,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       GGraph newModel = new GGraphBuilder()
          .id("entity-graph")
          .add(gRoot)
+         .addAll(edges)
          .build();
 
       modelState.updateRoot(newModel);
@@ -78,8 +89,24 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       }
 
       for (Feature child : feature.getFeatures()) {
-         parent.getChildren().add(createFeatureNode(child));
+
+         GNode childNode = createFeatureNode(child);
+
+         // Connect parent and child with an edge
+         GEdge edge = new GEdgeBuilder(TaskListModelTypes.LINK)
+            .id(feature.getId() + "_to_" + child.getId())
+            .source(parent)
+            .trace("asdfdsaf")
+            .target(childNode)
+            .build();
+
+         parent.getChildren().add(childNode);
+         edges.add(edge);
       }
+
+      parent.setLayout(Layout.FREEFORM);
+      pos_x += 50;
+      parent.setPosition(GraphUtil.point(pos_x, 10));
 
       return parent;
 
