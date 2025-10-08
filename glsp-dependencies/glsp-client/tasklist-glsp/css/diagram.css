@@ -16,64 +16,78 @@
  ********************************************************************************/
 
 
+/* ========================
+   Palette & Base
+   ======================== */
 :root{
-  --c-root:      hsla(50, 95%, 52%, 0.977);   /* root = warm yellow */
-  --c-mand:      hsl(22 88% 52%);   /* obligatory = orange */
-  --c-opt:       hsl(270 70% 54%);  /* optional = purple */
+  --c-root:  hsla(4, 94%, 44%, 0.98);
+  --c-mand:  hsl(159, 88%, 52%);
+  --c-opt:   hsl(270, 80%, 24%);
   --stroke:      hsl(220 15% 35%);
   --stroke-sel:  hsl(220 20% 20%);
   --text:        hsl(220 20% 18%);
-  --text-on:     white;
+  --text-on:     #fff;
   --shadow:      0 1px 2px rgba(0,0,0,.18), 0 3px 8px rgba(0,0,0,.08);
 }
 
-svg {
+svg{
   border: 1px solid #bbb;
-  font: 600 13px/1.2 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   background: #fff;
+  font: 600 13px/1.2 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
 }
 
 
-.sprotty-node > rect,
-.sprotty-node > path,
-.sprotty-node > polygon{
-  rx: 12; ry: 12;                 /* rounded corners for <rect> */
+.sprotty-node rect,
+.sprotty-node .sprotty-rect,
+.sprotty-node .node-body{
+  rx: 12px; ry: 12px;                    /* <- rounded corners added*/
   stroke: var(--stroke);
   stroke-width: 1.25;
   filter: drop-shadow(var(--shadow));
   transition: filter .15s ease, stroke-width .15s ease, transform .05s ease;
-  cursor: default;
 }
+
+
+.sprotty-node{
+  clip-path: inset(0 round 12px);
+}
+
+
+.sprotty-node.sprotty-hover rect{ filter: drop-shadow(0 2px 6px rgba(0,0,0,.22)); stroke-width: 2; }
+.sprotty-node.sprotty-selected rect{ stroke: var(--stroke-sel); stroke-width: 2.5; }
+.sprotty-node.sprotty-hover{ transform: translateY(-1px); }
 
 
 .feature-node-root       { fill: var(--c-root); }
 .feature-node-obligatory { fill: var(--c-mand); }
 .feature-node-optional   { fill: var(--c-opt);  }
 
+.sprotty-node[data-type="OBLIGATORY_FEATURE"] rect{ fill: var(--c-mand); }
+.sprotty-node[data-type="OPTIONAL_FEATURE"]   rect{ fill: var(--c-opt);  }
+.sprotty-node[data-type="ROOT_FEATURE"]       rect{ fill: var(--c-root); }
 
-.sprotty-hover    > rect { filter: drop-shadow(0 2px 6px rgba(0,0,0,.22)); stroke-width: 2; }
-.sprotty-selected > rect { stroke: var(--stroke-sel); stroke-width: 2.5; }
-
-
+/* ========================
+   Labels 
+   ======================== */
 .sprotty-label text{
   fill: var(--text);
   letter-spacing: .2px;
   dominant-baseline: middle;
+ 
   paint-order: stroke fill;
   stroke: rgba(0,0,0,.28);
   stroke-width: 2px;
+  text-shadow: 0 1px 0 rgba(0,0,0,.25);
 }
 
 
 .feature-node-root .sprotty-label text,
 .feature-node-obligatory .sprotty-label text,
-.feature-node-optional .sprotty-label text{
+.feature-node-optional .sprotty-label text,
+.sprotty-node[data-type="OBLIGATORY_FEATURE"] .sprotty-label text,
+.sprotty-node[data-type="OPTIONAL_FEATURE"]   .sprotty-label text,
+.sprotty-node[data-type="ROOT_FEATURE"]       .sprotty-label text{
   fill: var(--text-on);
-  stroke: rgba(0,0,0,.35); 
-}
-
-
-.sprotty-label text{
-  text-shadow: 0 1px 0 rgba(0,0,0,.25);
+  stroke: rgba(0,0,0,.35);
 }
 
