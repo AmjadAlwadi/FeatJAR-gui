@@ -56,8 +56,8 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case FeatJARPackage.FEAUTURE_MODEL:
-			return createFeautureModel();
+		case FeatJARPackage.FEATURE_MODEL:
+			return createFeatureModel();
 		case FeatJARPackage.FEATURE:
 			return createFeature();
 		case FeatJARPackage.CONSTRAINT:
@@ -73,9 +73,9 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	 * @generated
 	 */
 	@Override
-	public FeautureModel createFeautureModel() {
-		FeautureModelImpl feautureModel = new FeautureModelImpl();
-		return feautureModel;
+	public FeatureModel createFeatureModel() {
+		FeatureModelImpl featureModel = new FeatureModelImpl();
+		return featureModel;
 	}
 
 	/**

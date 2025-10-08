@@ -67,8 +67,8 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected FeatJARSwitch<Adapter> modelSwitch = new FeatJARSwitch<Adapter>() {
 		@Override
-		public Adapter caseFeautureModel(FeautureModel object) {
-			return createFeautureModelAdapter();
+		public Adapter caseFeatureModel(FeatureModel object) {
+			return createFeatureModelAdapter();
 		}
 
 		@Override
@@ -106,16 +106,16 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.FeautureModel <em>Feauture Model</em>}'.
+	 * Creates a new adapter for an object of class '{@link featJAR.FeatureModel <em>Feature Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see featJAR.FeautureModel
+	 * @see featJAR.FeatureModel
 	 * @generated
 	 */
-	public Adapter createFeautureModelAdapter() {
+	public Adapter createFeatureModelAdapter() {
 		return null;
 	}
 

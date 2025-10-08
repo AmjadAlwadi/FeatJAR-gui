@@ -6,7 +6,7 @@ import featJAR.Constraint;
 import featJAR.FeatJARFactory;
 import featJAR.FeatJARPackage;
 import featJAR.Feature;
-import featJAR.FeautureModel;
+import featJAR.FeatureModel;
 import featJAR.Identifiable;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -28,7 +28,7 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass feautureModelEClass = null;
+	private EClass featureModelEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -121,8 +121,8 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EClass getFeautureModel() {
-		return feautureModelEClass;
+	public EClass getFeatureModel() {
+		return featureModelEClass;
 	}
 
 	/**
@@ -131,8 +131,8 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getFeautureModel_Features() {
-		return (EReference) feautureModelEClass.getEStructuralFeatures().get(0);
+	public EReference getFeatureModel_Root() {
+		return (EReference) featureModelEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -141,8 +141,8 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getFeautureModel_Constraints() {
-		return (EReference) feautureModelEClass.getEStructuralFeatures().get(1);
+	public EReference getFeatureModel_Constraints() {
+		return (EReference) featureModelEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getFeature_Children() {
+	public EReference getFeature_Features() {
 		return (EReference) featureEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -213,16 +213,6 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	@Override
 	public EAttribute getFeature_Optional() {
 		return (EAttribute) featureEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getFeature_Root() {
-		return (EAttribute) featureEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -265,19 +255,18 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		feautureModelEClass = createEClass(FEAUTURE_MODEL);
-		createEReference(feautureModelEClass, FEAUTURE_MODEL__FEATURES);
-		createEReference(feautureModelEClass, FEAUTURE_MODEL__CONSTRAINTS);
+		featureModelEClass = createEClass(FEATURE_MODEL);
+		createEReference(featureModelEClass, FEATURE_MODEL__ROOT);
+		createEReference(featureModelEClass, FEATURE_MODEL__CONSTRAINTS);
 
 		identifiableEClass = createEClass(IDENTIFIABLE);
 		createEAttribute(identifiableEClass, IDENTIFIABLE__ID);
 		createEAttribute(identifiableEClass, IDENTIFIABLE__NAME);
 
 		featureEClass = createEClass(FEATURE);
-		createEReference(featureEClass, FEATURE__CHILDREN);
+		createEReference(featureEClass, FEATURE__FEATURES);
 		createEReference(featureEClass, FEATURE__PARENT);
 		createEAttribute(featureEClass, FEATURE__OPTIONAL);
-		createEAttribute(featureEClass, FEATURE__ROOT);
 
 		constraintEClass = createEClass(CONSTRAINT);
 	}
@@ -311,18 +300,18 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		feautureModelEClass.getESuperTypes().add(this.getIdentifiable());
+		featureModelEClass.getESuperTypes().add(this.getIdentifiable());
 		featureEClass.getESuperTypes().add(this.getIdentifiable());
 		constraintEClass.getESuperTypes().add(this.getIdentifiable());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(feautureModelEClass, FeautureModel.class, "FeautureModel", !IS_ABSTRACT, !IS_INTERFACE,
+		initEClass(featureModelEClass, FeatureModel.class, "FeatureModel", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getFeautureModel_Features(), this.getFeature(), null, "features", null, 0, -1,
-				FeautureModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getFeautureModel_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1,
-				FeautureModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+		initEReference(getFeatureModel_Root(), this.getFeature(), null, "root", null, 0, 1, FeatureModel.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFeatureModel_Constraints(), this.getConstraint(), null, "constraints", null, 0, -1,
+				FeatureModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
 				!IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(identifiableEClass, Identifiable.class, "Identifiable", IS_ABSTRACT, !IS_INTERFACE,
@@ -333,7 +322,7 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(featureEClass, Feature.class, "Feature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getFeature_Children(), this.getFeature(), null, "children", null, 0, -1, Feature.class,
+		initEReference(getFeature_Features(), this.getFeature(), null, "features", null, 0, -1, Feature.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getFeature_Parent(), this.getFeature(), null, "parent", null, 0, 1, Feature.class, !IS_TRANSIENT,
@@ -341,8 +330,6 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 				IS_ORDERED);
 		initEAttribute(getFeature_Optional(), ecorePackage.getEBoolean(), "optional", null, 0, 1, Feature.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getFeature_Root(), ecorePackage.getEBoolean(), "root", null, 0, 1, Feature.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(constraintEClass, Constraint.class, "Constraint", !IS_ABSTRACT, !IS_INTERFACE,
 				IS_GENERATED_INSTANCE_CLASS);

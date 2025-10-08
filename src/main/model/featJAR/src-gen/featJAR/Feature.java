@@ -13,10 +13,9 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link featJAR.Feature#getChildren <em>Children</em>}</li>
+ *   <li>{@link featJAR.Feature#getFeatures <em>Features</em>}</li>
  *   <li>{@link featJAR.Feature#getParent <em>Parent</em>}</li>
  *   <li>{@link featJAR.Feature#isOptional <em>Optional</em>}</li>
- *   <li>{@link featJAR.Feature#isRoot <em>Root</em>}</li>
  * </ul>
  *
  * @see featJAR.FeatJARPackage#getFeature()
@@ -25,16 +24,16 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Feature extends Identifiable {
 	/**
-	 * Returns the value of the '<em><b>Children</b></em>' reference list.
+	 * Returns the value of the '<em><b>Features</b></em>' reference list.
 	 * The list contents are of type {@link featJAR.Feature}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Children</em>' reference list.
-	 * @see featJAR.FeatJARPackage#getFeature_Children()
+	 * @return the value of the '<em>Features</em>' reference list.
+	 * @see featJAR.FeatJARPackage#getFeature_Features()
 	 * @model
 	 * @generated
 	 */
-	EList<Feature> getChildren();
+	EList<Feature> getFeatures();
 
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' reference.
@@ -79,27 +78,5 @@ public interface Feature extends Identifiable {
 	 * @generated
 	 */
 	void setOptional(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Root</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Root</em>' attribute.
-	 * @see #setRoot(boolean)
-	 * @see featJAR.FeatJARPackage#getFeature_Root()
-	 * @model
-	 * @generated
-	 */
-	boolean isRoot();
-
-	/**
-	 * Sets the value of the '{@link featJAR.Feature#isRoot <em>Root</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Root</em>' attribute.
-	 * @see #isRoot()
-	 * @generated
-	 */
-	void setRoot(boolean value);
 
 } // Feature

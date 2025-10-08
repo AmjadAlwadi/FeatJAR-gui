@@ -22,13 +22,13 @@ public interface FeatJARFactory extends EFactory {
 	FeatJARFactory eINSTANCE = featJAR.impl.FeatJARFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Feauture Model</em>'.
+	 * Returns a new object of class '<em>Feature Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Feauture Model</em>'.
+	 * @return a new object of class '<em>Feature Model</em>'.
 	 * @generated
 	 */
-	FeautureModel createFeautureModel();
+	FeatureModel createFeatureModel();
 
 	/**
 	 * Returns a new object of class '<em>Feature</em>'.

@@ -66,11 +66,11 @@ public class FeatJARSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-		case FeatJARPackage.FEAUTURE_MODEL: {
-			FeautureModel feautureModel = (FeautureModel) theEObject;
-			T result = caseFeautureModel(feautureModel);
+		case FeatJARPackage.FEATURE_MODEL: {
+			FeatureModel featureModel = (FeatureModel) theEObject;
+			T result = caseFeatureModel(featureModel);
 			if (result == null)
-				result = caseIdentifiable(feautureModel);
+				result = caseIdentifiable(featureModel);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -106,17 +106,17 @@ public class FeatJARSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Feauture Model</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Feature Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Feauture Model</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Feature Model</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseFeautureModel(FeautureModel object) {
+	public T caseFeatureModel(FeatureModel object) {
 		return null;
 	}
 
