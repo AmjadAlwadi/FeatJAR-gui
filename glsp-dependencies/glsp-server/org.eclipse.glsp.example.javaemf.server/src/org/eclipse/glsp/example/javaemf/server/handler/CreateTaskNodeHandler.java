@@ -74,7 +74,7 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
       Diagram diagram = modelState.getNotationModel();
       EditingDomain editingDomain = modelState.getEditingDomain();
 
-      Feature newFeature = createTask();
+      // Feature newFeature = createTask();
       // Command taskCommand = AddCommand.create(editingDomain, root,
       // FeatJARPackage.Literals.FEATURE, newFeature);
 
@@ -85,6 +85,7 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
       CompoundCommand compoundCommand = new CompoundCommand();
       // compoundCommand.append(taskCommand);
       // compoundCommand.append(shapeCommand);
+
       return compoundCommand;
    }
 

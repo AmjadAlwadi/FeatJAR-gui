@@ -32,20 +32,24 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
 
-// import featJAR.CoreFeature;
 import featJAR.Feature;
 import featJAR.FeatureModel;
 
 public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
+   public static void convertFutureToEmf() {
+
+   }
+
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
-      FeatureModel emf_root = FeatureModel.class.cast(semanticModel);
-      Feature root = emf_root.getRoot();
-      GNode gRoot = createRootNode(root);
+      FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
+      Feature emfRoot = emfFeatureModel.getRoot();
 
-      for (Feature element : root.getFeatures()) {
-         createFeatureNode(element);
+      GNode gRoot = createRootNode(emfRoot);
+
+      for (Feature child : emfRoot.getFeatures()) {
+         gRoot.getChildren().add(createFeatureNode(child));
       }
 
       GGraph newModel = new GGraphBuilder()
@@ -65,10 +69,19 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    protected GNode createFeatureNode(final Feature feature) {
 
+      GNode parent;
+
       if (feature.isOptional()) {
-         return createOptionalFeatureNode(feature);
+         parent = createOptionalFeatureNode(feature);
+      } else {
+         parent = createObligatoryFeatureNode(feature);
       }
-      return createObligatoryFeatureNode(feature);
+
+      for (Feature child : feature.getFeatures()) {
+         parent.getChildren().add(createFeatureNode(child));
+      }
+
+      return parent;
 
    }
 

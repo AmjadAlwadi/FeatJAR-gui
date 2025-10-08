@@ -27,7 +27,9 @@ public class TaskListDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       // tasks can be moved, deleted and resized
-      return List.of(new ShapeTypeHint(TaskListModelTypes.OBLIGATORY_FEATURE, true, true, false, false));
+      return List.of(new ShapeTypeHint(TaskListModelTypes.OBLIGATORY_FEATURE, true, true, true, false),
+         new ShapeTypeHint(TaskListModelTypes.OPTIONAL_FEATURE, true, true, true, false),
+         new ShapeTypeHint(TaskListModelTypes.ROOT, true, true, true, false));
    }
 
    @Override

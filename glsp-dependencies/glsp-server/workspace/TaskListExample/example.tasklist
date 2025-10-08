@@ -12,9 +12,31 @@
  
  
  <features 
-  id = "12" 
+  id = "112" 
   optional="false"
-  name="child child"/>
+  name="child 3">
+  
+  
+  <features 
+  id = "1fds12" 
+  optional="true"
+  name="child 100"/>
+  
+  
+  
+  </features>
+  
+  
+  
+  <features 
+  id = "1232" 
+  optional="false"
+  name="child 2"/>
+  
+    <features 
+  id = "1222" 
+  optional="false"
+  name="child 4"/>
   
   
   </root>
