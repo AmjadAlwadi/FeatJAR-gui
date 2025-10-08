@@ -5,7 +5,7 @@
     <semanticResources>featJAR.genmodel</semanticResources>
     <ownedViews xmi:type="viewpoint:DView" uid="_w-47sKQ0EfCga-D3nhM1og">
       <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']"/>
-      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_xAW7UKQ0EfCga-D3nhM1og" name="featJAR" repPath="#_w_0v0KQ0EfCga-D3nhM1og" changeId="1759921277977">
+      <ownedRepresentationDescriptors xmi:type="viewpoint:DRepresentationDescriptor" uid="_xAW7UKQ0EfCga-D3nhM1og" name="featJAR" repPath="#_w_0v0KQ0EfCga-D3nhM1og" changeId="1759921495815">
         <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']"/>
         <target xmi:type="ecore:EPackage" href="featJAR.ecore#/"/>
       </ownedRepresentationDescriptors>
@@ -210,9 +210,9 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@conditionnalStyles.1/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" uid="_GavZQKQ1EfCga-D3nhM1og" name="ID : EString" tooltipText="">
-        <target xmi:type="ecore:EAttribute" href="featJAR.ecore#//Identifiable/ID"/>
-        <semanticElements xmi:type="ecore:EAttribute" href="featJAR.ecore#//Identifiable/ID"/>
+      <ownedElements xmi:type="diagram:DNodeListElement" uid="_GavZQKQ1EfCga-D3nhM1og" name="id : EString" tooltipText="">
+        <target xmi:type="ecore:EAttribute" href="featJAR.ecore#//Identifiable/id"/>
+        <semanticElements xmi:type="ecore:EAttribute" href="featJAR.ecore#//Identifiable/id"/>
         <ownedStyle xmi:type="diagram:BundledImage" uid="_JOZMoaQ1EfCga-D3nhM1og" labelAlignment="LEFT">
           <description xmi:type="style:BundledImageDescription" href="platform:/plugin/org.eclipse.emf.ecoretools.design/description/ecore.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Entities']/@defaultLayer/@containerMappings[name='EC%20EClass']/@subNodeMappings[name='EC%20EAttribute']/@style"/>
         </ownedStyle>

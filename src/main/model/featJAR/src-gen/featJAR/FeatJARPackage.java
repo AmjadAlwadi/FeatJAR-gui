@@ -67,7 +67,7 @@ public interface FeatJARPackage extends EPackage {
 	int IDENTIFIABLE = 1;
 
 	/**
-	 * The feature id for the '<em><b>ID</b></em>' attribute.
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -113,7 +113,7 @@ public interface FeatJARPackage extends EPackage {
 	int FEAUTURE_MODEL = 0;
 
 	/**
-	 * The feature id for the '<em><b>ID</b></em>' attribute.
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -177,7 +177,7 @@ public interface FeatJARPackage extends EPackage {
 	int FEATURE = 2;
 
 	/**
-	 * The feature id for the '<em><b>ID</b></em>' attribute.
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -259,7 +259,7 @@ public interface FeatJARPackage extends EPackage {
 	int CONSTRAINT = 3;
 
 	/**
-	 * The feature id for the '<em><b>ID</b></em>' attribute.
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -337,15 +337,15 @@ public interface FeatJARPackage extends EPackage {
 	EClass getIdentifiable();
 
 	/**
-	 * Returns the meta object for the attribute '{@link featJAR.Identifiable#getID <em>ID</em>}'.
+	 * Returns the meta object for the attribute '{@link featJAR.Identifiable#getId <em>Id</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>ID</em>'.
-	 * @see featJAR.Identifiable#getID()
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see featJAR.Identifiable#getId()
 	 * @see #getIdentifiable()
 	 * @generated
 	 */
-	EAttribute getIdentifiable_ID();
+	EAttribute getIdentifiable_Id();
 
 	/**
 	 * Returns the meta object for the attribute '{@link featJAR.Identifiable#getName <em>Name</em>}'.
@@ -482,12 +482,12 @@ public interface FeatJARPackage extends EPackage {
 		EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
 
 		/**
-		 * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_ID();
+		EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

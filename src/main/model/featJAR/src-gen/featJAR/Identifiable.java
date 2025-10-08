@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link featJAR.Identifiable#getID <em>ID</em>}</li>
+ *   <li>{@link featJAR.Identifiable#getId <em>Id</em>}</li>
  *   <li>{@link featJAR.Identifiable#getName <em>Name</em>}</li>
  * </ul>
  *
@@ -23,26 +23,26 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Identifiable extends EObject {
 	/**
-	 * Returns the value of the '<em><b>ID</b></em>' attribute.
+	 * Returns the value of the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>ID</em>' attribute.
-	 * @see #setID(String)
-	 * @see featJAR.FeatJARPackage#getIdentifiable_ID()
+	 * @return the value of the '<em>Id</em>' attribute.
+	 * @see #setId(String)
+	 * @see featJAR.FeatJARPackage#getIdentifiable_Id()
 	 * @model
 	 * @generated
 	 */
-	String getID();
+	String getId();
 
 	/**
-	 * Sets the value of the '{@link featJAR.Identifiable#getID <em>ID</em>}' attribute.
+	 * Sets the value of the '{@link featJAR.Identifiable#getId <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>ID</em>' attribute.
-	 * @see #getID()
+	 * @param value the new value of the '<em>Id</em>' attribute.
+	 * @see #getId()
 	 * @generated
 	 */
-	void setID(String value);
+	void setId(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.

@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link featJAR.impl.IdentifiableImpl#getID <em>ID</em>}</li>
+ *   <li>{@link featJAR.impl.IdentifiableImpl#getId <em>Id</em>}</li>
  *   <li>{@link featJAR.impl.IdentifiableImpl#getName <em>Name</em>}</li>
  * </ul>
  *
@@ -28,20 +28,20 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public abstract class IdentifiableImpl extends MinimalEObjectImpl.Container implements Identifiable {
 	/**
-	 * The default value of the '{@link #getID() <em>ID</em>}' attribute.
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getID()
+	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
 	protected static final String ID_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getID() <em>ID</em>}' attribute.
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getID()
+	 * @see #getId()
 	 * @generated
 	 * @ordered
 	 */
@@ -92,7 +92,7 @@ public abstract class IdentifiableImpl extends MinimalEObjectImpl.Container impl
 	 * @generated
 	 */
 	@Override
-	public String getID() {
+	public String getId() {
 		return id;
 	}
 
@@ -102,11 +102,11 @@ public abstract class IdentifiableImpl extends MinimalEObjectImpl.Container impl
 	 * @generated
 	 */
 	@Override
-	public void setID(String newID) {
-		String oldID = id;
-		id = newID;
+	public void setId(String newId) {
+		String oldId = id;
+		id = newId;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatJARPackage.IDENTIFIABLE__ID, oldID, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatJARPackage.IDENTIFIABLE__ID, oldId, id));
 	}
 
 	/**
@@ -141,7 +141,7 @@ public abstract class IdentifiableImpl extends MinimalEObjectImpl.Container impl
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case FeatJARPackage.IDENTIFIABLE__ID:
-			return getID();
+			return getId();
 		case FeatJARPackage.IDENTIFIABLE__NAME:
 			return getName();
 		}
@@ -157,7 +157,7 @@ public abstract class IdentifiableImpl extends MinimalEObjectImpl.Container impl
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 		case FeatJARPackage.IDENTIFIABLE__ID:
-			setID((String) newValue);
+			setId((String) newValue);
 			return;
 		case FeatJARPackage.IDENTIFIABLE__NAME:
 			setName((String) newValue);
@@ -175,7 +175,7 @@ public abstract class IdentifiableImpl extends MinimalEObjectImpl.Container impl
 	public void eUnset(int featureID) {
 		switch (featureID) {
 		case FeatJARPackage.IDENTIFIABLE__ID:
-			setID(ID_EDEFAULT);
+			setId(ID_EDEFAULT);
 			return;
 		case FeatJARPackage.IDENTIFIABLE__NAME:
 			setName(NAME_EDEFAULT);
@@ -211,7 +211,7 @@ public abstract class IdentifiableImpl extends MinimalEObjectImpl.Container impl
 			return super.toString();
 
 		StringBuilder result = new StringBuilder(super.toString());
-		result.append(" (ID: ");
+		result.append(" (id: ");
 		result.append(id);
 		result.append(", name: ");
 		result.append(name);
