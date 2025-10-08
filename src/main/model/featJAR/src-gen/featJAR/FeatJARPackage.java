@@ -64,10 +64,10 @@ public interface FeatJARPackage extends EPackage {
 	 * @see featJAR.impl.FeatJARPackageImpl#getIdentifiable()
 	 * @generated
 	 */
-	int IDENTIFIABLE = 0;
+	int IDENTIFIABLE = 1;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -103,23 +103,23 @@ public interface FeatJARPackage extends EPackage {
 	int IDENTIFIABLE_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link featJAR.impl.CoreFeatureImpl <em>Core Feature</em>}' class.
+	 * The meta object id for the '{@link featJAR.impl.FeautureModelImpl <em>Feauture Model</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see featJAR.impl.CoreFeatureImpl
-	 * @see featJAR.impl.FeatJARPackageImpl#getCoreFeature()
+	 * @see featJAR.impl.FeautureModelImpl
+	 * @see featJAR.impl.FeatJARPackageImpl#getFeautureModel()
 	 * @generated
 	 */
-	int CORE_FEATURE = 1;
+	int FEAUTURE_MODEL = 0;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CORE_FEATURE__ID = IDENTIFIABLE__ID;
+	int FEAUTURE_MODEL__ID = IDENTIFIABLE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -128,7 +128,7 @@ public interface FeatJARPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORE_FEATURE__NAME = IDENTIFIABLE__NAME;
+	int FEAUTURE_MODEL__NAME = IDENTIFIABLE__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Features</b></em>' containment reference list.
@@ -137,98 +137,34 @@ public interface FeatJARPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CORE_FEATURE__FEATURES = IDENTIFIABLE_FEATURE_COUNT + 0;
+	int FEAUTURE_MODEL__FEATURES = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Edges</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Constraints</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CORE_FEATURE__EDGES = IDENTIFIABLE_FEATURE_COUNT + 1;
+	int FEAUTURE_MODEL__CONSTRAINTS = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of structural features of the '<em>Core Feature</em>' class.
+	 * The number of structural features of the '<em>Feauture Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CORE_FEATURE_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 2;
+	int FEAUTURE_MODEL_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 2;
 
 	/**
-	 * The number of operations of the '<em>Core Feature</em>' class.
+	 * The number of operations of the '<em>Feauture Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CORE_FEATURE_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
-
-	/**
-	 * The meta object id for the '{@link featJAR.impl.EdgeImpl <em>Edge</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see featJAR.impl.EdgeImpl
-	 * @see featJAR.impl.FeatJARPackageImpl#getEdge()
-	 * @generated
-	 */
-	int EDGE = 2;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE__ID = IDENTIFIABLE__ID;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE__NAME = IDENTIFIABLE__NAME;
-
-	/**
-	 * The feature id for the '<em><b>Source</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE__SOURCE = IDENTIFIABLE_FEATURE_COUNT + 0;
-
-	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE__TARGET = IDENTIFIABLE_FEATURE_COUNT + 1;
-
-	/**
-	 * The number of structural features of the '<em>Edge</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 2;
-
-	/**
-	 * The number of operations of the '<em>Edge</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int EDGE_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
+	int FEAUTURE_MODEL_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link featJAR.impl.FeatureImpl <em>Feature</em>}' class.
@@ -238,10 +174,10 @@ public interface FeatJARPackage extends EPackage {
 	 * @see featJAR.impl.FeatJARPackageImpl#getFeature()
 	 * @generated
 	 */
-	int FEATURE = 3;
+	int FEATURE = 2;
 
 	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * The feature id for the '<em><b>ID</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -259,13 +195,49 @@ public interface FeatJARPackage extends EPackage {
 	int FEATURE__NAME = IDENTIFIABLE__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__CHILDREN = IDENTIFIABLE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__PARENT = IDENTIFIABLE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Optional</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__OPTIONAL = IDENTIFIABLE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Root</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FEATURE__ROOT = IDENTIFIABLE_FEATURE_COUNT + 3;
+
+	/**
 	 * The number of structural features of the '<em>Feature</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 0;
+	int FEATURE_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Feature</em>' class.
@@ -275,6 +247,84 @@ public interface FeatJARPackage extends EPackage {
 	 * @ordered
 	 */
 	int FEATURE_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link featJAR.impl.ConstraintImpl <em>Constraint</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see featJAR.impl.ConstraintImpl
+	 * @see featJAR.impl.FeatJARPackageImpl#getConstraint()
+	 * @generated
+	 */
+	int CONSTRAINT = 3;
+
+	/**
+	 * The feature id for the '<em><b>ID</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__ID = IDENTIFIABLE__ID;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__NAME = IDENTIFIABLE__NAME;
+
+	/**
+	 * The number of structural features of the '<em>Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Constraint</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
+
+	/**
+	 * Returns the meta object for class '{@link featJAR.FeautureModel <em>Feauture Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Feauture Model</em>'.
+	 * @see featJAR.FeautureModel
+	 * @generated
+	 */
+	EClass getFeautureModel();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link featJAR.FeautureModel#getFeatures <em>Features</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Features</em>'.
+	 * @see featJAR.FeautureModel#getFeatures()
+	 * @see #getFeautureModel()
+	 * @generated
+	 */
+	EReference getFeautureModel_Features();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link featJAR.FeautureModel#getConstraints <em>Constraints</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Constraints</em>'.
+	 * @see featJAR.FeautureModel#getConstraints()
+	 * @see #getFeautureModel()
+	 * @generated
+	 */
+	EReference getFeautureModel_Constraints();
 
 	/**
 	 * Returns the meta object for class '{@link featJAR.Identifiable <em>Identifiable</em>}'.
@@ -287,15 +337,15 @@ public interface FeatJARPackage extends EPackage {
 	EClass getIdentifiable();
 
 	/**
-	 * Returns the meta object for the attribute '{@link featJAR.Identifiable#getId <em>Id</em>}'.
+	 * Returns the meta object for the attribute '{@link featJAR.Identifiable#getID <em>ID</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see featJAR.Identifiable#getId()
+	 * @return the meta object for the attribute '<em>ID</em>'.
+	 * @see featJAR.Identifiable#getID()
 	 * @see #getIdentifiable()
 	 * @generated
 	 */
-	EAttribute getIdentifiable_Id();
+	EAttribute getIdentifiable_ID();
 
 	/**
 	 * Returns the meta object for the attribute '{@link featJAR.Identifiable#getName <em>Name</em>}'.
@@ -309,70 +359,6 @@ public interface FeatJARPackage extends EPackage {
 	EAttribute getIdentifiable_Name();
 
 	/**
-	 * Returns the meta object for class '{@link featJAR.CoreFeature <em>Core Feature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Core Feature</em>'.
-	 * @see featJAR.CoreFeature
-	 * @generated
-	 */
-	EClass getCoreFeature();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link featJAR.CoreFeature#getFeatures <em>Features</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Features</em>'.
-	 * @see featJAR.CoreFeature#getFeatures()
-	 * @see #getCoreFeature()
-	 * @generated
-	 */
-	EReference getCoreFeature_Features();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link featJAR.CoreFeature#getEdges <em>Edges</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Edges</em>'.
-	 * @see featJAR.CoreFeature#getEdges()
-	 * @see #getCoreFeature()
-	 * @generated
-	 */
-	EReference getCoreFeature_Edges();
-
-	/**
-	 * Returns the meta object for class '{@link featJAR.Edge <em>Edge</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Edge</em>'.
-	 * @see featJAR.Edge
-	 * @generated
-	 */
-	EClass getEdge();
-
-	/**
-	 * Returns the meta object for the reference '{@link featJAR.Edge#getSource <em>Source</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Source</em>'.
-	 * @see featJAR.Edge#getSource()
-	 * @see #getEdge()
-	 * @generated
-	 */
-	EReference getEdge_Source();
-
-	/**
-	 * Returns the meta object for the reference '{@link featJAR.Edge#getTarget <em>Target</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Target</em>'.
-	 * @see featJAR.Edge#getTarget()
-	 * @see #getEdge()
-	 * @generated
-	 */
-	EReference getEdge_Target();
-
-	/**
 	 * Returns the meta object for class '{@link featJAR.Feature <em>Feature</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -381,6 +367,60 @@ public interface FeatJARPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getFeature();
+
+	/**
+	 * Returns the meta object for the reference list '{@link featJAR.Feature#getChildren <em>Children</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Children</em>'.
+	 * @see featJAR.Feature#getChildren()
+	 * @see #getFeature()
+	 * @generated
+	 */
+	EReference getFeature_Children();
+
+	/**
+	 * Returns the meta object for the reference '{@link featJAR.Feature#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Parent</em>'.
+	 * @see featJAR.Feature#getParent()
+	 * @see #getFeature()
+	 * @generated
+	 */
+	EReference getFeature_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link featJAR.Feature#isOptional <em>Optional</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Optional</em>'.
+	 * @see featJAR.Feature#isOptional()
+	 * @see #getFeature()
+	 * @generated
+	 */
+	EAttribute getFeature_Optional();
+
+	/**
+	 * Returns the meta object for the attribute '{@link featJAR.Feature#isRoot <em>Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Root</em>'.
+	 * @see featJAR.Feature#isRoot()
+	 * @see #getFeature()
+	 * @generated
+	 */
+	EAttribute getFeature_Root();
+
+	/**
+	 * Returns the meta object for class '{@link featJAR.Constraint <em>Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Constraint</em>'.
+	 * @see featJAR.Constraint
+	 * @generated
+	 */
+	EClass getConstraint();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -406,6 +446,32 @@ public interface FeatJARPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
+		 * The meta object literal for the '{@link featJAR.impl.FeautureModelImpl <em>Feauture Model</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see featJAR.impl.FeautureModelImpl
+		 * @see featJAR.impl.FeatJARPackageImpl#getFeautureModel()
+		 * @generated
+		 */
+		EClass FEAUTURE_MODEL = eINSTANCE.getFeautureModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Features</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEAUTURE_MODEL__FEATURES = eINSTANCE.getFeautureModel_Features();
+
+		/**
+		 * The meta object literal for the '<em><b>Constraints</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEAUTURE_MODEL__CONSTRAINTS = eINSTANCE.getFeautureModel_Constraints();
+
+		/**
 		 * The meta object literal for the '{@link featJAR.impl.IdentifiableImpl <em>Identifiable</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -416,12 +482,12 @@ public interface FeatJARPackage extends EPackage {
 		EClass IDENTIFIABLE = eINSTANCE.getIdentifiable();
 
 		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>ID</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
+		EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_ID();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -432,58 +498,6 @@ public interface FeatJARPackage extends EPackage {
 		EAttribute IDENTIFIABLE__NAME = eINSTANCE.getIdentifiable_Name();
 
 		/**
-		 * The meta object literal for the '{@link featJAR.impl.CoreFeatureImpl <em>Core Feature</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see featJAR.impl.CoreFeatureImpl
-		 * @see featJAR.impl.FeatJARPackageImpl#getCoreFeature()
-		 * @generated
-		 */
-		EClass CORE_FEATURE = eINSTANCE.getCoreFeature();
-
-		/**
-		 * The meta object literal for the '<em><b>Features</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CORE_FEATURE__FEATURES = eINSTANCE.getCoreFeature_Features();
-
-		/**
-		 * The meta object literal for the '<em><b>Edges</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference CORE_FEATURE__EDGES = eINSTANCE.getCoreFeature_Edges();
-
-		/**
-		 * The meta object literal for the '{@link featJAR.impl.EdgeImpl <em>Edge</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see featJAR.impl.EdgeImpl
-		 * @see featJAR.impl.FeatJARPackageImpl#getEdge()
-		 * @generated
-		 */
-		EClass EDGE = eINSTANCE.getEdge();
-
-		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EDGE__SOURCE = eINSTANCE.getEdge_Source();
-
-		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference EDGE__TARGET = eINSTANCE.getEdge_Target();
-
-		/**
 		 * The meta object literal for the '{@link featJAR.impl.FeatureImpl <em>Feature</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -492,6 +506,48 @@ public interface FeatJARPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FEATURE = eINSTANCE.getFeature();
+
+		/**
+		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEATURE__CHILDREN = eINSTANCE.getFeature_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEATURE__PARENT = eINSTANCE.getFeature_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FEATURE__OPTIONAL = eINSTANCE.getFeature_Optional();
+
+		/**
+		 * The meta object literal for the '<em><b>Root</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FEATURE__ROOT = eINSTANCE.getFeature_Root();
+
+		/**
+		 * The meta object literal for the '{@link featJAR.impl.ConstraintImpl <em>Constraint</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see featJAR.impl.ConstraintImpl
+		 * @see featJAR.impl.FeatJARPackageImpl#getConstraint()
+		 * @generated
+		 */
+		EClass CONSTRAINT = eINSTANCE.getConstraint();
 
 	}
 

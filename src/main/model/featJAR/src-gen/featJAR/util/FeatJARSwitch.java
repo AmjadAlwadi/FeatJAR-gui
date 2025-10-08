@@ -66,27 +66,18 @@ public class FeatJARSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+		case FeatJARPackage.FEAUTURE_MODEL: {
+			FeautureModel feautureModel = (FeautureModel) theEObject;
+			T result = caseFeautureModel(feautureModel);
+			if (result == null)
+				result = caseIdentifiable(feautureModel);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		case FeatJARPackage.IDENTIFIABLE: {
 			Identifiable identifiable = (Identifiable) theEObject;
 			T result = caseIdentifiable(identifiable);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case FeatJARPackage.CORE_FEATURE: {
-			CoreFeature coreFeature = (CoreFeature) theEObject;
-			T result = caseCoreFeature(coreFeature);
-			if (result == null)
-				result = caseIdentifiable(coreFeature);
-			if (result == null)
-				result = defaultCase(theEObject);
-			return result;
-		}
-		case FeatJARPackage.EDGE: {
-			Edge edge = (Edge) theEObject;
-			T result = caseEdge(edge);
-			if (result == null)
-				result = caseIdentifiable(edge);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -100,9 +91,33 @@ public class FeatJARSwitch<T> extends Switch<T> {
 				result = defaultCase(theEObject);
 			return result;
 		}
+		case FeatJARPackage.CONSTRAINT: {
+			Constraint constraint = (Constraint) theEObject;
+			T result = caseConstraint(constraint);
+			if (result == null)
+				result = caseIdentifiable(constraint);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		default:
 			return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Feauture Model</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Feauture Model</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseFeautureModel(FeautureModel object) {
+		return null;
 	}
 
 	/**
@@ -121,36 +136,6 @@ public class FeatJARSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Core Feature</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Core Feature</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseCoreFeature(CoreFeature object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Edge</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Edge</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseEdge(Edge object) {
-		return null;
-	}
-
-	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Feature</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -162,6 +147,21 @@ public class FeatJARSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseFeature(Feature object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Constraint</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseConstraint(Constraint object) {
 		return null;
 	}
 

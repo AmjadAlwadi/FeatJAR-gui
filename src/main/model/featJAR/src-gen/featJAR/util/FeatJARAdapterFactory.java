@@ -67,23 +67,23 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected FeatJARSwitch<Adapter> modelSwitch = new FeatJARSwitch<Adapter>() {
 		@Override
+		public Adapter caseFeautureModel(FeautureModel object) {
+			return createFeautureModelAdapter();
+		}
+
+		@Override
 		public Adapter caseIdentifiable(Identifiable object) {
 			return createIdentifiableAdapter();
 		}
 
 		@Override
-		public Adapter caseCoreFeature(CoreFeature object) {
-			return createCoreFeatureAdapter();
-		}
-
-		@Override
-		public Adapter caseEdge(Edge object) {
-			return createEdgeAdapter();
-		}
-
-		@Override
 		public Adapter caseFeature(Feature object) {
 			return createFeatureAdapter();
+		}
+
+		@Override
+		public Adapter caseConstraint(Constraint object) {
+			return createConstraintAdapter();
 		}
 
 		@Override
@@ -106,6 +106,20 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.FeautureModel <em>Feauture Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.FeautureModel
+	 * @generated
+	 */
+	public Adapter createFeautureModelAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link featJAR.Identifiable <em>Identifiable</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -120,34 +134,6 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.CoreFeature <em>Core Feature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see featJAR.CoreFeature
-	 * @generated
-	 */
-	public Adapter createCoreFeatureAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.Edge <em>Edge</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see featJAR.Edge
-	 * @generated
-	 */
-	public Adapter createEdgeAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link featJAR.Feature <em>Feature</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -158,6 +144,20 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFeatureAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.Constraint <em>Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.Constraint
+	 * @generated
+	 */
+	public Adapter createConstraintAdapter() {
 		return null;
 	}
 

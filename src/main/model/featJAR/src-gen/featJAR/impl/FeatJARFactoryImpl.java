@@ -56,12 +56,12 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case FeatJARPackage.CORE_FEATURE:
-			return createCoreFeature();
-		case FeatJARPackage.EDGE:
-			return createEdge();
+		case FeatJARPackage.FEAUTURE_MODEL:
+			return createFeautureModel();
 		case FeatJARPackage.FEATURE:
 			return createFeature();
+		case FeatJARPackage.CONSTRAINT:
+			return createConstraint();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -73,20 +73,9 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	 * @generated
 	 */
 	@Override
-	public CoreFeature createCoreFeature() {
-		CoreFeatureImpl coreFeature = new CoreFeatureImpl();
-		return coreFeature;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Edge createEdge() {
-		EdgeImpl edge = new EdgeImpl();
-		return edge;
+	public FeautureModel createFeautureModel() {
+		FeautureModelImpl feautureModel = new FeautureModelImpl();
+		return feautureModel;
 	}
 
 	/**
@@ -98,6 +87,17 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	public Feature createFeature() {
 		FeatureImpl feature = new FeatureImpl();
 		return feature;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Constraint createConstraint() {
+		ConstraintImpl constraint = new ConstraintImpl();
+		return constraint;
 	}
 
 	/**
