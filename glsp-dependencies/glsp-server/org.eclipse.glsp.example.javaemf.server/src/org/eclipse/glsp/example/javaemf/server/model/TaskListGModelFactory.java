@@ -16,77 +16,117 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server.model;
 
-import java.util.Map;
-
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
-import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
 
+// import featJAR.CoreFeature;
 import featJAR.Feature;
+import featJAR.FeatureModel;
 
 public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
+   //
+   // @Inject
+   // protected MyModelState modelState;
+
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
-      Feature feature = Feature.class.cast(semanticModel);
-      GGraph graph = GGraph.class.cast(newRoot);
+      FeatureModel emf_root = FeatureModel.class.cast(semanticModel);
+      // GGraph graph = GGraph.class.cast(newRoot);
 
-      if (notationModel.getSemanticElement() != null
-         && notationModel.getSemanticElement().getResolvedSemanticElement() != null) {
-         feature.getChildren().stream().map(this::createFeatureNode)
-            .forEachOrdered(graph.getChildren()::add);
+      for (Feature element : emf_root.getRoot().getFeatures()) {
+
+         read(element);
+
       }
 
-      // Feature f1 = Feature.class.cast(semanticModel);
-      // f1.setName("Amjad");
-      // f1.setOptional(false);
-      // f1.setRoot(true);
-      // f1.setID(10);
+      // System.out.println("before");
+
+      // if (notationModel.getSemanticElement() != null
+      // && notationModel.getSemanticElement().getResolvedSemanticElement() != null) {
+      // emf_root.getFeatures().stream().map(this::createFeatureNode)
+      // .forEachOrdered(graph.getChildren()::add);
+      // }
+
+      // System.out.println("after");
+
+      // graph.getChildren().add(newRoot);
+
+      // new GNodeBuilder("node:entity").add(newRoot);
+
+      // List<Entity> entities = modelState.getModel().getEntities();
+
+      // List<GModelElement> entityNodes = entities.stream().map(entity -> //
       //
-      // createFeatureNode(f1);
+      // GModelElement root = new GNodeBuilder("node")
+      // .layout("vbox")
+      // .add(new GLabelBuilder()
+      // .text("Root")
+      // .build())
+      // .addCssClass("feature-node-root")
+      // .build();
+      //
+
+      // GGraph newModel = new GGraphBuilder()
+      // .id("entity-graph")
+      // .add(newRoot)
+      // .build();
+      //
+      // modelState.updateRoot(newModel);
 
    }
 
-   protected GNode createFeatureNode(final Feature feature) {
+   protected void read(final Feature feature) {
 
-      if (feature.isOptional()) {
-         return createOptionalFeatureNode(feature);
-      }
-      return createObligatoryFeatureNode(feature);
+      System.out.println("Feature name: " + feature.getName());
 
    }
+   //
+   // protected GNode createFeatureNode(final Feature feature) {
+   //
+   // if (true) {
+   // return createOptionalFeatureNode(feature);
+   // }
+   // return createObligatoryFeatureNode(feature);
+   //
+   // }
+   //
+   // protected GNode createOptionalFeatureNode(final Feature feature) {
+   //
+   // GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OPTIONAL_FEATURE)
+   // .id(idGenerator.getOrCreateId(feature))
+   // .addCssClass("feature-node-optional")
+   // .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build())
+   // .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+   //
+   // applyShapeData(feature, taskNodeBuilder);
+   // return taskNodeBuilder.build();
+   // }
+   //
+   // protected GNode createObligatoryFeatureNode(final Feature feature) {
+   //
+   // GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OBLIGATORY_FEATURE)
+   // .id(idGenerator.getOrCreateId(feature))
+   // .addCssClass("feature-node-obligatory")
+   // .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build())
+   // .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+   //
+   // applyShapeData(feature, taskNodeBuilder);
+   // return taskNodeBuilder.build();
+   // }
 
-   protected GNode createOptionalFeatureNode(final Feature feature) {
-
-      GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OPTIONAL_FEATURE)
-         .id(idGenerator.getOrCreateId(feature))
-         // .addCssClass("feature-node-root")
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getID() + "_label").build())
-         .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
-
-      applyShapeData(feature, taskNodeBuilder);
-      return taskNodeBuilder.build();
-   }
-
-   protected GNode createObligatoryFeatureNode(final Feature feature) {
-
-      GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OBLIGATORY_FEATURE)
-         .id(idGenerator.getOrCreateId(feature))
-         // .addCssClass("feature-node-root")
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getID() + "_label").build())
-         .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
-
-      applyShapeData(feature, taskNodeBuilder);
-      return taskNodeBuilder.build();
-   }
+   // protected GNode createCoreFeatureNode(final CoreFeature feature) {
+   //
+   // GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OBLIGATORY_FEATURE)
+   // .id(idGenerator.getOrCreateId(feature))
+   // .addCssClass("feature-node-root")
+   // .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build())
+   // .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+   //
+   // applyShapeData(feature, taskNodeBuilder);
+   // return taskNodeBuilder.build();
+   // }
 
 }

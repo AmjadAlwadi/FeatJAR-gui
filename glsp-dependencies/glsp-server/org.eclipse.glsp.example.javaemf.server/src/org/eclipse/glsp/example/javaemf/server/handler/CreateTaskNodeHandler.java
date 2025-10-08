@@ -21,7 +21,6 @@ import java.util.function.Function;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
 import org.eclipse.glsp.graph.GModelElement;
@@ -32,7 +31,6 @@ import org.eclipse.glsp.server.emf.EMFCreateOperationHandler;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
-import org.eclipse.glsp.server.emf.model.notation.NotationPackage;
 import org.eclipse.glsp.server.emf.model.notation.SemanticElementReference;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.emf.notation.EMFNotationModelState;
@@ -42,7 +40,6 @@ import org.eclipse.glsp.server.utils.LayoutUtil;
 import com.google.inject.Inject;
 
 import featJAR.FeatJARFactory;
-import featJAR.FeatJARPackage;
 import featJAR.Feature;
 
 public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
@@ -73,21 +70,21 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
    public String getLabel() { return "Feature"; }
 
    protected Command createTaskAndShape(final Optional<GPoint> relativeLocation) {
-      Feature taskList = modelState.getSemanticModel(Feature.class).orElseThrow();
+      // CoreFeature root = modelState.getSemanticModel(CoreFeature.class).orElseThrow();
       Diagram diagram = modelState.getNotationModel();
       EditingDomain editingDomain = modelState.getEditingDomain();
 
-      Feature newTask = createTask();
-      Command taskCommand = AddCommand.create(editingDomain, taskList,
-         FeatJARPackage.Literals.FEATURE__CHILDREN, newTask);
+      Feature newFeature = createTask();
+      // Command taskCommand = AddCommand.create(editingDomain, root,
+      // FeatJARPackage.Literals.FEATURE, newFeature);
 
-      Shape shape = createShape(idGenerator.getOrCreateId(newTask), relativeLocation);
-      Command shapeCommand = AddCommand.create(editingDomain, diagram,
-         NotationPackage.Literals.DIAGRAM__ELEMENTS, shape);
+      // Shape shape = createShape((newFeature.getId()), relativeLocation);
+      // Command shapeCommand = AddCommand.create(editingDomain, diagram,
+      // NotationPackage.Literals.DIAGRAM__ELEMENTS, shape);
 
       CompoundCommand compoundCommand = new CompoundCommand();
-      compoundCommand.append(taskCommand);
-      compoundCommand.append(shapeCommand);
+      // compoundCommand.append(taskCommand);
+      // compoundCommand.append(shapeCommand);
       return compoundCommand;
    }
 
@@ -95,17 +92,16 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
 
       Feature newTask = FeatJARFactory.eINSTANCE.createFeature();
       newTask.setName(getLabel());
-      newTask.setID(++generalId);
-      newTask.setOptional(false);
-      newTask.setRoot(false);
+      // newTask.setId("Feature_" + generalId++);
+      // newTask.setOptional(false);
       setInitialName(newTask);
       return newTask;
    }
 
-   protected void setInitialName(final Feature task) {
-      Function<Integer, String> nameProvider = i -> "New " + task.getName() + i;
+   protected void setInitialName(final Feature feature) {
+      Function<Integer, String> nameProvider = i -> "New " + feature.getName() + i;
       int nodeCounter = modelState.getIndex().getCounter(GraphPackage.Literals.GNODE, nameProvider);
-      task.setName(nameProvider.apply(nodeCounter));
+      feature.setName(nameProvider.apply(nodeCounter));
    }
 
    protected Shape createShape(final String elementId, final Optional<GPoint> relativeLocation) {
