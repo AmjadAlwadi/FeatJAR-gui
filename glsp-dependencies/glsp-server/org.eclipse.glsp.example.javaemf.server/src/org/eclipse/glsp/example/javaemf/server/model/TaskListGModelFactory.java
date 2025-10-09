@@ -101,7 +101,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
             .build();
 
          parent.getChildren().add(childNode);
-         edges.add(edge);
+         // edges.add(edge);
       }
 
       parent.setLayout(Layout.FREEFORM);
