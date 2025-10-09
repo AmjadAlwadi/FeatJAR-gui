@@ -63,6 +63,18 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
       Optional<GPoint> relativeLocation = absoluteLocation
          .map(location -> LayoutUtil.getRelativeLocation(location, container));
 
+      // Create new Feature
+      // Based on type, do the operation (optional/obligatory)
+      // Add the new feature to the emf model via modelState
+      // Place at first the new feature at operation location
+      // Then we it get's connected via an edge to a parent, let TaskListGModelFactory
+      // redraw the emfmodel and draws the new feature correctly
+
+      // The ability to change name
+      // Add option in contextmenu to make optional
+
+      // Add operation handlers for the missing operations
+
       // Feature f = FeatJARFactory.eINSTANCE.createFeature();
       //
       // modelState.getNotationModel().getElements().add(NotationElement.class.cast(f));

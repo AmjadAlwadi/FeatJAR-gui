@@ -151,7 +151,8 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
          .addCssClass("feature-node-optional")
          .position(gPosition)
          .layout(GConstants.Layout.FREEFORM)
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build());
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label")
+            .addCssClass("labels").build());
 
       applyShapeData(feature, taskNodeBuilder);
       GNode element = taskNodeBuilder.build();
@@ -165,7 +166,8 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
          .addCssClass("feature-node-obligatory")
          .position(gPosition)
          .layout(GConstants.Layout.FREEFORM)
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build());
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label")
+            .addCssClass("labels").build());
 
       applyShapeData(feature, taskNodeBuilder);
       GNode element = taskNodeBuilder.build();
@@ -179,7 +181,8 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
          .addCssClass("feature-node-root")
          .position(gPosition)
          .layout(GConstants.Layout.FREEFORM)
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build());
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label")
+            .addCssClass("labels").build());
 
       applyShapeData(feature, taskNodeBuilder);
       GNode element = taskNodeBuilder.build();
