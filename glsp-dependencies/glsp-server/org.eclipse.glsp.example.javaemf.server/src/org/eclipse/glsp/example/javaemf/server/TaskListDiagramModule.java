@@ -16,6 +16,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server;
 
+import org.eclipse.glsp.example.javaemf.server.handler.AddEdgeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.CreateTaskNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.DeleteTaskNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.model.TaskListGModelFactory;
@@ -67,6 +68,7 @@ public class TaskListDiagramModule extends EMFNotationDiagramModule {
       super.configureOperationHandlers(binding);
       binding.add(CreateTaskNodeHandler.class);
       binding.add(DeleteTaskNodeHandler.class);
+      binding.add(AddEdgeHandler.class);
    }
 
    @Override

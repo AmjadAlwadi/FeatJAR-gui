@@ -33,6 +33,8 @@ public class TaskListDiagramConfiguration extends BaseDiagramConfiguration {
    }
 
    @Override
-   public List<EdgeTypeHint> getEdgeTypeHints() { return List.of(); }
+   public List<EdgeTypeHint> getEdgeTypeHints() {
+      return List.of(new EdgeTypeHint(TaskListModelTypes.LINK, true, true, true, false, null, null));
+   }
 
 }

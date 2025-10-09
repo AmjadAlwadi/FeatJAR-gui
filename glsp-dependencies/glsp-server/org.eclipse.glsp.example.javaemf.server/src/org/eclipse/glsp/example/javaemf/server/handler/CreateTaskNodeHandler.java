@@ -17,15 +17,12 @@
 package org.eclipse.glsp.example.javaemf.server.handler;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.GraphPackage;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.EMFCreateOperationHandler;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -35,7 +32,6 @@ import org.eclipse.glsp.server.emf.model.notation.SemanticElementReference;
 import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.emf.notation.EMFNotationModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 
@@ -50,18 +46,21 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
    @Inject
    protected EMFIdGenerator idGenerator;
 
-   public static int generalId = 10;
-
    public CreateTaskNodeHandler() {
       super(TaskListModelTypes.OBLIGATORY_FEATURE);
    }
 
    @Override
    public Optional<Command> createCommand(final CreateNodeOperation operation) {
-      GModelElement container = modelState.getIndex().get(operation.getContainerId()).orElseGet(modelState::getRoot);
-      Optional<GPoint> absoluteLocation = operation.getLocation();
-      Optional<GPoint> relativeLocation = absoluteLocation
-         .map(location -> LayoutUtil.getRelativeLocation(location, container));
+
+      System.out.println("operation.getContainerId(): " + operation.getContainerId());
+      System.out.println("operation.getElementTypeId(): " + operation.getElementTypeId());
+      System.out.println("operation.getKind(): " + operation.getKind());
+
+      // GModelElement container = modelState.getIndex().get(operation.getContainerId()).orElseGet(modelState::getRoot);
+      // Optional<GPoint> absoluteLocation = operation.getLocation();
+      // Optional<GPoint> relativeLocation = absoluteLocation
+      // .map(location -> LayoutUtil.getRelativeLocation(location, container));
 
       // Create new Feature
       // Based on type, do the operation (optional/obligatory)
@@ -75,11 +74,9 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
 
       // Add operation handlers for the missing operations
 
-      // Feature f = FeatJARFactory.eINSTANCE.createFeature();
-      //
-      // modelState.getNotationModel().getElements().add(NotationElement.class.cast(f));
+      Feature newFeature = createFeature();
 
-      return Optional.of(createTaskAndShape(relativeLocation));
+      return Optional.of(createTaskAndShape(null));
    }
 
    @Override
@@ -105,20 +102,12 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
       return compoundCommand;
    }
 
-   protected Feature createTask() {
-
+   protected Feature createFeature() {
       Feature newTask = FeatJARFactory.eINSTANCE.createFeature();
       newTask.setName(getLabel());
-      // newTask.setId("Feature_" + generalId++);
-      // newTask.setOptional(false);
-      setInitialName(newTask);
+      newTask.setId(idGenerator.getOrCreateId(newTask));
+      newTask.setOptional(false);
       return newTask;
-   }
-
-   protected void setInitialName(final Feature feature) {
-      Function<Integer, String> nameProvider = i -> "New " + feature.getName() + i;
-      int nodeCounter = modelState.getIndex().getCounter(GraphPackage.Literals.GNODE, nameProvider);
-      feature.setName(nameProvider.apply(nodeCounter));
    }
 
    protected Shape createShape(final String elementId, final Optional<GPoint> relativeLocation) {

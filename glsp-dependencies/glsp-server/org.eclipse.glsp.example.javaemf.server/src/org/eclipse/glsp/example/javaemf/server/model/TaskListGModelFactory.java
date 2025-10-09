@@ -40,15 +40,11 @@ import featJAR.FeatureModel;
 
 public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
-   public static void convertFutureToEmf() {
-
-   }
-
-   private final List<GEdge> edges = new ArrayList<>();
-   int padding_y = 100;
    List<GNode> gElements = new ArrayList<>();
+   List<GEdge> edges = new ArrayList<>();
 
    GPoint root_center = GraphUtil.point(300, 20);
+   int padding_y = 100;
 
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
@@ -126,12 +122,9 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
             .id(feature.getId() + "_to_" + child.getId())
             .source(gFeature)
             .addCssClass("feature-node-root")
-            // .addRoutingPoint(current_position)
-            // .addRoutingPoint(childNode.getPosition())
             .target(childNode)
             .build();
 
-         // gFeature.getChildren().add(childNode);
          edges.add(edge);
       }
 
