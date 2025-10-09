@@ -63,6 +63,10 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
       Optional<GPoint> relativeLocation = absoluteLocation
          .map(location -> LayoutUtil.getRelativeLocation(location, container));
 
+      // Feature f = FeatJARFactory.eINSTANCE.createFeature();
+      //
+      // modelState.getNotationModel().getElements().add(NotationElement.class.cast(f));
+
       return Optional.of(createTaskAndShape(relativeLocation));
    }
 

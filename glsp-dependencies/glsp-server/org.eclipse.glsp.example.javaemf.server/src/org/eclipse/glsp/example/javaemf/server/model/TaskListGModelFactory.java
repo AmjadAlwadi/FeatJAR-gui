@@ -18,7 +18,6 @@ package org.eclipse.glsp.example.javaemf.server.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
@@ -27,13 +26,11 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GConstants.Layout;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
@@ -48,104 +45,145 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
    }
 
    private final List<GEdge> edges = new ArrayList<>();
-   int pos_x = 0;
+   int padding_y = 100;
+   List<GNode> gElements = new ArrayList<>();
+
+   GPoint root_center = GraphUtil.point(300, 20);
 
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
       FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
       Feature emfRoot = emfFeatureModel.getRoot();
+      GGraph graph = GGraph.class.cast(newRoot);
 
       edges.clear();
-      GNode gRoot = createRootNode(emfRoot);
+      GNode gRoot = createFeatureNode(0, 0, emfRoot.getFeatures().size(), root_center, emfRoot, true);
 
-      for (Feature child : emfRoot.getFeatures()) {
-         gRoot.getChildren().add(createFeatureNode(child));
-      }
-
-      GGraph newModel = new GGraphBuilder()
-         .id("entity-graph")
-         .add(gRoot)
-         .addAll(edges)
-         .build();
-
-      modelState.updateRoot(newModel);
+      graph.getChildren().addAll(gElements);
+      graph.getChildren().addAll(edges);
 
    }
 
    protected void read(final Feature feature) {
-
       System.out.println("Feature name: " + feature.getName());
-
    }
 
-   protected GNode createFeatureNode(final Feature feature) {
+   protected GNode createFeatureNode(final int current_horizontal_index, int current_vertical_index,
+      final int current_layer_children_number,
+      final GPoint parent_pos, final Feature feature,
+      final boolean root) {
 
-      GNode parent;
+      GNode gFeature;
 
-      if (feature.isOptional()) {
-         parent = createOptionalFeatureNode(feature);
-      } else {
-         parent = createObligatoryFeatureNode(feature);
+      // Calculating the position
+      int horizontal_distance = (int) ((parent_pos.getX() * 2) / current_layer_children_number - 1);
+      GPoint current_position = GraphUtil.point(root_center.getX(), root_center.getY());
+
+      if (root) {
+         current_position = parent_pos;
       }
+
+      if (current_layer_children_number < 2) {
+         current_position.setX(parent_pos.getX());
+      }
+
+      else {
+         current_position
+            .setX(parent_pos.getX() - (parent_pos.getX() / 2) + current_horizontal_index * horizontal_distance);
+      }
+
+      current_position.setY(current_vertical_index * padding_y);
+
+      // System.out.println("current_vertical_index: " + current_vertical_index + ", Y: " + current_position.getY());
+      // System.out.println("current_horizontal_index: " + current_horizontal_index + ", X: " +
+      // current_position.getX());
+
+      // Generating the GNode
+      if (root) {
+         gFeature = createRootNode(feature, current_position);
+      } else {
+
+         if (feature.isOptional()) {
+            gFeature = createOptionalFeatureNode(feature, current_position);
+         } else {
+            gFeature = createObligatoryFeatureNode(feature, current_position);
+         }
+
+      }
+
+      // Rendering children nodes
+      int children_number = feature.getFeatures().size();
+      int child_index = 0;
+      current_vertical_index++;
 
       for (Feature child : feature.getFeatures()) {
 
-         GNode childNode = createFeatureNode(child);
+         GNode childNode = createFeatureNode(child_index++, current_vertical_index, children_number,
+            current_position, child, false);
 
          // Connect parent and child with an edge
          GEdge edge = new GEdgeBuilder(TaskListModelTypes.LINK)
             .id(feature.getId() + "_to_" + child.getId())
-            .source(parent)
-            .trace("asdfdsaf")
+            .source(gFeature)
+            .addCssClass("feature-node-root")
+            // .addRoutingPoint(current_position)
+            // .addRoutingPoint(childNode.getPosition())
             .target(childNode)
             .build();
 
-         parent.getChildren().add(childNode);
-         // edges.add(edge);
+         // gFeature.getChildren().add(childNode);
+         edges.add(edge);
       }
 
-      parent.setLayout(Layout.FREEFORM);
-      pos_x += 50;
-      parent.setPosition(GraphUtil.point(pos_x, 10));
+      gElements.add(gFeature);
 
-      return parent;
+      // System.out.println("x: " + gFeature.getPosition().getX() + ", Y: " + gFeature.getPosition().getY());
+      System.out.println();
+
+      return gFeature;
 
    }
 
-   protected GNode createOptionalFeatureNode(final Feature feature) {
+   protected GNode createOptionalFeatureNode(final Feature feature, final GPoint gPosition) {
 
       GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OPTIONAL_FEATURE)
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass("feature-node-optional")
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build())
-         .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+         .position(gPosition)
+         .layout(GConstants.Layout.FREEFORM)
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build());
 
       applyShapeData(feature, taskNodeBuilder);
-      return taskNodeBuilder.build();
+      GNode element = taskNodeBuilder.build();
+      return element;
    }
 
-   protected GNode createObligatoryFeatureNode(final Feature feature) {
+   protected GNode createObligatoryFeatureNode(final Feature feature, final GPoint gPosition) {
 
       GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.OBLIGATORY_FEATURE)
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass("feature-node-obligatory")
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build())
-         .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+         .position(gPosition)
+         .layout(GConstants.Layout.FREEFORM)
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build());
 
       applyShapeData(feature, taskNodeBuilder);
-      return taskNodeBuilder.build();
+      GNode element = taskNodeBuilder.build();
+      return element;
    }
 
-   protected GNode createRootNode(final Feature feature) {
+   protected GNode createRootNode(final Feature feature, final GPoint gPosition) {
 
       GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.ROOT)
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass("feature-node-root")
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build())
-         .layout(GConstants.Layout.HBOX, Map.of(GLayoutOptions.KEY_PADDING_LEFT, 5));
+         .position(gPosition)
+         .layout(GConstants.Layout.FREEFORM)
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label").build());
 
       applyShapeData(feature, taskNodeBuilder);
-      return taskNodeBuilder.build();
+      GNode element = taskNodeBuilder.build();
+      return element;
    }
 
 }

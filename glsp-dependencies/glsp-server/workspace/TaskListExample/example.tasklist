@@ -1,43 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
-<featJAR:FeatureModel id="hello" name="hallo" xmi:version="2.0"
+<featJAR:FeatureModel id="featuremodel" name="hallo" xmi:version="2.0"
   xmlns:xmi="http://www.omg.org/XMI"
   xmlns:featJAR="http://www.example.org/featJAR">
 
 <root 
-  id = "0" 
+  id = "root" 
   optional="false"
-  name="child 1">
- 
- 
- <features 
-  id = "112" 
-  optional="false"
-  name="child 3">
-  
-  
-  <features 
-  id = "1fds12" 
+  name="root">
+
+
+  <features
+  id = "second layer child 1"
   optional="true"
-  name="child 100"/>
+  name="second layer child 1">
+
+
+
+
+  <features
+  id = "third layer child 1"
+  optional="true"
+  name="third layer child"/>
   
+
+  <features
+  id = "third layesadfdsaf"
+  optional="true"
+  name="third layer child"/>
+  
+ 
   
   
   </features>
-  
-  
-  
-  <features 
-  id = "1232" 
-  optional="false"
-  name="child 2"/>
-  
-    <features 
-  id = "1222" 
-  optional="false"
-  name="child 4"/>
-  
+
+
   
   </root>
   
