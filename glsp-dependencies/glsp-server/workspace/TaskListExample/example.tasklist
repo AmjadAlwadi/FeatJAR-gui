@@ -4,6 +4,32 @@
 <featJAR:FeatureModel id="featuremodel" name="hallo" xmi:version="2.0"
   xmlns:xmi="http://www.omg.org/XMI"
   xmlns:featJAR="http://www.example.org/featJAR">
+  
+  
+  
+<constraints
+id = "b040ced2-cf90-47a0-914b-26701b0d713d"
+name="A and B and C"/>
+  
+  
+  <constraints
+id = "b040cedsd2-cf90-47a0-914b-26701b0d713d"
+name="A and B or C"/>
+  
+  
+    <constraints
+id = "b040cedssdd2-cf90-47a0-914b-26701b0d713d"
+name="A and B or C"/>
+  
+  
+      <constraints
+id = "b040cedssdd2-cf90-47a0-914b-26701b0d713d"
+name="A and B or C A and B or C"/>
+
+
+<constraints
+id = "b040cedssdd2-cf90-47a0-914b-2adsf6701b0d713d"
+name="A and B or C A and B or C and U and I"/>
 
 <root 
   id = "root" 

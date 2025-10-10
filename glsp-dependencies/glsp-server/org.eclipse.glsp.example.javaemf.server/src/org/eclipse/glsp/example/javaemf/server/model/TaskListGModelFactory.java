@@ -24,6 +24,7 @@ import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
@@ -36,6 +37,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
 
+import featJAR.Constraint;
 import featJAR.Feature;
 import featJAR.FeatureModel;
 
@@ -43,10 +45,11 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    List<GNode> gElements = new ArrayList<>();
    List<GEdge> edges = new ArrayList<>();
+   List<String> Expressions = new ArrayList<>();
 
    GPoint root_center = GraphUtil.point(400, 20);
 
-   double horizontal_gap = 1500;
+   double horizontal_gap = 1000;
    double vertical_gap = 100;
    int node_width = 100;
    int node_height = 30;
@@ -54,31 +57,39 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
    enum Node_type {
       ROOT,
       OPTIONAL,
-      OBLIGATORY;
+      OBLIGATORY,
+      EDGE,
+      LABEL;
 
       public String cssClass() {
          return switch (this) {
             case ROOT -> "feature-node-root";
             case OPTIONAL -> "feature-node-optional";
             case OBLIGATORY -> "feature-node-obligatory";
+            case EDGE -> "feature-node-root";
+            case LABEL -> "labels";
          };
       }
    }
 
    enum Constraint_type {
-      ROOT,
-      OPTIONAL,
-      OBLIGATORY;
+      OR,
+      XOR,
+      FREE,
    }
 
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
       FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
-      Feature emfRoot = emfFeatureModel.getRoot();
       GGraph graph = GGraph.class.cast(newRoot);
+      Feature emfRoot = emfFeatureModel.getRoot();
 
       edges.clear();
       GNode gRoot = createFeatureSubtree(0, 0, 0, root_center, emfRoot, true);
+
+      // createConstraint(Constraint_type.FREE, emfRoot, gRoot);
+
+      createConstraintLegend(emfFeatureModel.getConstraints());
 
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(edges);
@@ -109,7 +120,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
          current_layer_horizontal_gap = current_layer_horizontal_gap / (current_layer_children_number - 2);
       }
 
-      current_layer_horizontal_gap = Math.max(current_layer_horizontal_gap, node_width);
+      current_layer_horizontal_gap = Math.max(current_layer_horizontal_gap, node_width * 1.5);
 
       // root position
       if (!(root || current_layer_children_number == 1)) {
@@ -172,11 +183,11 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
             .vAlign(GConstants.VAlign.CENTER).hAlign(GConstants.HAlign.CENTER).minWidth(node_width)
             .minHeight(node_height))
          .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label")
-            .addCssClass("labels").build());
+            .addCssClass(Node_type.LABEL.cssClass()).build());
 
       applyShapeData(feature, taskNodeBuilder);
       GNode element = taskNodeBuilder.build();
-      // element.setLayout(GConstants.HAlign.CENTER);
+
       return element;
    }
 
@@ -186,7 +197,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       GEdge edge = new GEdgeBuilder(TaskListModelTypes.LINK)
          .id(source.getId() + "_to_" + target.getId())
          .source(gSource)
-         .addCssClass("feature-node-root")
+         .addCssClass(Node_type.EDGE.cssClass())
          .target(gTarget)
          .build();
 
@@ -194,6 +205,59 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   protected void createConstraint() {}
+   protected void createConstraint(final Constraint_type type, final Feature parent_feature,
+      final GNode parent_node) {
+
+      int shift = 30;
+      GPoint current_position = GraphUtil.copy(parent_node.getPosition());
+      current_position.setY(current_position.getY() + shift);
+
+      GNode constraintNode = new GNodeBuilder("node:circle")
+         .id(idGenerator.getOrCreateId(parent_feature) + "_contraint")
+         .addCssClass(Node_type.ROOT.cssClass())
+         .position(
+            GraphUtil.point(current_position.getX() + node_width / 2, current_position.getY() - 15))
+         .size(GraphUtil.dimension(30, 30))
+         .build();
+
+   }
+
+   protected void createConstraintLegend(final List<Constraint> constraints) {
+
+      int dynamic_shift = 20 * constraints.size();
+      int static_shift = 100;
+      int id = 0;
+
+      GPoint legend_position = GraphUtil.copy(root_center);
+      legend_position.setY(legend_position.getY() - dynamic_shift - static_shift);
+      GNodeBuilder legendBuilder = new GNodeBuilder("node:rectangle")
+         .id("cross-tree-contraints")
+         .size(GraphUtil.dimension(500, 800))
+         .position(legend_position)
+         .layout(GConstants.Layout.VBOX)
+         .addCssClass(Node_type.ROOT.cssClass());
+
+      for (Constraint constraint : constraints) {
+         legendBuilder.add(createLabel(constraint.getName(), id++));
+      }
+
+      GNode legend = legendBuilder.build();
+      legend.setPosition(GraphUtil.point(legend.getPosition().getX() - legend.getSize().getWidth() + node_width,
+         legend.getPosition().getY()));
+
+      gElements.add(legend);
+
+   }
+
+   public GLabel createLabel(final String label, final int id) {
+
+      return new GLabelBuilder(DefaultTypes.LABEL)
+         .id("constraints-label_" + id)
+         .text(label)
+         .addCssClass(Node_type.LABEL.cssClass())
+         .addArgument("wrap", true)
+         .build();
+
+   }
 
 }
