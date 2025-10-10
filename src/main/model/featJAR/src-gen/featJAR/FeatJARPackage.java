@@ -64,7 +64,7 @@ public interface FeatJARPackage extends EPackage {
 	 * @see featJAR.impl.FeatJARPackageImpl#getIdentifiable()
 	 * @generated
 	 */
-	int IDENTIFIABLE = 1;
+	int IDENTIFIABLE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -110,7 +110,7 @@ public interface FeatJARPackage extends EPackage {
 	 * @see featJAR.impl.FeatJARPackageImpl#getFeatureModel()
 	 * @generated
 	 */
-	int FEATURE_MODEL = 0;
+	int FEATURE_MODEL = 1;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -131,7 +131,7 @@ public interface FeatJARPackage extends EPackage {
 	int FEATURE_MODEL__NAME = IDENTIFIABLE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Root</b></em>' containment reference.
+	 * The feature id for the '<em><b>Root</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -195,22 +195,22 @@ public interface FeatJARPackage extends EPackage {
 	int FEATURE__NAME = IDENTIFIABLE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Features</b></em>' reference list.
+	 * The feature id for the '<em><b>Group In</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE__FEATURES = IDENTIFIABLE_FEATURE_COUNT + 0;
+	int FEATURE__GROUP_IN = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Parent</b></em>' reference.
+	 * The feature id for the '<em><b>Parent Of Group</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE__PARENT = IDENTIFIABLE_FEATURE_COUNT + 1;
+	int FEATURE__PARENT_OF_GROUP = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Optional</b></em>' attribute.
@@ -268,13 +268,22 @@ public interface FeatJARPackage extends EPackage {
 	int CONSTRAINT__NAME = IDENTIFIABLE__NAME;
 
 	/**
+	 * The feature id for the '<em><b>Expression</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTRAINT__EXPRESSION = IDENTIFIABLE_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Constraint</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTRAINT_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 0;
+	int CONSTRAINT_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Constraint</em>' class.
@@ -286,36 +295,95 @@ public interface FeatJARPackage extends EPackage {
 	int CONSTRAINT_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
 
 	/**
-	 * Returns the meta object for class '{@link featJAR.FeatureModel <em>Feature Model</em>}'.
+	 * The meta object id for the '{@link featJAR.impl.GroupImpl <em>Group</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Feature Model</em>'.
-	 * @see featJAR.FeatureModel
+	 * @see featJAR.impl.GroupImpl
+	 * @see featJAR.impl.FeatJARPackageImpl#getGroup()
 	 * @generated
 	 */
-	EClass getFeatureModel();
+	int GROUP = 4;
 
 	/**
-	 * Returns the meta object for the containment reference '{@link featJAR.FeatureModel#getRoot <em>Root</em>}'.
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Root</em>'.
-	 * @see featJAR.FeatureModel#getRoot()
-	 * @see #getFeatureModel()
 	 * @generated
+	 * @ordered
 	 */
-	EReference getFeatureModel_Root();
+	int GROUP__ID = IDENTIFIABLE__ID;
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link featJAR.FeatureModel#getConstraints <em>Constraints</em>}'.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Constraints</em>'.
-	 * @see featJAR.FeatureModel#getConstraints()
-	 * @see #getFeatureModel()
 	 * @generated
+	 * @ordered
 	 */
-	EReference getFeatureModel_Constraints();
+	int GROUP__NAME = IDENTIFIABLE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Made Of</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__MADE_OF = IDENTIFIABLE_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Group Parent</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__GROUP_PARENT = IDENTIFIABLE_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__TYPE = IDENTIFIABLE_FEATURE_COUNT + 2;
+
+	/**
+	 * The feature id for the '<em><b>Lower Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__LOWER_BOUND = IDENTIFIABLE_FEATURE_COUNT + 3;
+
+	/**
+	 * The feature id for the '<em><b>Upper Bound</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP__UPPER_BOUND = IDENTIFIABLE_FEATURE_COUNT + 4;
+
+	/**
+	 * The number of structural features of the '<em>Group</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP_FEATURE_COUNT = IDENTIFIABLE_FEATURE_COUNT + 5;
+
+	/**
+	 * The number of operations of the '<em>Group</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GROUP_OPERATION_COUNT = IDENTIFIABLE_OPERATION_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link featJAR.Identifiable <em>Identifiable</em>}'.
@@ -350,6 +418,38 @@ public interface FeatJARPackage extends EPackage {
 	EAttribute getIdentifiable_Name();
 
 	/**
+	 * Returns the meta object for class '{@link featJAR.FeatureModel <em>Feature Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Feature Model</em>'.
+	 * @see featJAR.FeatureModel
+	 * @generated
+	 */
+	EClass getFeatureModel();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link featJAR.FeatureModel#getRoot <em>Root</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Root</em>'.
+	 * @see featJAR.FeatureModel#getRoot()
+	 * @see #getFeatureModel()
+	 * @generated
+	 */
+	EReference getFeatureModel_Root();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link featJAR.FeatureModel#getConstraints <em>Constraints</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Constraints</em>'.
+	 * @see featJAR.FeatureModel#getConstraints()
+	 * @see #getFeatureModel()
+	 * @generated
+	 */
+	EReference getFeatureModel_Constraints();
+
+	/**
 	 * Returns the meta object for class '{@link featJAR.Feature <em>Feature</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -360,26 +460,26 @@ public interface FeatJARPackage extends EPackage {
 	EClass getFeature();
 
 	/**
-	 * Returns the meta object for the reference list '{@link featJAR.Feature#getFeatures <em>Features</em>}'.
+	 * Returns the meta object for the reference '{@link featJAR.Feature#getGroupIn <em>Group In</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Features</em>'.
-	 * @see featJAR.Feature#getFeatures()
+	 * @return the meta object for the reference '<em>Group In</em>'.
+	 * @see featJAR.Feature#getGroupIn()
 	 * @see #getFeature()
 	 * @generated
 	 */
-	EReference getFeature_Features();
+	EReference getFeature_GroupIn();
 
 	/**
-	 * Returns the meta object for the reference '{@link featJAR.Feature#getParent <em>Parent</em>}'.
+	 * Returns the meta object for the reference list '{@link featJAR.Feature#getParentOfGroup <em>Parent Of Group</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Parent</em>'.
-	 * @see featJAR.Feature#getParent()
+	 * @return the meta object for the reference list '<em>Parent Of Group</em>'.
+	 * @see featJAR.Feature#getParentOfGroup()
 	 * @see #getFeature()
 	 * @generated
 	 */
-	EReference getFeature_Parent();
+	EReference getFeature_ParentOfGroup();
 
 	/**
 	 * Returns the meta object for the attribute '{@link featJAR.Feature#isOptional <em>Optional</em>}'.
@@ -401,6 +501,82 @@ public interface FeatJARPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getConstraint();
+
+	/**
+	 * Returns the meta object for the attribute '{@link featJAR.Constraint#getExpression <em>Expression</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Expression</em>'.
+	 * @see featJAR.Constraint#getExpression()
+	 * @see #getConstraint()
+	 * @generated
+	 */
+	EAttribute getConstraint_Expression();
+
+	/**
+	 * Returns the meta object for class '{@link featJAR.Group <em>Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Group</em>'.
+	 * @see featJAR.Group
+	 * @generated
+	 */
+	EClass getGroup();
+
+	/**
+	 * Returns the meta object for the reference list '{@link featJAR.Group#getMadeOf <em>Made Of</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Made Of</em>'.
+	 * @see featJAR.Group#getMadeOf()
+	 * @see #getGroup()
+	 * @generated
+	 */
+	EReference getGroup_MadeOf();
+
+	/**
+	 * Returns the meta object for the reference '{@link featJAR.Group#getGroupParent <em>Group Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Group Parent</em>'.
+	 * @see featJAR.Group#getGroupParent()
+	 * @see #getGroup()
+	 * @generated
+	 */
+	EReference getGroup_GroupParent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link featJAR.Group#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see featJAR.Group#getType()
+	 * @see #getGroup()
+	 * @generated
+	 */
+	EAttribute getGroup_Type();
+
+	/**
+	 * Returns the meta object for the attribute '{@link featJAR.Group#getLowerBound <em>Lower Bound</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Lower Bound</em>'.
+	 * @see featJAR.Group#getLowerBound()
+	 * @see #getGroup()
+	 * @generated
+	 */
+	EAttribute getGroup_LowerBound();
+
+	/**
+	 * Returns the meta object for the attribute '{@link featJAR.Group#getUpperBound <em>Upper Bound</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Upper Bound</em>'.
+	 * @see featJAR.Group#getUpperBound()
+	 * @see #getGroup()
+	 * @generated
+	 */
+	EAttribute getGroup_UpperBound();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -425,32 +601,6 @@ public interface FeatJARPackage extends EPackage {
 	 * @generated
 	 */
 	interface Literals {
-		/**
-		 * The meta object literal for the '{@link featJAR.impl.FeatureModelImpl <em>Feature Model</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see featJAR.impl.FeatureModelImpl
-		 * @see featJAR.impl.FeatJARPackageImpl#getFeatureModel()
-		 * @generated
-		 */
-		EClass FEATURE_MODEL = eINSTANCE.getFeatureModel();
-
-		/**
-		 * The meta object literal for the '<em><b>Root</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FEATURE_MODEL__ROOT = eINSTANCE.getFeatureModel_Root();
-
-		/**
-		 * The meta object literal for the '<em><b>Constraints</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference FEATURE_MODEL__CONSTRAINTS = eINSTANCE.getFeatureModel_Constraints();
-
 		/**
 		 * The meta object literal for the '{@link featJAR.impl.IdentifiableImpl <em>Identifiable</em>}' class.
 		 * <!-- begin-user-doc -->
@@ -478,6 +628,32 @@ public interface FeatJARPackage extends EPackage {
 		EAttribute IDENTIFIABLE__NAME = eINSTANCE.getIdentifiable_Name();
 
 		/**
+		 * The meta object literal for the '{@link featJAR.impl.FeatureModelImpl <em>Feature Model</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see featJAR.impl.FeatureModelImpl
+		 * @see featJAR.impl.FeatJARPackageImpl#getFeatureModel()
+		 * @generated
+		 */
+		EClass FEATURE_MODEL = eINSTANCE.getFeatureModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Root</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEATURE_MODEL__ROOT = eINSTANCE.getFeatureModel_Root();
+
+		/**
+		 * The meta object literal for the '<em><b>Constraints</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FEATURE_MODEL__CONSTRAINTS = eINSTANCE.getFeatureModel_Constraints();
+
+		/**
 		 * The meta object literal for the '{@link featJAR.impl.FeatureImpl <em>Feature</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -488,20 +664,20 @@ public interface FeatJARPackage extends EPackage {
 		EClass FEATURE = eINSTANCE.getFeature();
 
 		/**
-		 * The meta object literal for the '<em><b>Features</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Group In</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference FEATURE__FEATURES = eINSTANCE.getFeature_Features();
+		EReference FEATURE__GROUP_IN = eINSTANCE.getFeature_GroupIn();
 
 		/**
-		 * The meta object literal for the '<em><b>Parent</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Parent Of Group</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference FEATURE__PARENT = eINSTANCE.getFeature_Parent();
+		EReference FEATURE__PARENT_OF_GROUP = eINSTANCE.getFeature_ParentOfGroup();
 
 		/**
 		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
@@ -520,6 +696,64 @@ public interface FeatJARPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CONSTRAINT = eINSTANCE.getConstraint();
+
+		/**
+		 * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONSTRAINT__EXPRESSION = eINSTANCE.getConstraint_Expression();
+
+		/**
+		 * The meta object literal for the '{@link featJAR.impl.GroupImpl <em>Group</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see featJAR.impl.GroupImpl
+		 * @see featJAR.impl.FeatJARPackageImpl#getGroup()
+		 * @generated
+		 */
+		EClass GROUP = eINSTANCE.getGroup();
+
+		/**
+		 * The meta object literal for the '<em><b>Made Of</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GROUP__MADE_OF = eINSTANCE.getGroup_MadeOf();
+
+		/**
+		 * The meta object literal for the '<em><b>Group Parent</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference GROUP__GROUP_PARENT = eINSTANCE.getGroup_GroupParent();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GROUP__TYPE = eINSTANCE.getGroup_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Lower Bound</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GROUP__LOWER_BOUND = eINSTANCE.getGroup_LowerBound();
+
+		/**
+		 * The meta object literal for the '<em><b>Upper Bound</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GROUP__UPPER_BOUND = eINSTANCE.getGroup_UpperBound();
 
 	}
 
