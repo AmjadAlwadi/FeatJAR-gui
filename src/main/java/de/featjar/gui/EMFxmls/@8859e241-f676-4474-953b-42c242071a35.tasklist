@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<featJAR:FeatureModel id=">8859e241-f676-4474-953b-42c242071a35" name="@8859e241-f676-4474-953b-42c242071a35" xmi:version="2.0"
+xmlns:xmi="http://www.omg.org/XMI"
+xmlns:featJAR="http://www.example.org/featJAR">
+
+<root
+id = "e825968c-38b1-4038-8233-a095a1ddcbf1"
+optional="false"
+name="Root">
+
+<features
+id = "9ec7e25b-da03-4cd2-a135-b8ea07e319d3"
+optional="true"
+name="A"/>
+
+<features
+id = "8bc6a495-99d4-4bfc-9f5d-fa42ae465737"
+optional="true"
+name="B"/>
+
+<features
+id = "0c49ce58-01df-4dea-bdb3-a96afed337cb"
+optional="true"
+name="C"/>
+
+</root>
+
+<constraints
+id = "b040ced2-cf90-47a0-914b-26701b0d713d"
+name="@b040ced2-cf90-47a0-914b-26701b0d713d"/>
+
+</featJAR:FeatureModel>

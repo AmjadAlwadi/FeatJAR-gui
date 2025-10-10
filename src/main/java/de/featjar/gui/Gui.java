@@ -32,7 +32,21 @@ import de.featjar.feature.model.IFeatureModel;
 import de.featjar.feature.model.IFeatureTree;
 import de.featjar.feature.model.io.uvl.UVLFeatureModelFormat;
 import de.featjar.formula.structure.Expressions;
+
+import de.featjar.gui.TranslatorFromEMF;
+import de.featjar.gui.TranslatorToEMF;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Collection;
+import java.util.List;
 
 public class Gui {
 
@@ -44,14 +58,25 @@ public class Gui {
         newFeatureModel.mutate().setDescription("awesome description");
         IFeature rootFeature = newFeatureModel.mutate().addFeature("root");
         IFeature childFeature = newFeatureModel.mutate().addFeature("child1");
+        IFeature childFeature2 = newFeatureModel.mutate().addFeature("child2");
+        IFeature childFeature3 = newFeatureModel.mutate().addFeature("child3");
+        IFeature childFeature4 = newFeatureModel.mutate().addFeature("child4");   
+        IFeature childchild2Feature = newFeatureModel.mutate().addFeature("child5");
+        IFeature childchild3Feature = newFeatureModel.mutate().addFeature("child6");
 
         IFeatureTree rootTree = newFeatureModel.mutate().addFeatureTreeRoot(rootFeature);
         IFeatureTree childTree = rootTree.mutate().addFeatureBelow(childFeature);
+        
+        rootTree.mutate().addFeatureBelow(childFeature2);
+        rootTree.mutate().addFeatureBelow(childFeature3);
+        rootTree.mutate().addFeatureBelow(childFeature4);
+        childTree.mutate().addFeatureBelow(childchild2Feature);
+        childTree.mutate().addFeatureBelow(childchild3Feature);
 
         IConstraint constraint1 = newFeatureModel.mutate().addConstraint(Expressions.True);
         IConstraint constraint2 = newFeatureModel.mutate().addConstraint(Expressions.True);
         IConstraint constraint3 = newFeatureModel.mutate().addConstraint(Expressions.False);
-
+        
         FeatJAR.log().message("\n" + Trees.traverse(rootTree, new TreePrinter()).get());
 
         IFeatureModel loadedFeatureModel = IO.load(
@@ -63,5 +88,12 @@ public class Gui {
                 .message("\n"
                         + Trees.traverse(loadedFeatureModel.getRoots().get(0), new TreePrinter())
                                 .get());
+        
+        //TranslatorToEMF.EMFTranslate(newFeatureModel);
+        //TranslatorToEMF.EMFTranslate(loadedFeatureModel);
+        IFeatureModel myChild = TranslatorFromEMF.FMTranslation("./src/main/java/de/featjar/gui/EMFxmls/@8859e241-f676-4474-953b-42c242071a35.tasklist");
+        
+        IFeatureTree newRoot = myChild.getRoots().get(0);
+        FeatJAR.log().message("\n" + Trees.traverse(newRoot, new TreePrinter()).get());
     }
 }
