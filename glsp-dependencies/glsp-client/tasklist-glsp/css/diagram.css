@@ -20,6 +20,8 @@
    Palette & Base
     */
 
+
+
 :root{
   --c-root:  hsl(170, 55%, 50%);
   --c-mand:  hsla(1, 90%, 32%, 0.928);
@@ -31,14 +33,29 @@
   --shadow:      0 1px 2px rgba(0,0,0,.18), 0 3px 8px rgba(0,0,0,.08);
 }
 
+
+svg {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #bbb;
+}
+
+.sprotty-node {
+  fill: inherit;
+}
+
+
+
+
 /* 
    ROOT FEATURE
-    */
+*/
 .feature-node-root{
-  clip-path: inset(0 round 12px);
+  clip-path: None;
   --node-fill: var(--c-root);
   cursor: default;
 }
+
 .feature-node-root :is(rect, path, polygon){
   fill: var(--node-fill);
   stroke: var(--stroke);
@@ -47,7 +64,7 @@
   transition: filter .15s ease, stroke-width .15s ease, transform .05s ease;
 }
 
-.feature-node-root rect{ rx:12px; ry:12px; }
+.feature-node-root rect{ rx:0; ry:0; }
 
 
 .sprotty-node.feature-node-root.sprotty-hover    rect{ filter: drop-shadow(0 2px 6px rgba(0,0,0,.22)); stroke-width: 2; }
@@ -67,11 +84,14 @@
   text-shadow: 0 1px 0 rgba(0,0,0,.25);
 }
 
+
+
+
 /* 
    OBLIGATORY FEATURE
-    */
+*/
 .feature-node-obligatory{
-  clip-path: inset(0 round 12px);
+  clip-path: None;
   --node-fill: var(--c-mand);
   cursor: default;
 }
@@ -82,7 +102,7 @@
   filter: drop-shadow(var(--shadow));
   transition: filter .15s ease, stroke-width .15s ease, transform .05s ease;
 }
-.feature-node-obligatory rect{ rx:12px; ry:12px; }
+.feature-node-obligatory rect{ rx:0; ry:0; }
 
 .sprotty-node.feature-node-obligatory.sprotty-hover    rect{ filter: drop-shadow(0 2px 6px rgba(0,0,0,.22)); stroke-width: 2; }
 .sprotty-node.feature-node-obligatory.sprotty-selected rect{ stroke: var(--stroke-sel); stroke-width: 2.5; }
@@ -100,11 +120,14 @@
   text-shadow: 0 1px 0 rgba(0,0,0,.25);
 }
 
+
+
+
 /* 
    OPTIONAL FEATURE
-    */
+*/
 .feature-node-optional{
-  clip-path: inset(0 round 12px);
+  clip-path: None;
   --node-fill: var(--c-opt);
   cursor: default;
 }
@@ -115,7 +138,7 @@
   filter: drop-shadow(var(--shadow));
   transition: filter .15s ease, stroke-width .15s ease, transform .05s ease;
 }
-.feature-node-optional rect{ rx:12px; ry:12px; }
+.feature-node-optional rect{ rx:0; ry:0; }
 
 .sprotty-node.feature-node-optional.sprotty-hover    rect{ filter: drop-shadow(0 2px 6px rgba(0,0,0,.22)); stroke-width: 2; }
 .sprotty-node.feature-node-optional.sprotty-selected rect{ stroke: var(--stroke-sel); stroke-width: 2.5; }
@@ -133,8 +156,9 @@
   text-shadow: 0 1px 0 rgba(0,0,0,.25);
 }
 
-/* 
-    .labels */
+
+
+/* .labels */
 .labels,
 .labels text,
 .sprotty-label text{

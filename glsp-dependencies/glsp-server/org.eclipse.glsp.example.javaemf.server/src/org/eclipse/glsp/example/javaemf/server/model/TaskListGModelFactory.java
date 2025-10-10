@@ -65,6 +65,12 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       }
    }
 
+   enum Constraint_type {
+      ROOT,
+      OPTIONAL,
+      OBLIGATORY;
+   }
+
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
       FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
@@ -161,7 +167,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass(node_type.cssClass())
          .position(gPosition)
-         .layout(GConstants.Layout.HBOX)
+         .layout(GConstants.Layout.VBOX)
          .layoutOptions(new GLayoutOptions()
             .vAlign(GConstants.VAlign.CENTER).hAlign(GConstants.HAlign.CENTER).minWidth(node_width)
             .minHeight(node_height))
@@ -170,6 +176,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
       applyShapeData(feature, taskNodeBuilder);
       GNode element = taskNodeBuilder.build();
+      // element.setLayout(GConstants.HAlign.CENTER);
       return element;
    }
 
@@ -187,6 +194,6 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   // protected void createEdge(final Feature source, final Feature target, final GNode gSource, final GNode gTarget) {
+   protected void createConstraint() {}
 
 }
