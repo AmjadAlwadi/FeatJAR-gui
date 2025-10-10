@@ -22,7 +22,14 @@
   <features
   id = "third layer child 1"
   optional="true"
+  name="third layer child">
+  
+    <features
+  id = "fourth layer child 1"
+  optional="true"
   name="third layer child"/>
+  
+  </features>
   
 
   <features
