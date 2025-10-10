@@ -46,7 +46,8 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    GPoint root_center = GraphUtil.point(400, 20);
 
-   int padding_y = 100;
+   double horizontal_gap = 1500;
+   double vertical_gap = 100;
    int node_width = 100;
    int node_height = 30;
 
@@ -71,7 +72,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       GGraph graph = GGraph.class.cast(newRoot);
 
       edges.clear();
-      GNode gRoot = createFeatureSubtree(0, 0, emfRoot.getFeatures().size(), root_center, emfRoot, true);
+      GNode gRoot = createFeatureSubtree(0, 0, 0, root_center, emfRoot, true);
 
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(edges);
@@ -90,23 +91,28 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       GNode gFeature;
 
       // Calculating the position
-      int horizontal_distance = (int) ((parent_pos.getX() * 2) / current_layer_children_number - 1);
-      GPoint current_position = GraphUtil.point(root_center.getX(), root_center.getY());
+      GPoint current_position = GraphUtil.copy(parent_pos);
+      double current_layer_horizontal_gap = horizontal_gap;
 
-      if (root) {
-         current_position = parent_pos;
+      current_layer_horizontal_gap = horizontal_gap / (1 << current_vertical_index);
+
+      double horizontal_starting_position = parent_pos.getX() - current_layer_horizontal_gap / 2;
+
+      // set x position for center if there are 0 or 1 children
+      if (current_layer_children_number > 2) {
+         current_layer_horizontal_gap = current_layer_horizontal_gap / (current_layer_children_number - 2);
       }
 
-      if (current_layer_children_number < 2) {
-         current_position.setX(parent_pos.getX());
-      }
+      current_layer_horizontal_gap = Math.max(current_layer_horizontal_gap, node_width);
 
-      else {
+      // root position
+      if (!(root || current_layer_children_number == 1)) {
          current_position
-            .setX(parent_pos.getX() - (parent_pos.getX() / 2) + current_horizontal_index * horizontal_distance);
+            .setX(horizontal_starting_position + current_horizontal_index * current_layer_horizontal_gap);
       }
 
-      current_position.setY(current_vertical_index * padding_y);
+      // set y position
+      current_position.setY(current_vertical_index * vertical_gap);
 
       // System.out.println("current_vertical_index: " + current_vertical_index + ", Y: " + current_position.getY());
       // System.out.println("current_horizontal_index: " + current_horizontal_index + ", X: " +
@@ -141,8 +147,9 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
       gElements.add(gFeature);
 
+      // read(feature);
       // System.out.println("x: " + gFeature.getPosition().getX() + ", Y: " + gFeature.getPosition().getY());
-      System.out.println();
+      // System.out.println();
 
       return gFeature;
 

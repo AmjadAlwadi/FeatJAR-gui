@@ -11,58 +11,56 @@
   name="root">
 
 
-  <features
-  id = "second layer child 1"
+    <features
+  id = "first layer child 1"
   optional="false"
-  name="second layer child 1">
-
-	
-	<features
-	  id = "third 2 layer child 1"
-	  optional="true"
-	  name="third layer child">
-	  
-	  
-	  
-	    <features
-  id = "third layesdfr child 1"
-  optional="true"
-  name="third layer child"/>
-  
-  
-  <features
-  id = "third layessdfdfr child 1"
-  optional="true"
-  name="third layer child"/>
-
-	  
-	  
-	  
-	  </features>
-	  
-	  
-
-  <features
-  id = "third layer child 1"
-  optional="true"
-  name="third layer child">
+  name="first layer child 1">
   
     <features
-  id = "fourth layer child 1"
-  optional="true"
-  name="third layer child"/>
+  id = "first layersdfs casdhisdsadld 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "first layersdfs casdhisadld 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "first layersdfs casdhild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "firssadt layersdfs casdhild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "first layer casdhild 1"
+  optional="false"
+  name="first layer child 1">
   
   
+  <features
+  id = "first layer casdhsdfild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  
+   <features
+  id = "firssdat layer casdhsdfild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  
+     <features
+  id = "firssdat layer casdhsdfilsadd 1"
+  optional="false"
+  name="first layer child 1"/>
   
   </features>
   
-
-  <features
-  id = "third layesadfdsaf"
-  optional="true"
-  name="third layer child"/>
-  
- 
   
   
   </features>
