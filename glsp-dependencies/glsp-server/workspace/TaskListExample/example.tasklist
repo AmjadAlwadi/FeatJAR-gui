@@ -13,11 +13,34 @@
 
   <features
   id = "second layer child 1"
-  optional="true"
+  optional="false"
   name="second layer child 1">
 
+	
+	<features
+	  id = "third 2 layer child 1"
+	  optional="true"
+	  name="third layer child">
+	  
+	  
+	  
+	    <features
+  id = "third layesdfr child 1"
+  optional="true"
+  name="third layer child"/>
+  
+  
+  <features
+  id = "third layessdfdfr child 1"
+  optional="true"
+  name="third layer child"/>
 
-
+	  
+	  
+	  
+	  </features>
+	  
+	  
 
   <features
   id = "third layer child 1"
@@ -28,6 +51,8 @@
   id = "fourth layer child 1"
   optional="true"
   name="third layer child"/>
+  
+  
   
   </features>
   
