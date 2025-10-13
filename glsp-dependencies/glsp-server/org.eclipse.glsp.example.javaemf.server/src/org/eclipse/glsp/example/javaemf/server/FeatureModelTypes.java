@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,26 +14,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0 OR MIT
  ********************************************************************************/
-package org.eclipse.glsp.example.javaemf.editor;
+package org.eclipse.glsp.example.javaemf.server;
 
-import java.net.URL;
+import org.eclipse.glsp.graph.DefaultTypes;
 
-import org.eclipse.glsp.ide.editor.GLSPServerManager;
-import org.eclipse.glsp.ide.editor.di.IdeServerModule;
-import org.eclipse.glsp.server.di.ServerModule;
+public final class FeatureModelTypes {
+   private FeatureModelTypes() {}
 
-public class TaskListServerManager extends GLSPServerManager {
+   public static final String ROOT = DefaultTypes.NODE;
+   public static final String OPTIONAL_FEATURE = DefaultTypes.NODE;
+   public static final String OBLIGATORY_FEATURE = DefaultTypes.NODE;
+   public static final String CONSTRAINT = DefaultTypes.EDGE;
+   public static final String LINK = DefaultTypes.EDGE;
 
-   public TaskListServerManager() {}
-
-   @Override
-   public ServerModule configureServerModule() {
-      return new IdeServerModule().configureDiagramModule(new TaskListEclipseDiagramModule());
-   }
-
-   @Override
-   public URL getResourceURL() { return Activator.getDefault().getBundle().getResource("diagram"); }
-
-   @Override
-   public String getGlspId() { return "tasklist"; }
 }

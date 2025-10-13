@@ -32,10 +32,11 @@ public class FeaturesPopupModelFactory implements PopupModelFactory {
    public Optional<GHtmlRoot> createPopupModel(final GModelElement element, final RequestPopupModelAction action) {
 
       String type = element.getType();
+      // System.out.print("type: " + type);
       String tooltipText = null;
 
       switch (type) {
-         case "feature-node-root":
+         case "node":
             tooltipText = "<b>Root Feature</b><br>This is the main entry point of your model.";
             break;
          case "feature-node-obligatory":
@@ -50,11 +51,9 @@ public class FeaturesPopupModelFactory implements PopupModelFactory {
 
       int tooltip_id = 0;
 
-      // Build an HTML popup container
       GHtmlRoot popup = new GHtmlRootBuilder()
          .id("popup-" + element.getId())
-         .addCssClass("glsp-tooltip") // optional custom style
-         // Add a single GModelElement that represents the tooltip content
+         .addCssClass("glsp-tooltip")
          .add(createTooltip(tooltipText, tooltip_id++))
          .build();
 

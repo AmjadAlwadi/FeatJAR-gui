@@ -16,7 +16,7 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.editor;
 
-import org.eclipse.glsp.example.javaemf.server.TaskListDiagramModule;
+import org.eclipse.glsp.example.javaemf.server.FeatureModelDiagramModule;
 import org.eclipse.glsp.ide.editor.actions.handlers.IdeNavigateToExternalTargetActionHandler;
 import org.eclipse.glsp.ide.editor.actions.handlers.IdeSetDirtyStateActionHandler;
 import org.eclipse.glsp.ide.editor.actions.handlers.IdeSetMarkersActionHandler;
@@ -35,7 +35,7 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 
 import com.google.inject.Scopes;
 
-public class TaskListEclipseDiagramModule extends TaskListDiagramModule {
+public class FeatureModelEclipseDiagramModule extends FeatureModelDiagramModule {
    @Override
    public void configure() {
       super.configure();

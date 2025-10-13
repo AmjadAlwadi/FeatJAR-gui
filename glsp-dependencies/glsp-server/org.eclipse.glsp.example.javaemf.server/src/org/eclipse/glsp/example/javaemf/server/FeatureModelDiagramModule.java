@@ -16,12 +16,11 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server;
 
-import org.eclipse.glsp.example.javaemf.server.handler.CreateTaskNodeHandler;
-import org.eclipse.glsp.example.javaemf.server.handler.DeleteTaskNodeHandler;
-import org.eclipse.glsp.example.javaemf.server.model.TaskListGModelFactory;
-import org.eclipse.glsp.example.javaemf.server.model.TaskListSourceModelStorage;
-import org.eclipse.glsp.example.javaemf.server.palette.FeaturesPopupModelFactory;
-import org.eclipse.glsp.example.javaemf.server.palette.TaskListToolPaletteItemProvider;
+import org.eclipse.glsp.example.javaemf.server.handler.CreateFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.DeleteFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.model.FeatureModelGModelFactory;
+import org.eclipse.glsp.example.javaemf.server.model.FeatureModelSourceModelStorage;
+import org.eclipse.glsp.example.javaemf.server.palette.FeatureModelToolPaletteItemProvider;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -29,33 +28,32 @@ import org.eclipse.glsp.server.emf.EMFSourceModelStorage;
 import org.eclipse.glsp.server.emf.idgen.AttributeIdGenerator;
 import org.eclipse.glsp.server.emf.notation.EMFNotationDiagramModule;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
-public class TaskListDiagramModule extends EMFNotationDiagramModule {
+public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
 
    @Override
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
       // define what operations are allowed with our elements
-      return TaskListDiagramConfiguration.class;
+      return FeatureModelDiagramConfiguration.class;
    }
 
-   @Override
-   protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
-      return FeaturesPopupModelFactory.class;
-   }
+   // @Override
+   // protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
+   // return FeaturesPopupModelFactory.class;
+   // }
 
    @Override
    protected Class<? extends EMFSourceModelStorage> bindSourceModelStorage() {
       // ensure our custom package is registered when loading our models
-      return TaskListSourceModelStorage.class;
+      return FeatureModelSourceModelStorage.class;
    }
 
    @Override
    public Class<? extends GModelFactory> bindGModelFactory() {
       // custom factory to convert tasks into nodes
-      return TaskListGModelFactory.class;
+      return FeatureModelGModelFactory.class;
    }
 
    @Override
@@ -66,14 +64,14 @@ public class TaskListDiagramModule extends EMFNotationDiagramModule {
 
    @Override
    protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
-      return TaskListToolPaletteItemProvider.class;
+      return FeatureModelToolPaletteItemProvider.class;
    }
 
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
-      binding.add(CreateTaskNodeHandler.class);
-      binding.add(DeleteTaskNodeHandler.class);
+      binding.add(CreateFeatureNodeHandler.class);
+      binding.add(DeleteFeatureNodeHandler.class);
    }
 
    @Override

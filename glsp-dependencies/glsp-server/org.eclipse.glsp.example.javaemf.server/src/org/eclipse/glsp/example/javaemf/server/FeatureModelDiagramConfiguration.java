@@ -14,17 +14,27 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0 OR MIT
  ********************************************************************************/
-package org.eclipse.glsp.example.javaemf.server.model;
+package org.eclipse.glsp.example.javaemf.server;
 
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.glsp.server.emf.notation.EMFNotationSourceModelStorage;
+import java.util.List;
 
-import featJAR.FeatJARPackage;
+import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
+import org.eclipse.glsp.server.types.EdgeTypeHint;
+import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-public class TaskListSourceModelStorage extends EMFNotationSourceModelStorage {
+public class FeatureModelDiagramConfiguration extends BaseDiagramConfiguration {
+
    @Override
-   protected ResourceSet setupResourceSet(final ResourceSet resourceSet) {
-      resourceSet.getPackageRegistry().put(FeatJARPackage.eINSTANCE.getNsURI(), FeatJARPackage.eINSTANCE);
-      return super.setupResourceSet(resourceSet);
+   public List<ShapeTypeHint> getShapeTypeHints() {
+      // tasks can be moved, deleted and resized
+      return List.of(new ShapeTypeHint(FeatureModelTypes.OBLIGATORY_FEATURE, false, true, false, true),
+         new ShapeTypeHint(FeatureModelTypes.OPTIONAL_FEATURE, false, true, false, true),
+         new ShapeTypeHint(FeatureModelTypes.ROOT, false, true, false, true));
    }
+
+   @Override
+   public List<EdgeTypeHint> getEdgeTypeHints() {
+      return List.of(new EdgeTypeHint(FeatureModelTypes.LINK, true, true, false, false, null, null));
+   }
+
 }

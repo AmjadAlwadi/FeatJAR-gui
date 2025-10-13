@@ -21,7 +21,7 @@ import java.util.Optional;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
+import org.eclipse.glsp.example.javaemf.server.FeatureModelTypes;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.EMFCreateOperationHandler;
@@ -38,7 +38,7 @@ import com.google.inject.Inject;
 import featJAR.FeatJARFactory;
 import featJAR.Feature;
 
-public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
+public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
 
    @Inject
    protected EMFNotationModelState modelState;
@@ -46,8 +46,8 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
    @Inject
    protected EMFIdGenerator idGenerator;
 
-   public CreateTaskNodeHandler() {
-      super(TaskListModelTypes.OBLIGATORY_FEATURE);
+   public CreateFeatureNodeHandler() {
+      super(FeatureModelTypes.OBLIGATORY_FEATURE);
    }
 
    @Override
@@ -76,7 +76,9 @@ public class CreateTaskNodeHandler extends EMFCreateOperationHandler<CreateNodeO
 
       Feature newFeature = createFeature();
 
-      return Optional.of(createTaskAndShape(null));
+      // return Optional.of(createTaskAndShape(null));
+      return Optional.empty();
+
    }
 
    @Override

@@ -20,7 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
+import org.eclipse.glsp.example.javaemf.server.FeatureModelTypes;
+// import org.eclipse.glsp.example.javaemf.server.model.FeatureTreeLayouter.LayoutContext;
+// import org.eclipse.glsp.example.javaemf.server.model.FeatureTreeLayouter.TreeNode;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GGraph;
@@ -36,25 +38,26 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
-import org.eclipse.glsp.server.features.popup.*;
 
 import featJAR.Constraint;
 import featJAR.Feature;
 import featJAR.FeatureModel;
 
-public class TaskListGModelFactory extends EMFNotationGModelFactory {
+public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
+   // All graphical elements (GModel Elements)
    List<GNode> gElements = new ArrayList<>();
    List<GEdge> edges = new ArrayList<>();
    List<String> Expressions = new ArrayList<>();
 
    GPoint root_center = GraphUtil.point(400, 20);
 
-   double horizontal_gap = 1000;
+   double horizontal_gap = 300;
    double vertical_gap = 100;
    int node_width = 100;
    int node_height = 30;
 
+   // GElement Type
    enum Node_type {
       ROOT,
       OPTIONAL,
@@ -91,9 +94,20 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       Feature emfRoot = emfFeatureModel.getRoot();
 
       edges.clear();
+
+      // Create the graphical elements without applying layout first
       GNode gRoot = createFeatureSubtree(0, 0, 0, root_center, emfRoot, true);
 
-      // createConstraint(Constraint_type.FREE, emfRoot, gRoot);
+      // // Layout tree
+      //
+      // TreeNode root = new TreeNode("root");
+      //
+      // LayoutContext ctx = new FeatureTreeLayouter.LayoutContext();
+      // FeatureTreeLayouter.computePositions(root, 0, horizontal_gap, vertical_gap, ctx);
+      //
+      // FeatureTreeLayouter featureTreeLayouter = new FeatureTreeLayouter();
+      //
+      // FeatureTreeLayouter.TreeNode node = new FeatureTreeLayouter.TreeNode("s");
 
       createConstraintLegend(emfFeatureModel.getConstraints());
 
@@ -102,47 +116,21 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   protected void read(final Feature feature) {
-      System.out.println("Feature name: " + feature.getName());
-   }
-
    protected GNode createFeatureSubtree(final int current_horizontal_index, int current_vertical_index,
       final int current_layer_children_number,
-      final GPoint parent_pos, final Feature feature,
-      final boolean root) {
+      final GPoint parent_position, final Feature feature,
+      final boolean isRoot) {
 
       GNode gFeature;
 
-      // Calculating the position
-      GPoint current_position = GraphUtil.copy(parent_pos);
-      double current_layer_horizontal_gap = horizontal_gap;
+      // Place the feature node using autolayouting
+      // GPoint current_position = calculateFeatureNodePosition(parent_position, current_horizontal_index,
+      // current_vertical_index, current_layer_children_number, isRoot);
 
-      current_layer_horizontal_gap = horizontal_gap / (1 << current_vertical_index);
+      GPoint current_position = GraphUtil.point(0, 0);
 
-      double horizontal_starting_position = parent_pos.getX() - current_layer_horizontal_gap / 2;
-
-      // set x position for center if there are 0 or 1 children
-      if (current_layer_children_number > 2) {
-         current_layer_horizontal_gap = current_layer_horizontal_gap / (current_layer_children_number - 2);
-      }
-
-      current_layer_horizontal_gap = Math.max(current_layer_horizontal_gap, node_width * 1.5);
-
-      // root position
-      if (!(root || current_layer_children_number == 1)) {
-         current_position
-            .setX(horizontal_starting_position + current_horizontal_index * current_layer_horizontal_gap);
-      }
-
-      // set y position
-      current_position.setY(current_vertical_index * vertical_gap);
-
-      // System.out.println("current_vertical_index: " + current_vertical_index + ", Y: " + current_position.getY());
-      // System.out.println("current_horizontal_index: " + current_horizontal_index + ", X: " +
-      // current_position.getX());
-
-      // Generating the GNode
-      if (root) {
+      // Creating the GNode
+      if (isRoot) {
          gFeature = createFeatureNode(feature, current_position, Node_type.ROOT);
       } else {
 
@@ -154,10 +142,12 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
       }
 
-      // Rendering children nodes
+      // Rendering children nodes recursively
       int children_number = feature.getFeatures().size();
       int child_index = 0;
       current_vertical_index++;
+
+      // FeatureTreeLayouter.TreeNode node = new FeatureTreeLayouter.TreeNode("s");
 
       for (Feature child : feature.getFeatures()) {
 
@@ -170,17 +160,45 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
       gElements.add(gFeature);
 
-      // read(feature);
-      // System.out.println("x: " + gFeature.getPosition().getX() + ", Y: " + gFeature.getPosition().getY());
-      // System.out.println();
-
       return gFeature;
 
    }
 
+   // Autolayouting function, takes in information about the node and returns the position
+   public GPoint calculateFeatureNodePosition(final GPoint parent_position, final int current_horizontal_index,
+      final int current_vertical_index, final int current_layer_children_number, final boolean isRoot) {
+
+      // Calculating the position
+      GPoint current_position = GraphUtil.copy(parent_position);
+      double current_layer_horizontal_gap = horizontal_gap;
+
+      current_layer_horizontal_gap = horizontal_gap / (1 << current_vertical_index);
+
+      double horizontal_starting_position = parent_position.getX() - current_layer_horizontal_gap / 2;
+
+      // set x position for center if there are 0 or 1 children
+      if (current_layer_children_number > 2) {
+         current_layer_horizontal_gap = current_layer_horizontal_gap / (current_layer_children_number - 1);
+      }
+
+      current_layer_horizontal_gap = Math.max(current_layer_horizontal_gap, node_width * 1.5);
+
+      // root position
+      if (!(isRoot || current_layer_children_number == 1)) {
+         current_position
+            .setX(horizontal_starting_position + current_horizontal_index * current_layer_horizontal_gap);
+      }
+
+      // set y position
+      current_position.setY(current_vertical_index * vertical_gap);
+
+      return current_position;
+   }
+
+   // Create the graphical representation of a feature
    protected GNode createFeatureNode(final Feature feature, final GPoint gPosition, final Node_type node_type) {
 
-      GNodeBuilder taskNodeBuilder = new GNodeBuilder(TaskListModelTypes.ROOT)
+      GNodeBuilder taskNodeBuilder = new GNodeBuilder(FeatureModelTypes.ROOT)
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass(node_type.cssClass())
          .position(gPosition)
@@ -197,10 +215,11 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       return element;
    }
 
+   // Create the graphical representation of the feature relation
    protected void createEdge(final Feature source, final Feature target, final GNode gSource, final GNode gTarget) {
 
       // Connect parent and child with an edge
-      GEdge edge = new GEdgeBuilder(TaskListModelTypes.LINK)
+      GEdge edge = new GEdgeBuilder(FeatureModelTypes.LINK)
          .id(source.getId() + "_to_" + target.getId())
          .source(gSource)
          .addCssClass(Node_type.EDGE.cssClass())
@@ -211,23 +230,25 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   protected void createConstraint(final Group_type type, final Feature parent_feature,
-      final GNode parent_node) {
+   // // Create the graphical representation of the constraint
+   // protected void createGroupConstraint(final Group_type type, final Feature parent_feature,
+   // final GNode parent_node) {
+   //
+   // int shift = 30;
+   // GPoint current_position = GraphUtil.copy(parent_node.getPosition());
+   // current_position.setY(current_position.getY() + shift);
+   //
+   // GNode constraintNode = new GNodeBuilder("node:circle")
+   // .id(idGenerator.getOrCreateId(parent_feature) + "_contraint")
+   // .addCssClass(Node_type.ROOT.cssClass())
+   // .position(
+   // GraphUtil.point(current_position.getX() + node_width / 2, current_position.getY() - 15))
+   // .size(GraphUtil.dimension(30, 30))
+   // .build();
+   //
+   // }
 
-      int shift = 30;
-      GPoint current_position = GraphUtil.copy(parent_node.getPosition());
-      current_position.setY(current_position.getY() + shift);
-
-      GNode constraintNode = new GNodeBuilder("node:circle")
-         .id(idGenerator.getOrCreateId(parent_feature) + "_contraint")
-         .addCssClass(Node_type.ROOT.cssClass())
-         .position(
-            GraphUtil.point(current_position.getX() + node_width / 2, current_position.getY() - 15))
-         .size(GraphUtil.dimension(30, 30))
-         .build();
-
-   }
-
+   // Create a box with all existing constraints as strings
    protected void createConstraintLegend(final List<Constraint> constraints) {
 
       int dynamic_shift = 20 * constraints.size();
@@ -245,10 +266,12 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
       // Add title
       legendBuilder.add(createConstraintsTitle("Constraints"));
+      legendBuilder.add(createLineLabel(id++, "."));
 
       // Add constraint strings
       for (Constraint constraint : constraints) {
          legendBuilder.add(createConstraintLabel(constraint.getName(), id++));
+         legendBuilder.add(createLineLabel(id++, "-"));
       }
 
       GNode legend = legendBuilder.build();
@@ -259,23 +282,37 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   public GLabel createConstraintLabel(final String label, final int id) {
+   // Create a label to draw a separating line using a specific symbol
+   public GLabel createLineLabel(final int id, final String separator) {
 
       return new GLabelBuilder(DefaultTypes.LABEL)
-         .id("constraints-label_" + id)
-         .text(label)
-         .addCssClass(Node_type.LABEL.cssClass())
+         .id("constraints-label-line_" + id)
+         .text(separator.repeat(30))
+         .addCssClass(Node_type.OPTIONAL.cssClass())
          .addArgument("wrap", true)
          .build();
 
    }
 
+   // Create the label for the constraints
    public GLabel createConstraintsTitle(final String label) {
 
       return new GLabelBuilder(DefaultTypes.LABEL)
          .id("constraints_title")
          .text(label)
          .addCssClass(Node_type.OPTIONAL.cssClass())
+         .addArgument("wrap", true)
+         .build();
+
+   }
+
+   // Create a label as GElement with a specific id and string value
+   public GLabel createConstraintLabel(final String label, final int id) {
+
+      return new GLabelBuilder(DefaultTypes.LABEL)
+         .id("constraints-label_" + id)
+         .text(label)
+         .addCssClass(Node_type.LABEL.cssClass())
          .addArgument("wrap", true)
          .build();
 

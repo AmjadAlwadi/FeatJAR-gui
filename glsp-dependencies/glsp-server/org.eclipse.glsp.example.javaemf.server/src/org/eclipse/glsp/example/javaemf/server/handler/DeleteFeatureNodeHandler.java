@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.RemoveCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -33,21 +32,23 @@ import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.google.inject.Inject;
 
-public class DeleteTaskNodeHandler extends AbstractEMFOperationHandler<DeleteOperation> {
+public class DeleteFeatureNodeHandler extends AbstractEMFOperationHandler<DeleteOperation> {
 
    @Inject
    protected EMFNotationModelState modelState;
 
    @Override
    public Optional<Command> createCommand(final DeleteOperation operation) {
-      List<String> elementIds = operation.getElementIds();
-      if (elementIds == null || elementIds.size() == 0) {
-         System.out.println("Elements to delete are not specified");
-         return Optional.empty();
-      }
-
-      List<Command> commands = createDeleteCommands(elementIds);
-      return commands.isEmpty() ? Optional.empty() : Optional.of(new CompoundCommand(commands));
+      // List<String> elementIds = operation.getElementIds();
+      // if (elementIds == null || elementIds.size() == 0) {
+      // System.out.println("Elements to delete are not specified");
+      // return Optional.empty();
+      // }
+      //
+      // List<Command> commands = createDeleteCommands(elementIds);
+      // return commands.isEmpty() ? Optional.empty() : Optional.of(new CompoundCommand(commands));
+      //
+      return Optional.empty();
    }
 
    private List<Command> createDeleteCommands(final List<String> elementIds) {

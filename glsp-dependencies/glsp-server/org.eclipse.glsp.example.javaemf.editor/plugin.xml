@@ -5,8 +5,8 @@
          point="org.eclipse.glsp.ide.editor">
       <configuration
             editorId="org.eclipse.glsp.example.javaemf.editor"
-            glspId="tasklist"
-            serverManagerClass="org.eclipse.glsp.example.javaemf.editor.TaskListServerManager">
+            glspId="featuremodel"
+            serverManagerClass="org.eclipse.glsp.example.javaemf.editor.FeatureModelServerManager">
       </configuration>
    </extension>
    <extension
@@ -15,9 +15,9 @@
             class="org.eclipse.glsp.ide.editor.ui.GLSPDiagramEditor"
             contributorClass="org.eclipse.glsp.ide.editor.ui.GLSPDiagramEditorActionContributor"
             default="true"
-            extensions="tasklist"
+            extensions="featuremodel"
             id="org.eclipse.glsp.example.javaemf.editor"
-            name="TaskList Diagram Editor">
+            name="Feature Model Diagram Editor">
       </editor>
    </extension>
    <extension

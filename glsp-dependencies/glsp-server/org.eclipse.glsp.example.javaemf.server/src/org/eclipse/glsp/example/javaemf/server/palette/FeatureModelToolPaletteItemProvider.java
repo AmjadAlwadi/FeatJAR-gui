@@ -20,12 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.glsp.example.javaemf.server.TaskListModelTypes;
+import org.eclipse.glsp.example.javaemf.server.FeatureModelTypes;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 
-public class TaskListToolPaletteItemProvider implements ToolPaletteItemProvider {
+public class FeatureModelToolPaletteItemProvider implements ToolPaletteItemProvider {
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
@@ -33,9 +33,9 @@ public class TaskListToolPaletteItemProvider implements ToolPaletteItemProvider 
    }
 
    private PaletteItem nodeCreation() {
-      PaletteItem createOptionalFeature = node(TaskListModelTypes.OPTIONAL_FEATURE, "Optional Feature");
-      PaletteItem createObligatoryFeature = node(TaskListModelTypes.OBLIGATORY_FEATURE, "Obligatory Feature");
-      PaletteItem createConstraint = node(TaskListModelTypes.CONSTRAINT, "Constraint");
+      PaletteItem createOptionalFeature = node(FeatureModelTypes.OPTIONAL_FEATURE, "Optional Feature");
+      PaletteItem createObligatoryFeature = node(FeatureModelTypes.OBLIGATORY_FEATURE, "Obligatory Feature");
+      PaletteItem createConstraint = node(FeatureModelTypes.CONSTRAINT, "Constraint");
       List<PaletteItem> nodes = new ArrayList<>();
       nodes.add(createOptionalFeature);
       nodes.add(createObligatoryFeature);
@@ -46,33 +46,38 @@ public class TaskListToolPaletteItemProvider implements ToolPaletteItemProvider 
    private PaletteItem informationLegend() {
 
       // info about node types
-      PaletteItem root_node = new PaletteItem("root_node", "Root");
-      root_node.setIcon("root_node_icon");
+      PaletteItem root_node = new PaletteItem("root_node", "🟩 Root");
+      // root_node.setIcon("root_node_icon");
       root_node.setSortString("1");
 
-      PaletteItem obligatory_node = new PaletteItem("obligatory_node", "Obligatory");
-      obligatory_node.setIcon("obligatory_node_icon");
+      PaletteItem obligatory_node = new PaletteItem("obligatory_node", "🟥 Obligatory");
+      // obligatory_node.setIcon("obligatory_node_icon");
       obligatory_node.setSortString("2");
 
-      PaletteItem optional_node = new PaletteItem("optional_node", "Optional");
-      optional_node.setIcon("optional_node_icon");
+      PaletteItem optional_node = new PaletteItem("optional_node", "🟪 Optional");
+      // optional_node.setIcon("optional_node_icon");
       optional_node.setSortString("3");
 
       // Info about group types
-      PaletteItem xor_group = new PaletteItem("XOR", "XOR");
-      xor_group.setIcon("xor_group_icon");
-      xor_group.setSortString("4");
 
-      PaletteItem true_group = new PaletteItem("TRUE", "TRUE");
-      true_group.setIcon("true_group_icon");
-      true_group.setSortString("5");
+      PaletteItem true_group = new PaletteItem("TRUE", "True Group");
+      // true_group.setIcon("true_group_icon");
+      true_group.setIcon("loading");
+      true_group.setSortString("4");
 
-      PaletteItem or_group = new PaletteItem("OR", "OR");
-      or_group.setIcon("or_group_icon");
-      or_group.setSortString("6");
+      PaletteItem or_group = new PaletteItem("OR", "Or Group");
+      // or_group.setIcon("or_group_icon");
+      or_group.setIcon("triangle-up");
+      or_group.setSortString("5");
 
-      PaletteItem speical_group = new PaletteItem("SPECIAL", "SPECIAL");
-      speical_group.setIcon("speical_group_icon");
+      PaletteItem xor_group = new PaletteItem("XOR", "Xor Group");
+      // xor_group.setIcon("xor_group_icon");
+      xor_group.setIcon("debug-breakpoint-log-unverified");
+      xor_group.setSortString("6");
+
+      PaletteItem speical_group = new PaletteItem("SPECIAL", "Special Group");
+      // speical_group.setIcon("special_group_icon");
+      speical_group.setIcon("loading");
       speical_group.setSortString("7");
 
       List<PaletteItem> legend = new ArrayList<>();
@@ -85,7 +90,7 @@ public class TaskListToolPaletteItemProvider implements ToolPaletteItemProvider 
       legend.add(obligatory_node);
       legend.add(optional_node);
 
-      return PaletteItem.createPaletteGroup("information", "Information", legend, "symbol-property");
+      return PaletteItem.createPaletteGroup("information", "Information", legend, "book");
    }
 
    private PaletteItem node(final String elementTypeId, final String label) {
