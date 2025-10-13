@@ -27,6 +27,8 @@
     </features>
 
     <features id="layer_1:horizontal_2" optional="false" name="Layer 1 - Node 2">
+      <features id="layer_2b:horizontal_1" optional="true" name="Layer 2b - Node 1"/>
+      <features id="layer_2b:horizontal_2" optional="false" name="Layer 2b - Node 2"/>
       <features id="layer_2b:horizontal_3" optional="true" name="Layer 2b - Node 3"/>
     </features>
 

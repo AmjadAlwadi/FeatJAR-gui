@@ -1,127 +1,103 @@
-/********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * https://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: GNU General Public License, version 2
- * with the GNU Classpath Exception which is available at
- * https://www.gnu.org/software/classpath/license.html.
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
- ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server.model;
 
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.util.GraphUtil;
 
 public class FeatureTreeLayouter {
 
-   private final double nodeWidth;
-   private final double nodeHeight;
-   private final double hSpacing;
-   private final double vSpacing;
+   // class datastructure which holds GNode and corresponding Layout Treenode
+   protected static class FeatureSubtreeResult {
+      public final GNode gNode;
+      public final FeatureTreeLayouter.TreeNode treeNode;
 
-   // store per-element computed subtree width
-   private final Map<GModelElement, Double> subtreeWidths = new HashMap<>();
-
-   public FeatureTreeLayouter(final double nodeWidth, final double nodeHeight, final double hSpacing,
-      final double vSpacing) {
-      this.nodeWidth = nodeWidth;
-      this.nodeHeight = nodeHeight;
-      this.hSpacing = hSpacing;
-      this.vSpacing = vSpacing;
+      public FeatureSubtreeResult(final GNode gNode, final FeatureTreeLayouter.TreeNode treeNode) {
+         this.gNode = gNode;
+         this.treeNode = treeNode;
+      }
    }
 
-   /**
-    * Public entry point. Expects a GNode root.
-    */
-   public void layout(final GNode root) {
-      computeSubtreeWidth(root);
-      assignPositions(root, 0, 0);
+   // Static list to keep track of all TreeNode instances
+   public static List<TreeNode> allTreeNodes = new ArrayList<>();
+
+   public static class TreeNode {
+      public String id;
+      public double x;
+      public double y;
+      public List<TreeNode> children = new ArrayList<>();
+
+      public TreeNode(final String id) {
+         this.id = id;
+         // Add this instance to the static list whenever a new node is created
+         allTreeNodes.add(this);
+      }
+
+      public void addChild(final TreeNode child) {
+         children.add(child);
+      }
+
+      @Override
+      public String toString() {
+         return String.format("%s(%.1f, %.1f)", id, x, y);
+      }
    }
 
-   /**
-    * Compute subtree width for the given model element (only GNode children are considered).
-    * Stores result in subtreeWidths map and returns the value.
-    */
-   private double computeSubtreeWidth(final GModelElement element) {
-      List<GNode> children = getChildNodes(element);
-
-      if (children.isEmpty()) {
-         subtreeWidths.put(element, nodeWidth);
-         return nodeWidth;
-      }
-
-      double totalWidth = 0;
-      for (GNode child : children) {
-         totalWidth += computeSubtreeWidth(child) + hSpacing;
-      }
-      totalWidth -= hSpacing; // remove trailing space
-
-      double width = Math.max(totalWidth, nodeWidth);
-      subtreeWidths.put(element, width);
-      return width;
+   public static class LayoutContext {
+      public double nextX = 0; // keeps track of horizontal position
    }
 
-   /**
-    * Assign positions recursively. This version takes GNode because we set positions on GNode.
-    *
-    * @param node The node to position
-    * @param left The left X coordinate of this node's allocated area/subtree
-    * @param top  The Y coordinate for this node
-    */
-   private void assignPositions(final GNode node, final double left, final double top) {
-      Double subtreeWidthObj = subtreeWidths.get(node);
-      if (subtreeWidthObj == null) {
-         // Fallback: compute on the fly if missing
-         computeSubtreeWidth(node);
-         subtreeWidthObj = subtreeWidths.get(node);
-      }
-      double subtreeWidth = subtreeWidthObj;
-
-      List<GNode> children = getChildNodes(node);
-      if (children.isEmpty()) {
-         // place leaf centered in its allocated subtree
-         node.setPosition(GraphUtil.point(left + subtreeWidth / 2.0, top));
+   public static void computePositions(final TreeNode node, final double startY,
+      double horizontalSpacing, double verticalSpacing, final double nodeWidth, final double nodeHeight,
+      final LayoutContext ctx) {
+      if (node == null) {
          return;
       }
 
-      // Layout children left-to-right inside this node's allocated width
-      double childX = left;
-      for (GNode child : children) {
-         double childWidth = subtreeWidths.getOrDefault(child, nodeWidth);
-         assignPositions(child, childX, top + nodeHeight + vSpacing);
-         childX += childWidth + hSpacing;
-      }
+      node.y = startY;
 
-      // After children are positioned, center this node over its children.
-      // We use children's x positions to compute center.
-      double firstX = children.get(0).getPosition().getX();
-      double lastX = children.get(children.size() - 1).getPosition().getX();
-      node.setPosition(GraphUtil.point((firstX + lastX) / 2.0, top));
+      horizontalSpacing = Math.max(horizontalSpacing, nodeWidth * 1.2);
+      verticalSpacing = Math.max(verticalSpacing, nodeHeight * 1.2);
+
+      // Leaf node
+      if (node.children.isEmpty()) {
+         node.x = ctx.nextX;
+         ctx.nextX += horizontalSpacing;
+      }
+      // Internal node
+      else {
+         for (TreeNode child : node.children) {
+            computePositions(child, startY + verticalSpacing,
+               horizontalSpacing, verticalSpacing, nodeWidth, nodeHeight, ctx);
+         }
+
+         double left = node.children.get(0).x;
+         double right = node.children.get(node.children.size() - 1).x;
+         node.x = (left + right) / 2.0;
+      }
    }
 
-   /**
-    * Helper: return only the children which are GNode instances (filter+cast).
-    */
-   private List<GNode> getChildNodes(final GModelElement element) {
-      if (element.getChildren() == null || element.getChildren().isEmpty()) {
-         return Collections.emptyList();
+   public static GNode mapTreeNodeToGNode(final TreeNode treeNode, final List<GNode> gNodeList) {
+      for (GNode g : gNodeList) {
+         if (g.getId().equals(treeNode.id)) { // Use equals() for String comparison
+            return g;
+         }
       }
-      return element.getChildren().stream()
-         .filter(child -> child instanceof GNode)
-         .map(child -> (GNode) child)
-         .collect(Collectors.toList());
+      return null; // return null if no match is found
    }
+
+   public static TreeNode mapGNodeToTreeNode(final GNode gnode) {
+      for (TreeNode t : allTreeNodes) {
+         if (t.id.equals(gnode.getId())) { // Use equals() for String comparison
+            return t;
+         }
+      }
+      return null; // return null if no match is found
+   }
+
+   public static void clear() {
+      allTreeNodes.clear();
+
+   }
+
 }
