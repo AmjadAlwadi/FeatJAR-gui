@@ -29,10 +29,10 @@ public class TaskListToolPaletteItemProvider implements ToolPaletteItemProvider 
 
    @Override
    public List<PaletteItem> getItems(final Map<String, String> args) {
-      return new ArrayList<>(List.of(nodes()));
+      return combinePalletes();
    }
 
-   private PaletteItem nodes() {
+   private PaletteItem nodeCreation() {
       PaletteItem createOptionalFeature = node(TaskListModelTypes.OPTIONAL_FEATURE, "Optional Feature");
       PaletteItem createObligatoryFeature = node(TaskListModelTypes.OBLIGATORY_FEATURE, "Obligatory Feature");
       PaletteItem createConstraint = node(TaskListModelTypes.CONSTRAINT, "Constraint");
@@ -40,11 +40,65 @@ public class TaskListToolPaletteItemProvider implements ToolPaletteItemProvider 
       nodes.add(createOptionalFeature);
       nodes.add(createObligatoryFeature);
       nodes.add(createConstraint);
-      return PaletteItem.createPaletteGroup("nodes", "Nodes", nodes, "symbol-property");
+      return PaletteItem.createPaletteGroup("nodes", "Add Features", nodes, "symbol-property");
+   }
+
+   private PaletteItem informationLegend() {
+
+      // info about node types
+      PaletteItem root_node = new PaletteItem("root_node", "Root");
+      root_node.setIcon("root_node_icon");
+      root_node.setSortString("1");
+
+      PaletteItem obligatory_node = new PaletteItem("obligatory_node", "Obligatory");
+      obligatory_node.setIcon("obligatory_node_icon");
+      obligatory_node.setSortString("2");
+
+      PaletteItem optional_node = new PaletteItem("optional_node", "Optional");
+      optional_node.setIcon("optional_node_icon");
+      optional_node.setSortString("3");
+
+      // Info about group types
+      PaletteItem xor_group = new PaletteItem("XOR", "XOR");
+      xor_group.setIcon("xor_group_icon");
+      xor_group.setSortString("4");
+
+      PaletteItem true_group = new PaletteItem("TRUE", "TRUE");
+      true_group.setIcon("true_group_icon");
+      true_group.setSortString("5");
+
+      PaletteItem or_group = new PaletteItem("OR", "OR");
+      or_group.setIcon("or_group_icon");
+      or_group.setSortString("6");
+
+      PaletteItem speical_group = new PaletteItem("SPECIAL", "SPECIAL");
+      speical_group.setIcon("speical_group_icon");
+      speical_group.setSortString("7");
+
+      List<PaletteItem> legend = new ArrayList<>();
+
+      legend.add(xor_group);
+      legend.add(true_group);
+      legend.add(or_group);
+      legend.add(speical_group);
+      legend.add(root_node);
+      legend.add(obligatory_node);
+      legend.add(optional_node);
+
+      return PaletteItem.createPaletteGroup("information", "Information", legend, "symbol-property");
    }
 
    private PaletteItem node(final String elementTypeId, final String label) {
       return new PaletteItem(elementTypeId, label, new TriggerNodeCreationAction(elementTypeId));
+   }
+
+   private List<PaletteItem> combinePalletes() {
+      List<PaletteItem> palletes = new ArrayList<>();
+
+      palletes.add(nodeCreation());
+      palletes.add(informationLegend());
+
+      return palletes;
    }
 
 }

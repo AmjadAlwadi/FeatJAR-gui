@@ -20,6 +20,7 @@ import org.eclipse.glsp.example.javaemf.server.handler.CreateTaskNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.DeleteTaskNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.model.TaskListGModelFactory;
 import org.eclipse.glsp.example.javaemf.server.model.TaskListSourceModelStorage;
+import org.eclipse.glsp.example.javaemf.server.palette.FeaturesPopupModelFactory;
 import org.eclipse.glsp.example.javaemf.server.palette.TaskListToolPaletteItemProvider;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
@@ -28,6 +29,7 @@ import org.eclipse.glsp.server.emf.EMFSourceModelStorage;
 import org.eclipse.glsp.server.emf.idgen.AttributeIdGenerator;
 import org.eclipse.glsp.server.emf.notation.EMFNotationDiagramModule;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
+import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
@@ -37,6 +39,11 @@ public class TaskListDiagramModule extends EMFNotationDiagramModule {
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
       // define what operations are allowed with our elements
       return TaskListDiagramConfiguration.class;
+   }
+
+   @Override
+   protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
+      return FeaturesPopupModelFactory.class;
    }
 
    @Override

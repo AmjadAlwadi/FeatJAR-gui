@@ -36,6 +36,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.model.notation.Diagram;
 import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
+import org.eclipse.glsp.server.features.popup.*;
 
 import featJAR.Constraint;
 import featJAR.Feature;
@@ -59,6 +60,8 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
       OPTIONAL,
       OBLIGATORY,
       EDGE,
+      CONSTRAINT_LABEL,
+      CONSTRAINT_TITLE,
       LABEL;
 
       public String cssClass() {
@@ -68,14 +71,17 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
             case OBLIGATORY -> "feature-node-obligatory";
             case EDGE -> "feature-node-root";
             case LABEL -> "labels";
+            case CONSTRAINT_LABEL -> "constraint_label";
+            case CONSTRAINT_TITLE -> "constraints_title";
          };
       }
    }
 
-   enum Constraint_type {
+   enum Group_type {
       OR,
       XOR,
-      FREE,
+      SPECIAL,
+      TRUE,
    }
 
    @Override
@@ -205,7 +211,7 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   protected void createConstraint(final Constraint_type type, final Feature parent_feature,
+   protected void createConstraint(final Group_type type, final Feature parent_feature,
       final GNode parent_node) {
 
       int shift = 30;
@@ -237,8 +243,12 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
          .layout(GConstants.Layout.VBOX)
          .addCssClass(Node_type.ROOT.cssClass());
 
+      // Add title
+      legendBuilder.add(createConstraintsTitle("Constraints"));
+
+      // Add constraint strings
       for (Constraint constraint : constraints) {
-         legendBuilder.add(createLabel(constraint.getName(), id++));
+         legendBuilder.add(createConstraintLabel(constraint.getName(), id++));
       }
 
       GNode legend = legendBuilder.build();
@@ -249,12 +259,23 @@ public class TaskListGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   public GLabel createLabel(final String label, final int id) {
+   public GLabel createConstraintLabel(final String label, final int id) {
 
       return new GLabelBuilder(DefaultTypes.LABEL)
          .id("constraints-label_" + id)
          .text(label)
          .addCssClass(Node_type.LABEL.cssClass())
+         .addArgument("wrap", true)
+         .build();
+
+   }
+
+   public GLabel createConstraintsTitle(final String label) {
+
+      return new GLabelBuilder(DefaultTypes.LABEL)
+         .id("constraints_title")
+         .text(label)
+         .addCssClass(Node_type.OPTIONAL.cssClass())
          .addArgument("wrap", true)
          .build();
 
