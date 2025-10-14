@@ -99,9 +99,22 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       FeatureTreeLayouter.clear();
 
       // Create the graphical elements without applying layout first
-      FeatureSubtreeResult gRoot = createFeatureSubtree(0, 0, 0, emfRoot, true);
+      FeatureSubtreeResult gRoot = createFeatureSubtree(emfRoot, true);
 
       // Autolayouting the feature tree
+      layoutFeatureTree(gRoot);
+
+      createConstraintLegend(emfFeatureModel.getConstraints(),
+         GraphUtil.point(gRoot.gNode.getPosition().getX() - 200, -200));
+
+      graph.getChildren().addAll(gElements);
+      graph.getChildren().addAll(gEdges);
+
+   }
+
+   // Run to automatically layout the feature nodes nicely
+   protected void layoutFeatureTree(final FeatureSubtreeResult gRoot) {
+
       LayoutContext ctx = new FeatureTreeLayouter.LayoutContext();
       FeatureTreeLayouter.computePositions(FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode), 0, horizontalGap,
          verticalGap, nodeWidth, nodeHeight,
@@ -112,18 +125,10 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       for (TreeNode node : FeatureTreeLayouter.allTreeNodes) {
          FeatureTreeLayouter.mapTreeNodeToGNode(node, gElements).setPosition(GraphUtil.point(node.x, node.y));
       }
-
-      createConstraintLegend(emfFeatureModel.getConstraints(),
-         GraphUtil.point(gRoot.gNode.getPosition().getX() - 200, -200));
-
-      graph.getChildren().addAll(gElements);
-      graph.getChildren().addAll(gEdges);
-
    }
 
-   protected FeatureSubtreeResult createFeatureSubtree(final int current_horizontal_index, int current_vertical_index,
-      final int current_layer_children_number, final Feature feature,
-      final boolean isRoot) {
+   // Create Feature Subtree without Autolayouting
+   protected FeatureSubtreeResult createFeatureSubtree(final Feature feature, final boolean isRoot) {
 
       GNode gFeature;
 
@@ -142,18 +147,15 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
       }
 
-      // For autolayouting
+      // For Autolayouting
       TreeNode current_node = new TreeNode(gFeature.getId());
 
       // Rendering children nodes recursively
       int children_number = feature.getFeatures().size();
-      int child_index = 0;
-      current_vertical_index++;
 
       for (Feature child : feature.getFeatures()) {
 
-         FeatureSubtreeResult gChild = createFeatureSubtree(child_index++, current_vertical_index, children_number,
-            child, false);
+         FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
 
          // Add child in TreeLayouter
          current_node.addChild(gChild.treeNode);
