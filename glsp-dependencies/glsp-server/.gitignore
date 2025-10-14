@@ -1,0 +1,17 @@
+tasklist-eclipse/app/**
+!tasklist-eclipse/app/diagram.html
+
+*.log
+*.ttf
+
+bin
+.bin
+target
+.target
+lib
+node_modules
+.gradle
+.DS_Store
+.apt_generated
+*.[oa]
+
