@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel"
+    modelDirectory="/featJAR/src-gen" creationIcons="false" editDirectory="/featJAR.edit/src-gen"
+    editorDirectory="/featJAR.editor/src-gen" modelPluginID="featJAR" modelName="FeatJAR"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" codeFormatting="true"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="21.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>featJAR.ecore</foreignModel>
+  <testsDirectory xsi:nil="true"/>
+  <genPackages prefix="FeatJAR" disposableProviderFactory="true" ecorePackage="featJAR.ecore#/">
+    <genClasses ecoreClass="featJAR.ecore#//Identifiable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute featJAR.ecore#//Identifiable/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute featJAR.ecore#//Identifiable/name"/>
+    </genClasses>
+    <genClasses ecoreClass="featJAR.ecore#//FeatureModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference featJAR.ecore#//FeatureModel/root"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference featJAR.ecore#//FeatureModel/constraints"/>
+    </genClasses>
+    <genClasses ecoreClass="featJAR.ecore#//Feature">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference featJAR.ecore#//Feature/groupIn"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference featJAR.ecore#//Feature/parentOfGroup"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute featJAR.ecore#//Feature/optional"/>
+    </genClasses>
+    <genClasses ecoreClass="featJAR.ecore#//Constraint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute featJAR.ecore#//Constraint/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="featJAR.ecore#//Group">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference featJAR.ecore#//Group/madeOf"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference featJAR.ecore#//Group/groupParent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute featJAR.ecore#//Group/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute featJAR.ecore#//Group/lowerBound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute featJAR.ecore#//Group/upperBound"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

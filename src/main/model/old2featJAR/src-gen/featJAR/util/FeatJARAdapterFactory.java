@@ -67,6 +67,21 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected FeatJARSwitch<Adapter> modelSwitch = new FeatJARSwitch<Adapter>() {
 		@Override
+		public Adapter caseIdentifiable(Identifiable object) {
+			return createIdentifiableAdapter();
+		}
+
+		@Override
+		public Adapter caseCoreFeature(CoreFeature object) {
+			return createCoreFeatureAdapter();
+		}
+
+		@Override
+		public Adapter caseEdge(Edge object) {
+			return createEdgeAdapter();
+		}
+
+		@Override
 		public Adapter caseFeature(Feature object) {
 			return createFeatureAdapter();
 		}
@@ -88,6 +103,48 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	@Override
 	public Adapter createAdapter(Notifier target) {
 		return modelSwitch.doSwitch((EObject) target);
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.Identifiable <em>Identifiable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.Identifiable
+	 * @generated
+	 */
+	public Adapter createIdentifiableAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.CoreFeature <em>Core Feature</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.CoreFeature
+	 * @generated
+	 */
+	public Adapter createCoreFeatureAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.Edge <em>Edge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.Edge
+	 * @generated
+	 */
+	public Adapter createEdgeAdapter() {
+		return null;
 	}
 
 	/**

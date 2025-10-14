@@ -14,34 +14,29 @@
   <constraints id="const_004" name="FeatureX implies FeatureY"/>
 
   <!-- Root -->
-  <root 
-      id="root_0" 
-      optional="false" 
-      name="layer_0:root">
 
-    <!-- Layer 1 -->
-    <features id="layer_1:horizontal_1" optional="true" name="Layer 1 - Node 1">
-      <features id="layer_2:horizontal_1" optional="false" name="Layer 2 - Node 1"/>
-      <features id="layer_2:horizontal_2" optional="true" name="Layer 2 - Node 2"/>
-      <features id="layer_2:horizontal_3" optional="false" name="Layer 2 - Node 3"/>
-    </features>
-
-    <features id="layer_1:horizontal_2" optional="false" name="Layer 1 - Node 2">
-      <features id="layer_2b:horizontal_1" optional="true" name="Layer 2b - Node 1"/>
-      <features id="layer_2b:horizontal_2" optional="false" name="Layer 2b - Node 2"/>
-      <features id="layer_2b:horizontal_3" optional="true" name="Layer 2b - Node 3"/>
-    </features>
-
-    <features id="layer_1:horizontal_3" optional="true" name="Layer 1 - Node 3">
-      <features id="layer_2c:horizontal_1" optional="false" name="Layer 2c - Node 1">
-        <features id="layer_3:horizontal_1" optional="true" name="Layer 3 - Node 1"/>
-        <features id="layer_3:horizontal_2" optional="false" name="Layer 3 - Node 2"/>
-        <features id="layer_3:horizontal_3" optional="true" name="Layer 3 - Node 3"/>
+  <root id="root_0" optional="false" name="layer_0:root">
+    <groups id="group_1" name="layer_1:Group1" type="TRUE" lowerBound="0" upperBound="2">
+      <features id="node_1" optional="false" name="layer_1:Nodde1">
+      
+      	<groups id="group_3" name="layer_2:Group1" type="TRUE" lowerBound="0" upperBound="2">
+      		<features id="node_5" optional="false" name="layer_2:Nodde1"/>
+      		<features id="node_6" optional="false" name="layer_2:Nodde2"/>
+      	</groups>
+      	
       </features>
-      <features id="layer_2c:horizontal_2" optional="true" name="Layer 2c - Node 2"/>
-      <features id="layer_2c:horizontal_3" optional="false" name="Layer 2c - Node 3"/>
-    </features>
+      <features id="node_2" optional="false" name="layer_1:Nodde2"/>
+    </groups>
 
+    <groups id="group_2" name="layer_1:Group2" type="TRUE" lowerBound="0" upperBound="2">
+      <features id="node_3" optional="false" name="layer_1:Nodde3"/>
+      <features id="node_4" optional="false" name="layer_1:Nodde4">
+      	<groups id="group_4" name="layer_2:Group2" type="TRUE" lowerBound="0" upperBound="2">
+      		<features id="node_7" optional="false" name="layer_2:Nodde3"/>
+      		<features id="node_8" optional="false" name="layer_2:Nodde4"/>
+      	</groups>
+      </features>
+    </groups>
   </root>
 
 </featJAR:FeatureModel>

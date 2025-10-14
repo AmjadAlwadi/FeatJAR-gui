@@ -204,13 +204,13 @@ public interface FeatJARPackage extends EPackage {
 	int FEATURE__GROUP_IN = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Parent Of Group</b></em>' reference list.
+	 * The feature id for the '<em><b>Groups</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FEATURE__PARENT_OF_GROUP = IDENTIFIABLE_FEATURE_COUNT + 1;
+	int FEATURE__GROUPS = IDENTIFIABLE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Optional</b></em>' attribute.
@@ -323,13 +323,13 @@ public interface FeatJARPackage extends EPackage {
 	int GROUP__NAME = IDENTIFIABLE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Made Of</b></em>' reference list.
+	 * The feature id for the '<em><b>Features</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GROUP__MADE_OF = IDENTIFIABLE_FEATURE_COUNT + 0;
+	int GROUP__FEATURES = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Group Parent</b></em>' reference.
@@ -471,15 +471,15 @@ public interface FeatJARPackage extends EPackage {
 	EReference getFeature_GroupIn();
 
 	/**
-	 * Returns the meta object for the reference list '{@link featJAR.Feature#getParentOfGroup <em>Parent Of Group</em>}'.
+	 * Returns the meta object for the reference list '{@link featJAR.Feature#getGroups <em>Groups</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Parent Of Group</em>'.
-	 * @see featJAR.Feature#getParentOfGroup()
+	 * @return the meta object for the reference list '<em>Groups</em>'.
+	 * @see featJAR.Feature#getGroups()
 	 * @see #getFeature()
 	 * @generated
 	 */
-	EReference getFeature_ParentOfGroup();
+	EReference getFeature_Groups();
 
 	/**
 	 * Returns the meta object for the attribute '{@link featJAR.Feature#isOptional <em>Optional</em>}'.
@@ -524,15 +524,15 @@ public interface FeatJARPackage extends EPackage {
 	EClass getGroup();
 
 	/**
-	 * Returns the meta object for the reference list '{@link featJAR.Group#getMadeOf <em>Made Of</em>}'.
+	 * Returns the meta object for the reference list '{@link featJAR.Group#getFeatures <em>Features</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Made Of</em>'.
-	 * @see featJAR.Group#getMadeOf()
+	 * @return the meta object for the reference list '<em>Features</em>'.
+	 * @see featJAR.Group#getFeatures()
 	 * @see #getGroup()
 	 * @generated
 	 */
-	EReference getGroup_MadeOf();
+	EReference getGroup_Features();
 
 	/**
 	 * Returns the meta object for the reference '{@link featJAR.Group#getGroupParent <em>Group Parent</em>}'.
@@ -672,12 +672,12 @@ public interface FeatJARPackage extends EPackage {
 		EReference FEATURE__GROUP_IN = eINSTANCE.getFeature_GroupIn();
 
 		/**
-		 * The meta object literal for the '<em><b>Parent Of Group</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Groups</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference FEATURE__PARENT_OF_GROUP = eINSTANCE.getFeature_ParentOfGroup();
+		EReference FEATURE__GROUPS = eINSTANCE.getFeature_Groups();
 
 		/**
 		 * The meta object literal for the '<em><b>Optional</b></em>' attribute feature.
@@ -716,12 +716,12 @@ public interface FeatJARPackage extends EPackage {
 		EClass GROUP = eINSTANCE.getGroup();
 
 		/**
-		 * The meta object literal for the '<em><b>Made Of</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Features</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference GROUP__MADE_OF = eINSTANCE.getGroup_MadeOf();
+		EReference GROUP__FEATURES = eINSTANCE.getGroup_Features();
 
 		/**
 		 * The meta object literal for the '<em><b>Group Parent</b></em>' reference feature.

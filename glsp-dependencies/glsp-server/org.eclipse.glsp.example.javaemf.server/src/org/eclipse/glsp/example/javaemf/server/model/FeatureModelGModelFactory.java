@@ -19,6 +19,7 @@ package org.eclipse.glsp.example.javaemf.server.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.glsp.example.javaemf.server.FeatureModelTypes;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureTreeLayouter.FeatureSubtreeResult;
@@ -43,6 +44,7 @@ import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
 import featJAR.Constraint;
 import featJAR.Feature;
 import featJAR.FeatureModel;
+import featJAR.Group;
 
 public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
@@ -91,7 +93,7 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
       FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
       GGraph graph = GGraph.class.cast(newRoot);
-      Feature emfRoot = emfFeatureModel.getRoot();
+      Feature emfRoot = emfFeatureModel.getRoot().get(0);
 
       gElements.clear();
       gExpressions.clear();
@@ -151,17 +153,19 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TreeNode current_node = new TreeNode(gFeature.getId());
 
       // Rendering children nodes recursively
-      int children_number = feature.getFeatures().size();
+      // int children_number = feature.getParentOfGroup().;
+      EList<Group> g = feature.getGroups();
 
-      for (Feature child : feature.getFeatures()) {
+      for (Group Flist : g) {
+         for (Feature child : Flist.getFeatures()) {
 
-         FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
+            FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
 
-         // Add child in TreeLayouter
-         current_node.addChild(gChild.treeNode);
-
-         // Connect parent and child with an edge
-         createEdge(feature, child, gFeature, gChild.gNode);
+            // Add child in TreeLayouter
+            current_node.addChild(gChild.treeNode);
+            // Connect parent and child with an edge
+            createEdge(feature, child, gFeature, gChild.gNode);
+         }
       }
 
       gElements.add(gFeature);

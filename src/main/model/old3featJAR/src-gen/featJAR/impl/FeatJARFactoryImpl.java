@@ -56,12 +56,8 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-		case FeatJARPackage.FEATURE_MODEL:
-			return createFeatureModel();
 		case FeatJARPackage.FEATURE:
 			return createFeature();
-		case FeatJARPackage.CONSTRAINT:
-			return createConstraint();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -73,31 +69,9 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	 * @generated
 	 */
 	@Override
-	public FeatureModel createFeatureModel() {
-		FeatureModelImpl featureModel = new FeatureModelImpl();
-		return featureModel;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Feature createFeature() {
 		FeatureImpl feature = new FeatureImpl();
 		return feature;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Constraint createConstraint() {
-		ConstraintImpl constraint = new ConstraintImpl();
-		return constraint;
 	}
 
 	/**

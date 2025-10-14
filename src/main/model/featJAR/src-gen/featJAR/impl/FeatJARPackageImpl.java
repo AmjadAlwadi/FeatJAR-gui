@@ -209,7 +209,7 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getFeature_ParentOfGroup() {
+	public EReference getFeature_Groups() {
 		return (EReference) featureEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -259,7 +259,7 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 	 * @generated
 	 */
 	@Override
-	public EReference getGroup_MadeOf() {
+	public EReference getGroup_Features() {
 		return (EReference) groupEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -343,14 +343,14 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 
 		featureEClass = createEClass(FEATURE);
 		createEReference(featureEClass, FEATURE__GROUP_IN);
-		createEReference(featureEClass, FEATURE__PARENT_OF_GROUP);
+		createEReference(featureEClass, FEATURE__GROUPS);
 		createEAttribute(featureEClass, FEATURE__OPTIONAL);
 
 		constraintEClass = createEClass(CONSTRAINT);
 		createEAttribute(constraintEClass, CONSTRAINT__EXPRESSION);
 
 		groupEClass = createEClass(GROUP);
-		createEReference(groupEClass, GROUP__MADE_OF);
+		createEReference(groupEClass, GROUP__FEATURES);
 		createEReference(groupEClass, GROUP__GROUP_PARENT);
 		createEAttribute(groupEClass, GROUP__TYPE);
 		createEAttribute(groupEClass, GROUP__LOWER_BOUND);
@@ -412,9 +412,9 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 		initEReference(getFeature_GroupIn(), this.getGroup(), null, "groupIn", null, 1, 1, Feature.class, !IS_TRANSIENT,
 				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
 				IS_ORDERED);
-		initEReference(getFeature_ParentOfGroup(), this.getGroup(), null, "parentOfGroup", null, 0, -1, Feature.class,
-				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getFeature_Groups(), this.getGroup(), null, "groups", null, 0, -1, Feature.class, !IS_TRANSIENT,
+				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
 		initEAttribute(getFeature_Optional(), ecorePackage.getEBoolean(), "optional", null, 0, 1, Feature.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -425,9 +425,9 @@ public class FeatJARPackageImpl extends EPackageImpl implements FeatJARPackage {
 				!IS_DERIVED, IS_ORDERED);
 
 		initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getGroup_MadeOf(), this.getFeature(), null, "madeOf", null, 1, -1, Group.class, !IS_TRANSIENT,
-				!IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-				IS_ORDERED);
+		initEReference(getGroup_Features(), this.getFeature(), null, "features", null, 1, -1, Group.class,
+				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getGroup_GroupParent(), this.getFeature(), null, "groupParent", null, 1, 1, Group.class,
 				!IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
 				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
