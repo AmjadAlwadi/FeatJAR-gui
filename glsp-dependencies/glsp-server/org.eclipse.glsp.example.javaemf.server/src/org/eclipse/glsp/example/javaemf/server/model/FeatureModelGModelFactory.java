@@ -106,8 +106,14 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       // Autolayouting the feature tree
       layoutFeatureTree(gRoot);
 
-      createConstraintLegend(emfFeatureModel.getConstraints(),
-         GraphUtil.point(gRoot.gNode.getPosition().getX() - 200, -200));
+      // --- NEW: place constraints box under the rightmost (last) leaf, centered horizontally ---
+      TreeNode rootTree = FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode);
+      double marginY = 160; // tweak spacing below the last leaf
+      FeatureTreeLayouter.Point anchor = FeatureTreeLayouter.computeAnchorBelowRightmostLeaf(rootTree, nodeWidth,
+         nodeHeight, marginY);
+
+      createConstraintLegend(emfFeatureModel.getConstraints(), GraphUtil.point(anchor.x, anchor.y));
+      // -----------------------------------------------------------------------------------------
 
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(gEdges);
@@ -153,7 +159,6 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TreeNode current_node = new TreeNode(gFeature.getId());
 
       // Rendering children nodes recursively
-      // int children_number = feature.getParentOfGroup().;
       EList<Group> g = feature.getGroups();
 
       for (Group Flist : g) {
@@ -228,18 +233,26 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    // }
 
    // Create a box with all existing constraints as strings
+   // coords is treated as: (centerX, topY) anchor under the rightmost leaf
    protected void createConstraintLegend(final List<Constraint> constraints, final GPoint coords) {
 
-      int dynamic_shift = 20 * constraints.size();
-      int static_shift = 100;
+      // Calculate a sane size based on content
+      int lines = 1 /* title */ + 1 /* first sep */ + (constraints.size() * 2);
+      int lineHeight = 20;
+      int padding = 40;
+      int legendHeight = Math.max(200, lines * lineHeight + padding);
+      int legendWidth = 500; // fixed width; adjust as needed
+
       int id = 0;
 
-      GPoint legend_position = GraphUtil.copy(coords);
-      legend_position.setY(legend_position.getY() - dynamic_shift - static_shift);
+      // Center horizontally on coords.getX(), place top at coords.getY()
+      double topLeftX = coords.getX() - (legendWidth / 2.0);
+      double topLeftY = coords.getY();
+
       GNodeBuilder legendBuilder = new GNodeBuilder("node:rectangle")
          .id("cross-tree-contraints")
-         .size(GraphUtil.dimension(500, 800))
-         .position(legend_position)
+         .size(GraphUtil.dimension(legendWidth, legendHeight))
+         .position(GraphUtil.point(topLeftX, topLeftY))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(Node_type.ROOT.cssClass());
 
@@ -254,9 +267,8 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       }
 
       GNode legend = legendBuilder.build();
-      legend.setPosition(GraphUtil.point(legend.getPosition().getX() - legend.getSize().getWidth() + nodeWidth,
-         legend.getPosition().getY()));
 
+      // No extra post-build shifting needed; it's already centered & placed
       gElements.add(legend);
 
    }

@@ -43,6 +43,22 @@ public class FeatureTreeLayouter {
       }
    }
 
+   /** Lightweight point for returning coordinates without extra deps. */
+   public static class Point {
+      public final double x;
+      public final double y;
+
+      public Point(final double x, final double y) {
+         this.x = x;
+         this.y = y;
+      }
+
+      @Override
+      public String toString() {
+         return "Point(" + x + ", " + y + ")";
+      }
+   }
+
    public static class LayoutContext {
       public double nextX = 0; // keeps track of horizontal position
    }
@@ -97,7 +113,70 @@ public class FeatureTreeLayouter {
 
    public static void clear() {
       allTreeNodes.clear();
-
    }
 
+   // =========================
+   // 🔽 NEW: Helper functions
+   // =========================
+
+   /**
+    * Returns the "last child" in display order: repeatedly takes the last child
+    * of each node until a leaf is reached. Returns null if root is null.
+    */
+   public static TreeNode findRightmostLeaf(final TreeNode root) {
+      if (root == null) {
+         return null;
+      }
+      TreeNode current = root;
+      while (!current.children.isEmpty()) {
+         current = current.children.get(current.children.size() - 1);
+      }
+      return current;
+   }
+
+   /**
+    * Computes an anchor point centered horizontally under the rightmost leaf.
+    *
+    * @param root       The layout tree root (from mapGNodeToTreeNode(gRootNode)).
+    * @param nodeWidth  The width used for feature nodes in layout.
+    * @param nodeHeight The height used for feature nodes in layout.
+    * @param marginY    Additional vertical gap below the leaf.
+    * @return Point where x = center under the leaf, y = bottom + margin.
+    */
+   public static Point computeAnchorBelowRightmostLeaf(final TreeNode root,
+      final double nodeWidth,
+      final double nodeHeight,
+      final double marginY) {
+      TreeNode leaf = findRightmostLeaf(root);
+      if (leaf == null) {
+         return new Point(0, 0);
+      }
+      double centerX = leaf.x + (nodeWidth / 2.0);
+      double bottomY = leaf.y + nodeHeight + marginY;
+      return new Point(centerX, bottomY);
+   }
+
+   /**
+    * Computes the TOP-LEFT position to place a rectangular legend of given size
+    * so that it is horizontally centered under the rightmost leaf.
+    *
+    * @param root         The layout tree root.
+    * @param legendWidth  The legend's width.
+    * @param legendHeight The legend's height (not used for centering, but handy).
+    * @param nodeWidth    The feature node width used in layout.
+    * @param nodeHeight   The feature node height used in layout.
+    * @param marginY      Vertical margin below the leaf.
+    * @return Point = top-left for the legend rectangle.
+    */
+   public static Point computeLegendTopLeftUnderRightmostLeaf(final TreeNode root,
+      final double legendWidth,
+      final double legendHeight,
+      final double nodeWidth,
+      final double nodeHeight,
+      final double marginY) {
+      Point anchor = computeAnchorBelowRightmostLeaf(root, nodeWidth, nodeHeight, marginY);
+      double topLeftX = anchor.x - (legendWidth / 2.0);
+      double topLeftY = anchor.y; // place top edge at anchor; add extra offset if desired
+      return new Point(topLeftX, topLeftY);
+   }
 }
