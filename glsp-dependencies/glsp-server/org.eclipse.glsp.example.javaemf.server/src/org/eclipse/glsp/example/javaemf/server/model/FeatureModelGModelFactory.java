@@ -231,10 +231,9 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
       GNode constraintNode = new GNodeBuilder(type.shapeType())
          .id(idGenerator.getOrCreateId(parent_feature) + "_conasdtraint")
-         // .addCssClass(Node_type.ROOT.cssClass())
          .position(
-            GraphUtil.point(-200, -200))
-         .size(GraphUtil.dimension(50, 50))
+            GraphUtil.point(-30, 0))
+         .size(GraphUtil.dimension(0.1, 0.1))
          .build();
 
       gElements.add(constraintNode);

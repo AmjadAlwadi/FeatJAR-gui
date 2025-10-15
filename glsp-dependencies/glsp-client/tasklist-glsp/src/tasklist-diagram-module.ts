@@ -21,9 +21,9 @@ const taskListDiagramModule = new ContainerModule((bind, unbind, isBound, rebind
     const context = { bind, isBound };
     configureDefaultModelElements(context);
 
-    configureModelElement(context, 'new-shape-type', GNode, xorGroup);
-    configureModelElement(context, 'new-shape-type', GNode, trueGroup);
-    configureModelElement(context, 'new-shape-type', GNode, orGroup);
+    configureModelElement(context, 'xorGroup', GNode, xorGroup);
+    configureModelElement(context, 'trueGroup', GNode, trueGroup);
+    configureModelElement(context, 'orGroup', GNode, orGroup);
 });
 
 export function initializeTasklistDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {

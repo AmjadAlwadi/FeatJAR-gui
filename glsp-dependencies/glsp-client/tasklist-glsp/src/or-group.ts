@@ -1,16 +1,22 @@
-import { ShapeView } from '@eclipse-glsp/client';
+import { GNode, RenderingContext, ShapeView } from '@eclipse-glsp/client';
 import type { VNode } from 'snabbdom';
 import { h } from 'snabbdom';
 
 export class orGroup extends ShapeView {
-    render(): VNode {
+    render(model: GNode, context: RenderingContext): VNode {
+        // Default fallback size if server didn’t set it
+        const width = model.size?.width ?? 80;
+        const height = model.size?.height ?? 60;
+
         return h(
             'svg',
             {
                 attrs: {
-                    width: '800',
-                    height: '600',
-                    xmlns: 'http://www.w3.org/2000/svg'
+                    width,
+                    height,
+                    viewBox: `0 0 800 600`, // use viewBox for scalable rendering
+                    xmlns: 'http://www.w3.org/2000/svg',
+                    preserveAspectRatio: 'xMidYMid meet'
                 }
             },
             [
