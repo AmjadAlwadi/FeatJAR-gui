@@ -1,26 +1,29 @@
 import {
     configureDefaultModelElements,
+    configureModelElement,
     ConsoleLogger,
     ContainerConfiguration,
+    GNode,
     initializeDiagramContainer,
     LogLevel,
-    TYPES,
-    configureModelElement,
-    GNode
+    TYPES
 } from '@eclipse-glsp/client';
 import { Container, ContainerModule } from 'inversify';
 import '../css/diagram.css';
-import { MyCustomShapeView } from './my-custom-shape-view';
+import { orGroup } from './or-group';
+import { trueGroup } from './true-group';
+import { xorGroup } from './xor-group';
 
 const taskListDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
 
-    const context = { bind, isBound }; // ✅ only these are needed
+    const context = { bind, isBound };
     configureDefaultModelElements(context);
 
-    // ✅ Register your custom shape (older GLSP API)
-    configureModelElement(context, 'new-shape-type', GNode, MyCustomShapeView);
+    configureModelElement(context, 'new-shape-type', GNode, xorGroup);
+    configureModelElement(context, 'new-shape-type', GNode, trueGroup);
+    configureModelElement(context, 'new-shape-type', GNode, orGroup);
 });
 
 export function initializeTasklistDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {

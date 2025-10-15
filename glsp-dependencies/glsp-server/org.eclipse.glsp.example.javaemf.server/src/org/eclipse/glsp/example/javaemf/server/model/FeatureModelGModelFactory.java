@@ -86,7 +86,17 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       OR,
       XOR,
       SPECIAL,
-      TRUE,
+      TRUE;
+
+      public String shapeType() {
+         return switch (this) {
+            case OR -> "orGroup";
+            case XOR -> "xorGroup";
+            case SPECIAL -> "special";
+            case TRUE -> "trueGroup";
+         };
+
+      }
    }
 
    @Override
@@ -106,8 +116,10 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       // Autolayouting the feature tree
       layoutFeatureTree(gRoot);
 
-      createConstraintLegend(emfFeatureModel.getConstraints(),
-         GraphUtil.point(gRoot.gNode.getPosition().getX() - 200, -200));
+      createGroupConstraint(Group_type.OR, emfRoot, gRoot.gNode);
+
+      // createConstraintLegend(emfFeatureModel.getConstraints(),
+      // GraphUtil.point(gRoot.gNode.getPosition().getX() - 200, -200));
 
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(gEdges);
@@ -209,23 +221,25 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-   // // Create the graphical representation of the constraint
-   // protected void createGroupConstraint(final Group_type type, final Feature parent_feature,
-   // final GNode parent_node) {
-   //
-   // int shift = 30;
-   // GPoint current_position = GraphUtil.copy(parent_node.getPosition());
-   // current_position.setY(current_position.getY() + shift);
-   //
-   // GNode constraintNode = new GNodeBuilder("node:circle")
-   // .id(idGenerator.getOrCreateId(parent_feature) + "_contraint")
-   // .addCssClass(Node_type.ROOT.cssClass())
-   // .position(
-   // GraphUtil.point(current_position.getX() + node_width / 2, current_position.getY() - 15))
-   // .size(GraphUtil.dimension(30, 30))
-   // .build();
-   //
-   // }
+   // Create the graphical representation of the constraint
+   protected void createGroupConstraint(final Group_type type, final Feature parent_feature,
+      final GNode parent_node) {
+
+      // int shift = 30;
+      // GPoint current_position = GraphUtil.copy(parent_node.getPosition());
+      // current_position.setY(current_position.getY() + shift);
+
+      GNode constraintNode = new GNodeBuilder(type.shapeType())
+         .id(idGenerator.getOrCreateId(parent_feature) + "_conasdtraint")
+         // .addCssClass(Node_type.ROOT.cssClass())
+         .position(
+            GraphUtil.point(-200, -200))
+         .size(GraphUtil.dimension(50, 50))
+         .build();
+
+      gElements.add(constraintNode);
+
+   }
 
    // Create a box with all existing constraints as strings
    protected void createConstraintLegend(final List<Constraint> constraints, final GPoint coords) {

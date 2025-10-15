@@ -42,6 +42,10 @@ module.exports = {
                 use: ['ts-loader']
             },
             {
+                test: /\.svg$/,
+                type: 'asset/resource'
+            },
+            {
                 test: /\.js$/,
                 use: ['source-map-loader'],
                 enforce: 'pre'
