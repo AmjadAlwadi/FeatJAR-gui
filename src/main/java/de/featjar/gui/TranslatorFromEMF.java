@@ -51,10 +51,20 @@ public class TranslatorFromEMF {
 			//adding to the model
 			if (stop.compareTo("feat") == 0) {
 				newFeatureModel.mutate().setName(name);
-		        newFeatureModel.mutate().setDescription("awesome description");
+		        newFeatureModel.mutate().setDescription("Created/edited with GLSP");
 		        //System.out.println("created model");
 			} else {
 				throw new IOException();
+			}
+			
+			//skipping lines
+			readEMFFileCapsulatedWord(reader, '"');
+			readEMFFileCapsulatedWord(reader, '"');
+			readEMFFileCapsulatedWord(reader, '"');
+			
+			//check for an early end
+			if (readEMFFileCheckingClosingTag(reader)) {
+				return newFeatureModel;
 			}
 
 			//getting the roots (which should only be one)
@@ -79,16 +89,18 @@ public class TranslatorFromEMF {
 	public static void FMaddRoot(IFeatureModel goal, BufferedReader reader) throws IOException {
 		String name = readEMFFileCapsulatedWord(reader, '"');
 		name = readEMFFileCapsulatedWord(reader, '"');
-		name = readEMFFileCapsulatedWord(reader, '"');
 		IFeature rootFeature = goal.mutate().addFeature(name);
 		IFeatureTree rootTree = goal.mutate().addFeatureTreeRoot(rootFeature);
-		//System.out.println("added root");
+		
+		if (readEMFFileCheckingClosingTag(reader)) {
+			return;
+		}
 
 		//getting the kids 
 		String stop;
 		while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
-			if (stop.compareTo("feat") == 0) {
-				FMaddFeature(goal, rootTree, reader);
+			if (stop.compareTo("grou") == 0) {
+				FMaddGroup(goal, rootTree, reader);//GROUPS
 			} else if (stop.compareTo("/roo") == 0) {
 				return;
 			} else {
@@ -97,42 +109,76 @@ public class TranslatorFromEMF {
 		}
 		throw new IOException();
 	}
+	
+	public static void FMaddGroup(IFeatureModel goal, IFeatureTree hook, BufferedReader reader) {
+		String type = readEMFFileCapsulatedWord(reader, '"');
+		type = readEMFFileCapsulatedWord(reader, '"');
+		type = readEMFFileCapsulatedWord(reader, '"');
+		String low = readEMFFileCapsulatedWord(reader, '"');
+		String up = readEMFFileCapsulatedWord(reader, '"');
+		
+		try {
+			if (readEMFFileCheckingClosingTag(reader)) {
+				return;
+			}
+			
+			//adding other features first
+			String stop;
+			while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
+				if (stop.compareTo("feat") == 0) {
+					FMaddFeature(goal, hook, reader);
+				} else if (stop.compareTo("/gro") == 0) {
+					break;
+				} else {
+					throw new IOException();
+				}
+			}
+			
+			//adding group to feature
+			if (type.compareTo("XOR") == 0) {
+				hook.mutate().addAlternativeGroup();
+			} else if (type.compareTo("OR") == 0) {
+				hook.mutate().addOrGroup();
+			} else if (type.compareTo("TRUE") == 0) {
+				hook.mutate().addAndGroup();
+			} else {
+				hook.mutate().addCardinalityGroup(Integer.parseInt(low), Integer.parseInt(up));
+			}
+			
+		} catch (IOException e) {
+			System.err.println("Error reading");
+		}
+	}
 
 	public static void FMaddFeature(IFeatureModel goal, IFeatureTree hook, BufferedReader reader) throws IOException {
-		String optional = readEMFFileCapsulatedWord(reader, '"');
-		optional = readEMFFileCapsulatedWord(reader, '"');
 		String name = readEMFFileCapsulatedWord(reader, '"');
+		name = readEMFFileCapsulatedWord(reader, '"');
+		String optional = readEMFFileCapsulatedWord(reader, '"');
+		
 		IFeature feature = goal.mutate().addFeature(name);
 		IFeatureTree tree = hook.mutate().addFeatureBelow(feature);
 		
 		if (optional.compareTo("true") == 0) {
 			tree.mutate().makeOptional();
 		}
-		//System.out.println("added feature");
-
-		int character;
+		
 		try {
-			if ((character = reader.read()) != -1) {
-			    char ch = (char) character;
-			    //returning to parent, when no further children
-			    if(ch == '/') {
-			    	return;
-			    }
-			    String stop;
-			    while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
-			    	//continue adding children...
-			    	if (stop.compareTo("feat") == 0) {
-						FMaddFeature(goal, tree, reader);
-					//unless closing element is read
-					} else if (stop.compareTo("/fea") == 0) {
-						return;
-					} else {
-						throw new IOException();
-					}
-			    }
-			} else {
-				throw new IOException();
+			if (readEMFFileCheckingClosingTag(reader)) {
+				return;
 			}
+			
+			String stop;
+		    while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
+		    	//continue adding children...
+		    	if (stop.compareTo("grou") == 0) {
+					FMaddGroup(goal, tree, reader);
+				//unless closing element is read
+				} else if (stop.compareTo("/fea") == 0) {
+					return;
+				} else {
+					throw new IOException();
+				}
+		    }
 		} catch (IOException e) {
 			System.err.println("Error reading the file");
 		}
@@ -142,7 +188,7 @@ public class TranslatorFromEMF {
 		IConstraint constraint1 = goal.mutate().addConstraint(Expressions.True);
 	}
 
-	//getting the word thats between the next instance of walls (like ", as in "word")
+	//getting the word thats between the next instance of walls (like ", as in getting word from "word")
 	public static String readEMFFileCapsulatedWord(BufferedReader reader, char walls) {
 		StringBuilder result = new StringBuilder();
 		int character;
@@ -192,5 +238,23 @@ public class TranslatorFromEMF {
 			System.err.println("Error reading");
 		}
 		return "";
+	}
+	
+	//checks if either / or > comes next, to determine if the element continues or not
+	public static boolean readEMFFileCheckingClosingTag(BufferedReader reader) throws IOException {
+		int character;
+		try {
+			while((character = reader.read()) != -1) {
+			    char ch = (char) character;
+			    if(ch == '/') {
+			        return true;
+			    } else if (ch == '>') {
+			    	return false;
+			    }
+			}
+		} catch (IOException e) {
+			System.err.println("Error reading");
+		}
+		throw new IOException();
 	}
 }

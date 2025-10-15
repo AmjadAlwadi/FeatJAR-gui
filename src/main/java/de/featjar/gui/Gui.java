@@ -20,6 +20,8 @@
  */
 package de.featjar.gui;
 
+import java.nio.file.Paths;
+
 import de.featjar.base.FeatJAR;
 import de.featjar.base.data.identifier.Identifiers;
 import de.featjar.base.io.IO;
@@ -32,21 +34,6 @@ import de.featjar.feature.model.IFeatureModel;
 import de.featjar.feature.model.IFeatureTree;
 import de.featjar.feature.model.io.uvl.UVLFeatureModelFormat;
 import de.featjar.formula.structure.Expressions;
-
-import de.featjar.gui.TranslatorFromEMF;
-import de.featjar.gui.TranslatorToEMF;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Collection;
-import java.util.List;
 
 public class Gui {
 
@@ -78,21 +65,27 @@ public class Gui {
         IConstraint constraint3 = newFeatureModel.mutate().addConstraint(Expressions.False);
         
         FeatJAR.log().message("\n" + Trees.traverse(rootTree, new TreePrinter()).get());
-
+        
         IFeatureModel loadedFeatureModel = IO.load(
                         Paths.get("../formula/src/testFixtures/resources/formats/uvl/ABC-nAnBnC_01.uvl"),
                         new UVLFeatureModelFormat())
                 .orElseThrow();
-
+        
+	    IFeatureModel loadedFeatureModel2 = IO.load(
+	    		  		Paths.get("../formula/src/testFixtures/resources/formats/uvl/nA_01.uvl"),
+	    		  		new UVLFeatureModelFormat())
+	    		.orElseThrow();
+	    
         FeatJAR.log()
                 .message("\n"
                         + Trees.traverse(loadedFeatureModel.getRoots().get(0), new TreePrinter())
                                 .get());
         
-        //TranslatorToEMF.EMFTranslate(newFeatureModel);
-        //TranslatorToEMF.EMFTranslate(loadedFeatureModel);
-        IFeatureModel myChild = TranslatorFromEMF.FMTranslation("./src/main/java/de/featjar/gui/EMFxmls/@8859e241-f676-4474-953b-42c242071a35.tasklist");
-        
+        TranslatorToEMF.EMFTranslate(newFeatureModel);
+        TranslatorToEMF.EMFTranslate(loadedFeatureModel);
+        TranslatorToEMF.EMFTranslate(loadedFeatureModel2);
+	    
+        IFeatureModel myChild = TranslatorFromEMF.FMTranslation("./src/main/java/de/featjar/gui/EMFxmls/My Model.tasklist");
         IFeatureTree newRoot = myChild.getRoots().get(0);
         FeatJAR.log().message("\n" + Trees.traverse(newRoot, new TreePrinter()).get());
     }

@@ -4,6 +4,10 @@ tasklist-eclipse/app/**
 *.log
 *.ttf
 
+.classpath
+.project
+.settings/
+build/
 bin
 .bin
 target

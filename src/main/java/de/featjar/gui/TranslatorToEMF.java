@@ -20,6 +20,7 @@
  */
 package de.featjar.gui;
 
+import de.featjar.feature.model.FeatureTree.Group;
 import de.featjar.feature.model.IConstraint;
 import de.featjar.feature.model.IFeatureModel;
 import de.featjar.feature.model.IFeatureTree;
@@ -33,19 +34,27 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TranslatorToEMF {
+	private static int idCounter = 0;
+	private static String dir = "./src/main/java/de/featjar/gui/EMFxmls";
+	
+	private static String giveID() {
+		idCounter++;
+		return String.valueOf(idCounter);
+	}
+	
 	public static boolean EMFTranslate(IFeatureModel source) {
     	String name = source.getName().get();
-    	String id = source.getIdentifier().toString();
+    	//String id = source.getIdentifier().toString();
+    	List<IFeatureTree> rootNodes = source.getRoots();
     	
-    	//Creating new File for the GLSP-Client/Server to read
-    	
-    	String filename = "./src/main/java/de/featjar/gui/EMFxmls";
-    	Path path = Paths.get(filename);
+    	//Creating new File and Directory for the GLSP-Client/Server to read
+    	Path path = Paths.get(dir);
     	EMFFileDir(path);
     	
-    	filename = "./src/main/java/de/featjar/gui/EMFxmls/" + name + ".tasklist";
+    	String filename = dir + "/" + name + ".tasklist";
         File file = new File(filename);
         path = Paths.get(filename);
         
@@ -65,128 +74,202 @@ public class TranslatorToEMF {
         try (FileWriter fileWriter = new FileWriter(file, false)) {
             fileWriter.write("");
         } catch (IOException e) {
-        	System.err.println("Error creating" + file.toString());
+        	System.err.println("Error creating" + path.toString());
         }
 
         //writing preamble
         String input = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n"
-        					+ "<featJAR:FeatureModel id=\">" + id + "\" name=\"" + name + "\" "
-        					+ "xmi:version=\"2.0\"\nxmlns:xmi=\"http://www.omg.org/XMI\"\n"
-        					+ "xmlns:featJAR=\"http://www.example.org/featJAR\">\n\n";
+        					+ "<featJAR:FeatureModel\nid=\">" + giveID() + "\"\nname=\"" + name + "\" "
+        					+ "\nxmi:version=\"2.0\"\nxmlns:xmi=\"http://www.omg.org/XMI\""
+        					+ "\nxmlns:featJAR=\"http://www.example.org/featJAR\"";
+        
+        if (rootNodes.isEmpty()) {
+        	input += " />\n\n";
+        } else {
+        	input += " >\n\n";
+        }
+        
         try {
         	Files.writeString(path, input, StandardOpenOption.WRITE);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
+        }
+        
+        if (rootNodes.isEmpty()) {
+        	return true;
         }
 
         //getting the roots (should only be one) and writing them down
-    	List<IFeatureTree> rootNodes = source.getRoots();
     	for (IFeatureTree root : rootNodes) {
-    		EMFaddRoot(root, path, file);
+    		EMFaddRoot(root, path);
     	}
 
     	//getting the constraints
-    	EMFaddConstraints(source, path, file);
+    	EMFaddConstraints(source, path);
 
     	//closing element
     	input = "</featJAR:FeatureModel>";
     	try {
         	Files.writeString(path, input, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
         }
 
     	return true;
 	}
 
-	public static void EMFaddRoot(IFeatureTree root, Path path, File file) {
+	public static void EMFaddRoot(IFeatureTree root, Path path) {
 		//fetching info about root
+		//String rootId = root.getFeature().getIdentifier().toString();
 		String rootName = root.getFeature().getName().get();
-		String rootId = root.getFeature().getIdentifier().toString();
-
+		List<Group> rootsGroups = root.getChildrenGroups();
+		
 		//writing info down
-		String input = "<root\nid = \"" + rootId + "\"\noptional=\"false\"\nname=\"" + rootName + "\">\n\n";
+		String input = "<root id = \"" + giveID() + "\" name = \"" + rootName + "\" optional = \"false\"";
+		if (rootsGroups.isEmpty()) {
+			input += " />\n\n";
+		} else {
+			input += " >\n\n";
+		}
+		
 		try {
         	Files.writeString(path, input, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
         }
-
-		//getting the children
-		List<? extends IFeatureTree> childTree = root.getChildren();
-		for (IFeatureTree feature : childTree) {
-			EMFaddFeatures(feature, path, file);
+		
+		//check for early return
+		if(rootsGroups.isEmpty()) {
+    		return;
+    	}
+		
+		//going over the groups of the root
+		for (int i = 0; i < rootsGroups.size(); i++) {
+			EMFaddGroups(rootsGroups.get(i), root, i, path);
 		}
-
+		
 		//closing element
 		input = "</root>\n\n";
 		try {
 	    	Files.writeString(path, input, StandardOpenOption.APPEND);
 	    } catch (IOException e) {
-	        System.err.println("Error creating" + file.toString());
+	        System.err.println("Error creating" + path.toString());
 	    }
 	}
+	
+	
+	public static void EMFaddGroups(Group group, IFeatureTree tree, int groupID, Path path) {
+		//int groupId = tree.getParentGroupID();
+		String groupName = group.toString();
+		String groupType;
+		List<IFeatureTree> siblings = tree.getChildren().stream()
+				.filter(t -> t.getParentGroupID() == groupID)
+				.collect(Collectors.toList());
+		
+		//determining type of group
+		if (group.isAlternative()) {
+			groupType = "XOR";
+		} else if (group.isOr()) {
+			groupType = "OR";
+		} else if (group.isAnd()) {
+			groupType = "TRUE";
+		} else {
+			groupType = "SPECIAL";
+		}
+		
+		int lower = group.getLowerBound();
+		int upper = group.getUpperBound();
+		
+		String input = "<groups id = \"" + giveID() + "\" name = \"" + groupName
+							+ "\" type = \"" + groupType + "\" lowerBound = \"" + String.valueOf(lower)
+							+ "\" upperBound = \"" + String.valueOf(upper) + "\"";
+		
+		if (siblings.isEmpty()) {
+			input += " />\n\n";
+		} else {
+			input += " >\n\n";
+		}
+		
+		try {
+        	Files.writeString(path, input, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.err.println("Error creating" + path.toString());
+        }
+		
+		if (siblings.isEmpty()) {
+			return;
+		}
+		
+		//going over the all features in the group
+		for (IFeatureTree feature : siblings) {
+			EMFaddFeatures(feature, path);
+		}
+		
+		input = "</groups>\n\n";
+		try {
+			Files.writeString(path, input, StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			System.err.println("Error creating" + path.toString());
+		}
+	}
 
-	public static void EMFaddFeatures(IFeatureTree feature, Path path, File file) {
+	public static void EMFaddFeatures(IFeatureTree feature, Path path) {
 		//fetching info about node 
+		//String featureId = feature.getFeature().getIdentifier().toString();
 		String featureName = feature.getFeature().getName().get();
-		String featureId = feature.getFeature().getIdentifier().toString();
 		boolean optional = feature.isOptional();
-		int amountChildren = feature.getChildrenCount();
 
 		//writing info down
-		String input = "<features\nid = \"" + featureId + "\"\noptional=\"" + optional + "\"\nname=\"" + featureName + "\"";
-		try {
-        	Files.writeString(path, input, StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
-        }
-
-		//determine if we can already close the element
-    	if(amountChildren == 0) {
-    		input = "/>\n\n";
+		String input = "<features id = \"" + giveID() + "\" name = \"" + featureName + "\" optional = \"" + optional + "\"";
+		if(feature.getChildrenCount() == 0) {
+    		input += " />\n";
     	} else {
-	    	input = ">\n\n";
+	    	input += " >\n";
     	}
-
+		
 		try {
         	Files.writeString(path, input, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
         }
 
-		//getting the children
-		List<? extends IFeatureTree> childTree = feature.getChildren();
-    	for (IFeatureTree child : childTree) {
-    		EMFaddFeatures(child, path, file);
+		if(feature.getChildrenCount() == 0) {
+    		return;
     	}
 
-    	//determine if we should already close the element
-    	if(amountChildren != 0) {
-    		input = "</features>\n\n";
-    		try {
-            	Files.writeString(path, input, StandardOpenOption.APPEND);
-            } catch (IOException e) {
-                System.err.println("Error creating" + file.toString());
-            }
+		//getting the children and groups
+		List<Group> childGroups = feature.getChildrenGroups();
+		for (int i = 0; i < childGroups.size(); i++) {
+    		EMFaddGroups(childGroups.get(i), feature, i, path);
     	}
+
+    	//closing element
+		input = "</features>\n\n";
+		try {
+        	Files.writeString(path, input, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.err.println("Error creating" + path.toString());
+        }
     }
+	
 
-	public static void EMFaddConstraints(IFeatureModel source, Path path, File file) {
+	public static void EMFaddConstraints(IFeatureModel source, Path path) {
 		//fetching constraints
 		Collection<IConstraint> cons = source.getConstraints();
 		for (IConstraint con : cons) {
-			String conName = con.getName().get();
-			String conId = con.getIdentifier().toString();
-			String input = "<constraints\nid = \"" + conId + "\"\nname=\"" + conName + "\"/>\n\n";
+			//String conId = con.getIdentifier().toString();
+			String conName = con.getFormula().toString();
+			String input = "<constraints id = \"" + giveID() + "\" name = \"" + conName + "\" />\n";
+			
 			try {
 	        	Files.writeString(path, input, StandardOpenOption.APPEND);
 	        } catch (IOException e) {
-	            System.err.println("Error creating" + file.toString());
+	            System.err.println("Error creating" + path.toString());
 	        }
 		}
     }
 	
+	//makes a directory for the files (next to main file currently)
 	public static void EMFFileDir(Path path) {
 		try {
 			Files.createDirectories(path);
