@@ -1,42 +1,201 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<featJAR:FeatureModel 
-    id="featuremodel_001" 
-    name="LayeredFeatureModel" 
+<featJAR:FeatureModel
+    id="featuremodel_001"
+    name="LayeredFeatureModel HUGE"
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:featJAR="http://www.example.org/featJAR">
 
-  <!-- Constraints Section -->
+  <!-- Constraints -->
   <constraints id="const_001" name="A and B and C"/>
   <constraints id="const_002" name="A or B and not C"/>
   <constraints id="const_003" name="(A and B) or (C and D)"/>
   <constraints id="const_004" name="FeatureX implies FeatureY"/>
+  <constraints id="const_005" name="(Node12 -> Node22)"/>
+  <constraints id="const_006" name="not (Node33 and Node44)"/>
+  <constraints id="const_007" name="(Node70 xor Node71)"/>
+  <constraints id="const_008" name="Node90 -> (Node34 and Node45)"/>
 
   <!-- Root -->
-
   <root id="root_0" optional="false" name="layer_0:root">
-    <groups id="group_1" name="layer_1:Group1" type="TRUE" lowerBound="0" upperBound="2">
+
+    <!-- ============ layer_1:Group1 ============ -->
+    <groups id="group_1" name="layer_1:Group1" type="TRUE" lowerBound="0" upperBound="20">
       <features id="node_1" optional="false" name="layer_1:Nodde1">
-      
-      	<groups id="group_3" name="layer_2:Group1" type="TRUE" lowerBound="0" upperBound="2">
-      		<features id="node_5" optional="false" name="layer_2:Nodde1"/>
-      		<features id="node_6" optional="false" name="layer_2:Nodde2"/>
-      	</groups>
-      	
+        <!-- layer_2:Group1 -->
+        <groups id="group_3" name="layer_2:Group1" type="TRUE" lowerBound="0" upperBound="20">
+          <features id="node_5"  optional="false" name="layer_2:Nodde1">
+            <!-- layer_3:GroupA -->
+            <groups id="group_5" name="layer_3:GroupA" type="TRUE" lowerBound="0" upperBound="20">
+              <features id="node_15" optional="false" name="layer_3:Nodde1"/>
+              <features id="node_16" optional="false" name="layer_3:Nodde2"/>
+              <features id="node_17" optional="false" name="layer_3:Nodde3"/>
+              <features id="node_18" optional="false" name="layer_3:Nodde4"/>
+              <features id="node_28" optional="false" name="layer_3:Nodde5"/>
+              <features id="node_29" optional="false" name="layer_3:Nodde6"/>
+              <features id="node_60a" optional="false" name="layer_3:Nodde7"/>
+              <features id="node_60b" optional="false" name="layer_3:Nodde8"/>
+              <!-- deeper pocket -->
+              <features id="node_30" optional="false" name="layer_3:Nodde9">
+                <groups id="group_8" name="layer_4:GroupA1" type="TRUE" lowerBound="0" upperBound="20">
+                  <features id="node_31" optional="false" name="layer_4:Nodde1"/>
+                  <features id="node_32" optional="false" name="layer_4:Nodde2"/>
+                  <features id="node_33" optional="false" name="layer_4:Nodde3">
+                    <groups id="group_9" name="layer_5:GroupA1a" type="TRUE" lowerBound="0" upperBound="20">
+                      <features id="node_34" optional="false" name="layer_5:Nodde1"/>
+                      <features id="node_35" optional="false" name="layer_5:Nodde2"/>
+                      <features id="node_36" optional="false" name="layer_5:Nodde3"/>
+                      <!-- layer_6 for even more depth -->
+                      <features id="node_90" optional="false" name="layer_6:NoddeDeep1">
+                        <groups id="group_20" name="layer_6:GroupDeep" type="TRUE" lowerBound="0" upperBound="20">
+                          <features id="node_91" optional="false" name="layer_6:NoddeDeep2"/>
+                          <features id="node_92" optional="false" name="layer_6:NoddeDeep3"/>
+                        </groups>
+                      </features>
+                    </groups>
+                  </features>
+                </groups>
+              </features>
+            </groups>
+          </features>
+
+          <!-- widen layer_2 -->
+          <features id="node_6"  optional="false" name="layer_2:Nodde2"/>
+          <features id="node_60" optional="false" name="layer_2:Nodde3"/>
+          <features id="node_13" optional="false" name="layer_2:Nodde4"/>
+          <features id="node_14" optional="false" name="layer_2:Nodde5"/>
+          <features id="node_37" optional="false" name="layer_2:Nodde6"/>
+          <features id="node_38" optional="false" name="layer_2:Nodde7"/>
+          <features id="node_39" optional="false" name="layer_2:Nodde8"/>
+          <features id="node_62" optional="false" name="layer_2:Nodde9"/>
+          <features id="node_63" optional="false" name="layer_2:Nodde10"/>
+        </groups>
       </features>
-      <features id="node_2" optional="false" name="layer_1:Nodde2"/>
+
+      <!-- more layer_1 siblings -->
+      <features id="node_2"  optional="false" name="layer_1:Nodde2"/>
+      <features id="node_11" optional="false" name="layer_1:Nodde5"/>
+      <features id="node_12" optional="false" name="layer_1:Nodde6"/>
+      <features id="node_40" optional="false" name="layer_1:Nodde7"/>
+      <features id="node_41" optional="false" name="layer_1:Nodde8"/>
+      <features id="node_61" optional="false" name="layer_1:Nodde9"/>
+      <features id="node_64" optional="false" name="layer_1:Nodde10"/>
     </groups>
 
-    <groups id="group_2" name="layer_1:Group2" type="TRUE" lowerBound="0" upperBound="2">
+    <!-- ============ layer_1:Group2 ============ -->
+    <groups id="group_2" name="layer_1:Group2" type="TRUE" lowerBound="0" upperBound="20">
       <features id="node_3" optional="false" name="layer_1:Nodde3"/>
       <features id="node_4" optional="false" name="layer_1:Nodde4">
-      	<groups id="group_4" name="layer_2:Group2" type="TRUE" lowerBound="0" upperBound="2">
-      		<features id="node_7" optional="false" name="layer_2:Nodde3"/>
-      		<features id="node_8" optional="false" name="layer_2:Nodde4"/>
-      	</groups>
+        <!-- layer_2:Group2 -->
+        <groups id="group_4" name="layer_2:Group2" type="TRUE" lowerBound="0" upperBound="20">
+          <features id="node_7"  optional="false" name="layer_2:Nodde3"/>
+          <features id="node_8"  optional="false" name="layer_2:Nodde4">
+            <!-- layer_3:GroupB -->
+            <groups id="group_6" name="layer_3:GroupB" type="TRUE" lowerBound="0" upperBound="20">
+              <features id="node_22" optional="false" name="layer_3:Nodde5">
+                <!-- layer_4:GroupC -->
+                <groups id="group_7" name="layer_4:GroupC" type="TRUE" lowerBound="0" upperBound="20">
+                  <features id="node_26" optional="false" name="layer_4:Nodde1"/>
+                  <features id="node_27" optional="false" name="layer_4:Nodde2"/>
+                  <features id="node_42" optional="false" name="layer_4:Nodde3">
+                    <groups id="group_10" name="layer_5:GroupC1" type="TRUE" lowerBound="0" upperBound="20">
+                      <features id="node_43" optional="false" name="layer_5:Nodde1"/>
+                      <features id="node_44" optional="false" name="layer_5:Nodde2"/>
+                      <features id="node_45" optional="false" name="layer_5:Nodde3"/>
+                      <features id="node_46" optional="false" name="layer_5:Nodde4"/>
+                      <!-- a bit deeper on right branch -->
+                      <features id="node_93" optional="false" name="layer_6:NoddeDeep4">
+                        <groups id="group_21" name="layer_6:GroupDeepRight" type="TRUE" lowerBound="0" upperBound="20">
+                          <features id="node_94" optional="false" name="layer_6:NoddeDeep5"/>
+                        </groups>
+                      </features>
+                    </groups>
+                  </features>
+                </groups>
+              </features>
+              <features id="node_23" optional="false" name="layer_3:Nodde6"/>
+              <features id="node_24" optional="false" name="layer_3:Nodde7"/>
+              <features id="node_25" optional="false" name="layer_3:Nodde8"/>
+              <features id="node_47" optional="false" name="layer_3:Nodde9"/>
+              <features id="node_48" optional="false" name="layer_3:Nodde10"/>
+              <features id="node_65" optional="false" name="layer_3:Nodde11"/>
+            </groups>
+          </features>
+
+          <!-- widen layer_2 -->
+          <features id="node_9"  optional="false" name="layer_2:Nodde5"/>
+          <features id="node_10" optional="false" name="layer_2:Nodde6"/>
+          <features id="node_20" optional="false" name="layer_2:Nodde7"/>
+          <features id="node_21" optional="false" name="layer_2:Nodde8"/>
+          <features id="node_49" optional="false" name="layer_2:Nodde9"/>
+          <features id="node_50" optional="false" name="layer_2:Nodde10"/>
+          <features id="node_66" optional="false" name="layer_2:Nodde11"/>
+          <features id="node_67" optional="false" name="layer_2:Nodde12"/>
+        </groups>
       </features>
+
+      <!-- extra layer_1 features -->
+      <features id="node_19" optional="false" name="layer_1:Nodde7"/>
+      <features id="node_51" optional="false" name="layer_1:Nodde9"/>
+      <features id="node_68" optional="false" name="layer_1:Nodde10"/>
     </groups>
+
+    <!-- ============ layer_1:Group3 ============ -->
+    <groups id="group_11" name="layer_1:Group3" type="TRUE" lowerBound="0" upperBound="20">
+      <features id="node_52" optional="false" name="layer_1:Nodde10"/>
+      <features id="node_53" optional="false" name="layer_1:Nodde11">
+        <groups id="group_12" name="layer_2:Group3" type="TRUE" lowerBound="0" upperBound="20">
+          <features id="node_54" optional="false" name="layer_2:Nodde11"/>
+          <features id="node_55" optional="false" name="layer_2:Nodde12"/>
+          <features id="node_56" optional="false" name="layer_2:Nodde13">
+            <groups id="group_13" name="layer_3:GroupD" type="TRUE" lowerBound="0" upperBound="20">
+              <features id="node_57" optional="false" name="layer_3:Nodde11"/>
+              <features id="node_58" optional="false" name="layer_3:Nodde12"/>
+              <features id="node_59" optional="false" name="layer_3:Nodde13"/>
+              <!-- one deeper pocket on far left -->
+              <features id="node_69" optional="false" name="layer_3:Nodde14">
+                <groups id="group_14" name="layer_4:GroupD1" type="TRUE" lowerBound="0" upperBound="20">
+                  <features id="node_70" optional="false" name="layer_4:Nodde14a"/>
+                  <features id="node_71" optional="false" name="layer_4:Nodde14b"/>
+                </groups>
+              </features>
+            </groups>
+          </features>
+          <!-- widen layer_2 of Group3 -->
+          <features id="node_72" optional="false" name="layer_2:Nodde14"/>
+          <features id="node_73" optional="false" name="layer_2:Nodde15"/>
+        </groups>
+      </features>
+      <!-- add breadth -->
+      <features id="node_74" optional="false" name="layer_1:Nodde12"/>
+      <features id="node_75" optional="false" name="layer_1:Nodde13"/>
+    </groups>
+
+    <!-- ============ layer_1:Group4 (brand new, for even more width) ============ -->
+    <groups id="group_15" name="layer_1:Group4" type="TRUE" lowerBound="0" upperBound="20">
+      <features id="node_76" optional="false" name="layer_1:Nodde15"/>
+      <features id="node_77" optional="false" name="layer_1:Nodde16">
+        <groups id="group_16" name="layer_2:Group4" type="TRUE" lowerBound="0" upperBound="20">
+          <features id="node_78" optional="false" name="layer_2:Nodde16"/>
+          <features id="node_79" optional="false" name="layer_2:Nodde17"/>
+          <features id="node_80" optional="false" name="layer_2:Nodde18">
+            <groups id="group_17" name="layer_3:GroupE" type="TRUE" lowerBound="0" upperBound="20">
+              <features id="node_81" optional="false" name="layer_3:Nodde15"/>
+              <features id="node_82" optional="false" name="layer_3:Nodde16"/>
+              <features id="node_83" optional="false" name="layer_3:Nodde17"/>
+              <features id="node_84" optional="false" name="layer_3:Nodde18"/>
+            </groups>
+          </features>
+          <!-- extra width -->
+          <features id="node_85" optional="false" name="layer_2:Nodde19"/>
+          <features id="node_86" optional="false" name="layer_2:Nodde20"/>
+        </groups>
+      </features>
+      <features id="node_87" optional="false" name="layer_1:Nodde17"/>
+      <features id="node_88" optional="false" name="layer_1:Nodde18"/>
+      <features id="node_89" optional="false" name="layer_1:Nodde19"/>
+    </groups>
+
   </root>
 
 </featJAR:FeatureModel>

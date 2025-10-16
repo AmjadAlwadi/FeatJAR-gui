@@ -119,6 +119,45 @@ svg {
   stroke-width: 2px;
   text-shadow: 0 1px 0 rgba(0,0,0,.25);
 }
+/* ===== Feature marker (small circle above the label) ===== */
+
+/* tiny gap above the label */
+.feature-marker { 
+  transform: translateY(2px);
+}
+
+/* common styling (covers class on wrapper or on the shape itself) */
+.feature-marker circle,
+.feature-marker ellipse,
+.feature-marker,
+.feature-marker-optional,
+.feature-marker-mandatory {
+  pointer-events: none;
+  filter: drop-shadow(var(--shadow));
+  transition: transform .05s ease;
+}
+
+/* fallback radius in case size doesn't propagate */
+.feature-marker circle { r: 6; }
+
+/* Optional = filled dot */
+.feature-marker-optional,
+.feature-marker-optional circle,
+.feature-marker-optional ellipse {
+  fill: var(--text-on);
+  stroke: var(--text-on);
+  stroke-width: 2px;
+}
+
+/* Mandatory/root = hollow dot */
+.feature-marker-mandatory,
+.feature-marker-mandatory circle,
+.feature-marker-mandatory ellipse {
+  fill: none;
+  stroke: var(--text-on);
+  stroke-width: 2px;
+}
+
 
 
 
@@ -171,3 +210,38 @@ svg {
   stroke-width: 2px;
   text-shadow: 0 1px 0 rgba(0,0,0,.20);
 }
+
+/* ===== Feature marker (robust) ===== */
+.feature-marker { transform: translateY(2px); }
+
+/* style the actual drawn element, wherever the class ends up */
+.feature-marker circle,
+.feature-marker ellipse,
+.feature-marker-optional circle,
+.feature-marker-optional ellipse,
+.feature-marker-mandatory circle,
+.feature-marker-mandatory ellipse {
+  pointer-events: none;
+  filter: drop-shadow(var(--shadow));
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Optional = filled dot */
+.feature-marker-optional,
+.feature-marker-optional circle,
+.feature-marker-optional ellipse {
+  fill: var(--text-on);
+  stroke: var(--text-on);
+}
+
+/* Mandatory/root = hollow dot */
+.feature-marker-mandatory,
+.feature-marker-mandatory circle,
+.feature-marker-mandatory ellipse {
+  fill: none;
+  stroke: var(--text-on);
+}
+
+/* safety net if renderer didn’t compute radius from size */
+.feature-marker circle { r: 7; }
