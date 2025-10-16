@@ -115,9 +115,9 @@ public class FeatureTreeLayouter {
       allTreeNodes.clear();
    }
 
-   // =========================
-   // 🔽 NEW: Helper functions
-   // =========================
+  
+   
+   
 
    /**
     * Returns the "last child" in display order: repeatedly takes the last child
@@ -178,5 +178,48 @@ public class FeatureTreeLayouter {
       double topLeftX = anchor.x - (legendWidth / 2.0);
       double topLeftY = anchor.y; // place top edge at anchor; add extra offset if desired
       return new Point(topLeftX, topLeftY);
+   }
+
+   // Find the deepest (max y) leaf under `root`. If multiple share the same y,
+   // pick the rightmost (max x).
+   public static TreeNode findDeepestRightmostLeaf(final TreeNode root) {
+      if (root == null) {
+         return null;
+      }
+
+      TreeNode best = null;
+      double bestY = Double.NEGATIVE_INFINITY;
+      double bestX = Double.NEGATIVE_INFINITY;
+
+      // Simple DFS
+      final ArrayList<TreeNode> stack = new ArrayList<>();
+      stack.add(root);
+      while (!stack.isEmpty()) {
+         TreeNode n = stack.remove(stack.size() - 1);
+         if (n.children.isEmpty()) {
+            if (n.y > bestY || (n.y == bestY && n.x > bestX)) {
+               best = n;
+               bestY = n.y;
+               bestX = n.x;
+            }
+         } else {
+            // push children
+            for (TreeNode element : n.children) {
+               stack.add(element);
+            }
+         }
+      }
+      return best;
+   }
+
+   /** Y just below the deepest-rightmost leaf (pixel coords, after layout). */
+   public static double computeYBelowDeepestRightmostLeaf(final TreeNode root,
+      final double nodeHeight,
+      final double marginY) {
+      TreeNode leaf = findDeepestRightmostLeaf(root);
+      if (leaf == null) {
+         return marginY;
+      }
+      return leaf.y + nodeHeight + marginY;
    }
 }
