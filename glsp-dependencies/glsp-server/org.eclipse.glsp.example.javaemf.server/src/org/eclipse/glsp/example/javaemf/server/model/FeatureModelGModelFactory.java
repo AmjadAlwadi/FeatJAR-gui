@@ -17,7 +17,9 @@
 package org.eclipse.glsp.example.javaemf.server.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -49,6 +51,8 @@ import featJAR.Group;
 public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
    // All graphical elements (GModel Elements)
+   public static Map<String, String> featureIdMap = new HashMap<>();
+   public static List<Feature> emfFeatures = new ArrayList<>();
    List<GNode> gElements = new ArrayList<>();
    List<GEdge> gEdges = new ArrayList<>();
    List<String> gExpressions = new ArrayList<>();
@@ -89,15 +93,26 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TRUE,
    }
 
+   public static void render() {
+
+   }
+
    @Override
    protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
       FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
       GGraph graph = GGraph.class.cast(newRoot);
+
+      if (emfFeatureModel.getRoot().size() == 0) {
+         return;
+      }
+
       Feature emfRoot = emfFeatureModel.getRoot().get(0);
 
       gElements.clear();
       gExpressions.clear();
       gEdges.clear();
+      featureIdMap.clear();
+      emfFeatures.clear();
       FeatureTreeLayouter.clear();
 
       // Create the graphical elements without applying layout first
@@ -169,6 +184,9 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       }
 
       gElements.add(gFeature);
+
+      featureIdMap.put(gFeature.getId(), feature.getId());
+      emfFeatures.add(feature);
 
       return new FeatureSubtreeResult(gFeature, current_node);
 

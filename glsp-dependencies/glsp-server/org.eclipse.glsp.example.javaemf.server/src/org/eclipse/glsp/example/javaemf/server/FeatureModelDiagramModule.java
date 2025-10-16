@@ -17,7 +17,8 @@
 package org.eclipse.glsp.example.javaemf.server;
 
 import org.eclipse.glsp.example.javaemf.server.handler.CreateFeatureNodeHandler;
-import org.eclipse.glsp.example.javaemf.server.handler.DeleteFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.FeatureModelLabelEditValidator;
+import org.eclipse.glsp.example.javaemf.server.handler.RenameFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelGModelFactory;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelSourceModelStorage;
 import org.eclipse.glsp.example.javaemf.server.palette.FeatureModelToolPaletteItemProvider;
@@ -28,6 +29,7 @@ import org.eclipse.glsp.server.emf.EMFSourceModelStorage;
 import org.eclipse.glsp.server.emf.idgen.AttributeIdGenerator;
 import org.eclipse.glsp.server.emf.notation.EMFNotationDiagramModule;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
+import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
@@ -68,10 +70,16 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
    }
 
    @Override
+   protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
+      return FeatureModelLabelEditValidator.class;
+   }
+
+   @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
       binding.add(CreateFeatureNodeHandler.class);
-      binding.add(DeleteFeatureNodeHandler.class);
+      // binding.add(DeleteFeatureNodeHandler.class);
+      binding.add(RenameFeatureNodeHandler.class);
    }
 
    @Override

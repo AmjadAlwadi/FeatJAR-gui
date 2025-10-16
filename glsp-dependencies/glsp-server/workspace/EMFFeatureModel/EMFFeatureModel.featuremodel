@@ -1,42 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<featJAR:FeatureModel 
-    id="featuremodel_001" 
-    name="LayeredFeatureModel" 
-    xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI"
-    xmlns:featJAR="http://www.example.org/featJAR">
-
-  <!-- Constraints Section -->
+<featJAR:FeatureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:featJAR="http://www.example.org/featJAR" id="featuremodel_001" name="LayeredFeatureModel">
+  <root id="root_0" name="Amjad"/>
   <constraints id="const_001" name="A and B and C"/>
   <constraints id="const_002" name="A or B and not C"/>
   <constraints id="const_003" name="(A and B) or (C and D)"/>
   <constraints id="const_004" name="FeatureX implies FeatureY"/>
-
-  <!-- Root -->
-
-  <root id="root_0" optional="false" name="layer_0:root">
-    <groups id="group_1" name="layer_1:Group1" type="TRUE" lowerBound="0" upperBound="2">
-      <features id="node_1" optional="false" name="layer_1:Nodde1">
-      
-      	<groups id="group_3" name="layer_2:Group1" type="TRUE" lowerBound="0" upperBound="2">
-      		<features id="node_5" optional="false" name="layer_2:Nodde1"/>
-      		<features id="node_6" optional="false" name="layer_2:Nodde2"/>
-      	</groups>
-      	
-      </features>
-      <features id="node_2" optional="false" name="layer_1:Nodde2"/>
-    </groups>
-
-    <groups id="group_2" name="layer_1:Group2" type="TRUE" lowerBound="0" upperBound="2">
-      <features id="node_3" optional="false" name="layer_1:Nodde3"/>
-      <features id="node_4" optional="false" name="layer_1:Nodde4">
-      	<groups id="group_4" name="layer_2:Group2" type="TRUE" lowerBound="0" upperBound="2">
-      		<features id="node_7" optional="false" name="layer_2:Nodde3"/>
-      		<features id="node_8" optional="false" name="layer_2:Nodde4"/>
-      	</groups>
-      </features>
-    </groups>
-  </root>
-
 </featJAR:FeatureModel>
