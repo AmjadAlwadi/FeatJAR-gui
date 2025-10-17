@@ -19,7 +19,6 @@ package org.eclipse.glsp.example.javaemf.server;
 import org.eclipse.glsp.example.javaemf.server.handler.CreateConstraintOperationHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.CreateObligatoryFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.CreateOptionalFeatureNodeHandler;
-import org.eclipse.glsp.example.javaemf.server.handler.CreateRootFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.DeleteFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.PasteOperationHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.SelectionActionHandler;
@@ -91,7 +90,6 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
       super.configureOperationHandlers(binding);
       binding.add(CreateObligatoryFeatureNodeHandler.class);
       binding.add(CreateOptionalFeatureNodeHandler.class);
-      binding.add(CreateRootFeatureNodeHandler.class);
       binding.add(CreateConstraintOperationHandler.class);
       binding.add(DeleteFeatureNodeHandler.class);
       binding.add(PasteOperationHandler.class);

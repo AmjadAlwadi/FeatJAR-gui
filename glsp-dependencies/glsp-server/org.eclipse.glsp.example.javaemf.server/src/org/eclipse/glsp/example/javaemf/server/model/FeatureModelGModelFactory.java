@@ -191,7 +191,7 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    // Create the graphical representation of a feature
    protected GNode createFeatureNode(final Feature feature, final GPoint gPosition, final Node_type node_type) {
 
-      GNodeBuilder taskNodeBuilder = new GNodeBuilder(FeatureModelTypes.ROOT)
+      GNodeBuilder taskNodeBuilder = new GNodeBuilder(DefaultTypes.NODE)
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass(node_type.cssClass())
          .position(gPosition)

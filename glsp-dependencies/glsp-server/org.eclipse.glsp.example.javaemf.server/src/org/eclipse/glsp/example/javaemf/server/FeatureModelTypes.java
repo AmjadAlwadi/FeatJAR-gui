@@ -21,9 +21,9 @@ import org.eclipse.glsp.graph.DefaultTypes;
 public final class FeatureModelTypes {
    private FeatureModelTypes() {}
 
-   public static final String ROOT = DefaultTypes.NODE;
-   public static final String OPTIONAL_FEATURE = DefaultTypes.NODE;
-   public static final String OBLIGATORY_FEATURE = DefaultTypes.NODE;
+   public static final String ROOT = "root:node";
+   public static final String OPTIONAL_FEATURE = "op:node";
+   public static final String OBLIGATORY_FEATURE = "ob:node";
    public static final String CONSTRAINT = DefaultTypes.EDGE;
    public static final String LINK = DefaultTypes.EDGE;
 

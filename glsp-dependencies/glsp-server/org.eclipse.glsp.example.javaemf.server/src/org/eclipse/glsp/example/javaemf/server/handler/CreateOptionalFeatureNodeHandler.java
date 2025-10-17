@@ -24,13 +24,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.example.javaemf.server.FeatureModelTypes;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.emf.EMFCreateOperationHandler;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.notation.EMFNotationModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 
@@ -56,42 +53,65 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
    @Override
    public Optional<Command> createCommand(final CreateNodeOperation operation) {
 
-      GModelElement container = modelState.getIndex().get(operation.getContainerId()).orElseGet(modelState::getRoot);
-      Optional<GPoint> absoluteLocation = operation.getLocation();
-      Optional<GPoint> relativeLocation = absoluteLocation
-         .map(location -> LayoutUtil.getRelativeLocation(location, container));
-
+      System.out.println("optioanl");
       Feature newFeature = createFeature();
-
-      return Optional.of(createFeatureAndNode(absoluteLocation));
+      return Optional.of(createFeatureAndNode());
 
    }
 
    @Override
-   public String getLabel() { return "New Feature"; }
+   public String getLabel() { return "New Optional Feature"; }
 
-   protected Optional<FeatureModel> getFeatureModel() { return modelState.getSemanticModel(FeatureModel.class); }
+   protected FeatureModel getFeatureModel() { return modelState.getSemanticModel(FeatureModel.class).get(); }
 
    protected Optional<Feature> getRoot() {
       return modelState.getSemanticModel(FeatureModel.class)
          .flatMap(model -> model.getRoots().stream().findFirst());
    }
 
-   protected Command createFeatureAndNode(final Optional<GPoint> relativeLocation) {
+   protected Command createFeatureAndNode() {
 
       Optional<Feature> selectedFeature = modelState.getProperty("currentSelection",
          (Class<Feature>) (Class<?>) Feature.class);
+
+      System.out.println("asdfdf: " + selectedFeature.get());
 
       // 2. If no element selected, default to root model
       Feature parentElement = selectedFeature
          .or(() -> getRoot())
          .orElse(null);
 
-      EObject eParent = EObject.class.cast(parentElement);
+      EObject eParent = EObject.class.cast(getFeatureModel());
 
-      if (parentElement == null) {
-         eParent = EObject.class.cast(getFeatureModel());
+      if (parentElement != null) {
+
+         eParent = EObject.class.cast(parentElement);
+
+         // 3. Create the new feature instance
+         Feature newFeature = createFeature();
+
+         // 4. Build EMF AddCommand
+         EditingDomain editingDomain = modelState.getEditingDomain();
+
+         Command addCommand = AddCommand.create(
+            editingDomain,
+            eParent, // where to add
+            FeatJARPackage.Literals.FEATURE__FEATURES, // the containment reference
+            newFeature // what to add
+         );
+
+         // Setting id
+         newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
+         // newFeature.setOptional(true);
+
+         CompoundCommand compound = new CompoundCommand();
+         compound.append(addCommand);
+
+         return compound;
+
       }
+
+      // Crreat Root otherwise
 
       // 3. Create the new feature instance
       Feature newFeature = createFeature();
@@ -102,9 +122,13 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
       Command addCommand = AddCommand.create(
          editingDomain,
          eParent, // where to add
-         FeatJARPackage.Literals.FEATURE__FEATURES, // the containment reference
+         FeatJARPackage.Literals.FEATURE_MODEL__ROOTS, // the containment reference
          newFeature // what to add
       );
+
+      // Setting id
+      newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
+      // newFeature.setOptional(true);
 
       CompoundCommand compound = new CompoundCommand();
       compound.append(addCommand);
@@ -115,7 +139,6 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
    protected Feature createFeature() {
       Feature newFeature = FeatJARFactory.eINSTANCE.createFeature();
       newFeature.setName(getLabel() + i++);
-      newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
       newFeature.setOptional(true);
       return newFeature;
    }
