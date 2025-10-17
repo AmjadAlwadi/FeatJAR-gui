@@ -91,33 +91,7 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TRUE,
    }
 
-<<<<<<< HEAD
    protected void clearAllGraphicalElements() {
-=======
-   @Override
-   protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
-      FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
-      GGraph graph = GGraph.class.cast(newRoot);
-
-      // --- Robust root resolution: supports single root or list of roots ---
-      Feature emfRoot = null;
-      var rootSF = emfFeatureModel.eClass().getEStructuralFeature("root");
-      if (rootSF != null) {
-         Object rootVal = emfFeatureModel.eGet(rootSF);
-         if (rootVal instanceof Feature f) {
-            emfRoot = f;
-         } else if (rootVal instanceof EList<?> list && !list.isEmpty()) {
-            Object first = list.get(0);
-            if (first instanceof Feature f0) {
-               emfRoot = f0;
-            }
-         }
-      }
-      if (emfRoot == null) {
-         throw new IllegalStateException("featJAR.FeatureModel has no resolvable 'root' (single or list).");
-      }
-
->>>>>>> general-Layouting
       gElements.clear();
       gExpressions.clear();
       gEdges.clear();
@@ -151,10 +125,8 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       // Place constraints box under the rightmost (last) leaf, centered horizontally
       TreeNode rootTree = FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode);
       double marginY = 160; // tweak spacing below the last leaf
-      /*
-       * FeatureTreeLayouter.Point anchor = FeatureTreeLayouter.computeAnchorBelowRightmostLeaf(rootTree, nodeWidth,
-       * nodeHeight, marginY);
-       */
+
+  
       double rootCenterX = rootTree.x + (nodeWidth / 2.0);
       double legendTopY = FeatureTreeLayouter.computeYBelowDeepestRightmostLeaf(rootTree, nodeHeight, marginY);
 
@@ -164,6 +136,8 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(gEdges);
    }
+
+
 
    // Run to automatically layout the feature nodes nicely
    protected void layoutFeatureTree(final FeatureSubtreeResult gRoot) {
@@ -179,21 +153,27 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
    // Create Feature Subtree without Autolayouting
    protected FeatureSubtreeResult createFeatureSubtree(final Feature feature, final boolean isRoot) {
+
       GNode gFeature;
+
       GPoint current_position = GraphUtil.point(0, 0);
 
       // Creating the GNode
       if (isRoot) {
          gFeature = createFeatureNode(feature, current_position, Node_type.ROOT);
       } else {
-         gFeature = createFeatureNode(feature, current_position,
-            feature.isOptional() ? Node_type.OPTIONAL : Node_type.OBLIGATORY);
+
+         if (feature.isOptional()) {
+            gFeature = createFeatureNode(feature, current_position, Node_type.OPTIONAL);
+         } else {
+            gFeature = createFeatureNode(feature, current_position, Node_type.OBLIGATORY);
+         }
+
       }
 
       // For Autolayouting
       TreeNode current_node = new TreeNode(gFeature.getId());
 
-<<<<<<< HEAD
       for (Feature child : feature.getFeatures()) {
 
          FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
@@ -204,78 +184,22 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
          // Connect parent and child with an edge
          createEdge(feature, child, gFeature, gChild.gNode);
 
-=======
-      // -------- Robust children gathering: supports both schemas (groups->features OR direct features) --------
-      List<Feature> childFeatures = new ArrayList<>();
-
-      // Prefer 'groups' if present (new schema)
-      var groupsSF = feature.eClass().getEStructuralFeature("groups");
-      if (groupsSF != null) {
-         Object groupsVal = feature.eGet(groupsSF);
-         if (groupsVal instanceof EList<?> groupsList) {
-            for (Object gObj : groupsList) {
-               if (gObj instanceof EObject gEO) {
-                  var featuresSF = gEO.eClass().getEStructuralFeature("features");
-                  if (featuresSF != null) {
-                     Object featsVal = gEO.eGet(featuresSF);
-                     if (featsVal instanceof EList<?> featsList) {
-                        for (Object fObj : featsList) {
-                           if (fObj instanceof Feature fChild) {
-                              childFeatures.add(fChild);
-                           }
-                        }
-                     }
-                  }
-               }
-            }
-         }
->>>>>>> general-Layouting
       }
 
-      // Fallback to direct 'features' on Feature (old schema)
-      if (childFeatures.isEmpty()) {
-         var featuresSF = feature.eClass().getEStructuralFeature("features");
-         if (featuresSF != null) {
-            Object featsVal = feature.eGet(featuresSF);
-            if (featsVal instanceof EList<?> featsList) {
-               for (Object fObj : featsList) {
-                  if (fObj instanceof Feature fChild) {
-                     childFeatures.add(fChild);
-                  }
-               }
-            }
-         }
-      }
-      // --------------------------------------------------------------------------------------------------------
-
-      // Rendering children nodes recursively
-      for (Feature child : childFeatures) {
-         FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
-
-         // Add child in TreeLayouter
-         current_node.addChild(gChild.treeNode);
-         // Connect parent and child with an edge
-         createEdge(feature, child, gFeature, gChild.gNode);
-      }
-
+      // Save all graphical elements and a semantic map
       gElements.add(gFeature);
-<<<<<<< HEAD
       featureIdMap.put(gFeature.getId(), feature.getId());
       emfFeatures.add(feature);
 
-=======
->>>>>>> general-Layouting
       return new FeatureSubtreeResult(gFeature, current_node);
+
    }
+
 
    // Create the graphical representation of a feature
    protected GNode createFeatureNode(final Feature feature, final GPoint gPosition, final Node_type node_type) {
 
-<<<<<<< HEAD
       GNodeBuilder taskNodeBuilder = new GNodeBuilder(DefaultTypes.NODE)
-=======
-      GNodeBuilder nodeBuilder = new GNodeBuilder(FeatureModelTypes.ROOT)
->>>>>>> general-Layouting
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass(node_type.cssClass())
          .position(gPosition)
@@ -285,26 +209,6 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
             .hAlign(GConstants.HAlign.CENTER)
             .minWidth(nodeWidth)
             .minHeight(nodeHeight));
-
-      // Marker circle on top: filled if optional, hollow if mandatory/root
-      final boolean isOptional = feature.isOptional();
-      final String markerStyle = isOptional ? "feature-marker-optional" : "feature-marker-mandatory";
-
-      nodeBuilder.add(
-         new GNodeBuilder("node:circle")
-            .id(feature.getId() + "_marker")
-            .addCssClass("feature-marker")
-            .addCssClass(markerStyle)
-            .size(GraphUtil.dimension(12, 12))
-            .build());
-
-      // Label under the marker
-      nodeBuilder.add(
-         new GLabelBuilder(DefaultTypes.LABEL)
-            .text(feature.getName())
-            .id(feature.getId() + "_label")
-            .addCssClass(Node_type.LABEL.cssClass())
-            .build());
 
       applyShapeData(feature, nodeBuilder);
       return nodeBuilder.build();
