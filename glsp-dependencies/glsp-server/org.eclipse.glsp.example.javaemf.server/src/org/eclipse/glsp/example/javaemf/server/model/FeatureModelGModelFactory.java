@@ -91,7 +91,33 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TRUE,
    }
 
+<<<<<<< HEAD
    protected void clearAllGraphicalElements() {
+=======
+   @Override
+   protected void fillRootElement(final EObject semanticModel, final Diagram notationModel, final GModelRoot newRoot) {
+      FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
+      GGraph graph = GGraph.class.cast(newRoot);
+
+      // --- Robust root resolution: supports single root or list of roots ---
+      Feature emfRoot = null;
+      var rootSF = emfFeatureModel.eClass().getEStructuralFeature("root");
+      if (rootSF != null) {
+         Object rootVal = emfFeatureModel.eGet(rootSF);
+         if (rootVal instanceof Feature f) {
+            emfRoot = f;
+         } else if (rootVal instanceof EList<?> list && !list.isEmpty()) {
+            Object first = list.get(0);
+            if (first instanceof Feature f0) {
+               emfRoot = f0;
+            }
+         }
+      }
+      if (emfRoot == null) {
+         throw new IllegalStateException("featJAR.FeatureModel has no resolvable 'root' (single or list).");
+      }
+
+>>>>>>> general-Layouting
       gElements.clear();
       gExpressions.clear();
       gEdges.clear();
@@ -122,24 +148,30 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       // Autolayouting the feature tree
       layoutFeatureTree(gRoot);
 
+      // Place constraints box under the rightmost (last) leaf, centered horizontally
+      TreeNode rootTree = FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode);
+      double marginY = 160; // tweak spacing below the last leaf
+      /*
+       * FeatureTreeLayouter.Point anchor = FeatureTreeLayouter.computeAnchorBelowRightmostLeaf(rootTree, nodeWidth,
+       * nodeHeight, marginY);
+       */
+      double rootCenterX = rootTree.x + (nodeWidth / 2.0);
+      double legendTopY = FeatureTreeLayouter.computeYBelowDeepestRightmostLeaf(rootTree, nodeHeight, marginY);
+
       createConstraintLegend(emfFeatureModel.getConstraints(),
-         GraphUtil.point(gRoot.gNode.getPosition().getX() - 200, -200));
+         GraphUtil.point(gRoot.gNode.getPosition().getX() + 225, legendTopY));
 
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(gEdges);
-
    }
 
    // Run to automatically layout the feature nodes nicely
    protected void layoutFeatureTree(final FeatureSubtreeResult gRoot) {
-
       LayoutContext ctx = new FeatureTreeLayouter.LayoutContext();
       FeatureTreeLayouter.computePositions(FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode), 0, horizontalGap,
-         verticalGap, nodeWidth, nodeHeight,
-         ctx);
+         verticalGap, nodeWidth, nodeHeight, ctx);
 
-      // Get the layout information from the TreeNodes, map them to our GNodes by id
-      // and map there positions to our GNodes
+      // Map computed positions back to the GNodes
       for (TreeNode node : FeatureTreeLayouter.allTreeNodes) {
          FeatureTreeLayouter.mapTreeNodeToGNode(node, gElements).setPosition(GraphUtil.point(node.x, node.y));
       }
@@ -147,27 +179,21 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
    // Create Feature Subtree without Autolayouting
    protected FeatureSubtreeResult createFeatureSubtree(final Feature feature, final boolean isRoot) {
-
       GNode gFeature;
-
       GPoint current_position = GraphUtil.point(0, 0);
 
       // Creating the GNode
       if (isRoot) {
          gFeature = createFeatureNode(feature, current_position, Node_type.ROOT);
       } else {
-
-         if (feature.isOptional()) {
-            gFeature = createFeatureNode(feature, current_position, Node_type.OPTIONAL);
-         } else {
-            gFeature = createFeatureNode(feature, current_position, Node_type.OBLIGATORY);
-         }
-
+         gFeature = createFeatureNode(feature, current_position,
+            feature.isOptional() ? Node_type.OPTIONAL : Node_type.OBLIGATORY);
       }
 
       // For Autolayouting
       TreeNode current_node = new TreeNode(gFeature.getId());
 
+<<<<<<< HEAD
       for (Feature child : feature.getFeatures()) {
 
          FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
@@ -178,34 +204,110 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
          // Connect parent and child with an edge
          createEdge(feature, child, gFeature, gChild.gNode);
 
+=======
+      // -------- Robust children gathering: supports both schemas (groups->features OR direct features) --------
+      List<Feature> childFeatures = new ArrayList<>();
+
+      // Prefer 'groups' if present (new schema)
+      var groupsSF = feature.eClass().getEStructuralFeature("groups");
+      if (groupsSF != null) {
+         Object groupsVal = feature.eGet(groupsSF);
+         if (groupsVal instanceof EList<?> groupsList) {
+            for (Object gObj : groupsList) {
+               if (gObj instanceof EObject gEO) {
+                  var featuresSF = gEO.eClass().getEStructuralFeature("features");
+                  if (featuresSF != null) {
+                     Object featsVal = gEO.eGet(featuresSF);
+                     if (featsVal instanceof EList<?> featsList) {
+                        for (Object fObj : featsList) {
+                           if (fObj instanceof Feature fChild) {
+                              childFeatures.add(fChild);
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+>>>>>>> general-Layouting
+      }
+
+      // Fallback to direct 'features' on Feature (old schema)
+      if (childFeatures.isEmpty()) {
+         var featuresSF = feature.eClass().getEStructuralFeature("features");
+         if (featuresSF != null) {
+            Object featsVal = feature.eGet(featuresSF);
+            if (featsVal instanceof EList<?> featsList) {
+               for (Object fObj : featsList) {
+                  if (fObj instanceof Feature fChild) {
+                     childFeatures.add(fChild);
+                  }
+               }
+            }
+         }
+      }
+      // --------------------------------------------------------------------------------------------------------
+
+      // Rendering children nodes recursively
+      for (Feature child : childFeatures) {
+         FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
+
+         // Add child in TreeLayouter
+         current_node.addChild(gChild.treeNode);
+         // Connect parent and child with an edge
+         createEdge(feature, child, gFeature, gChild.gNode);
       }
 
       gElements.add(gFeature);
+<<<<<<< HEAD
       featureIdMap.put(gFeature.getId(), feature.getId());
       emfFeatures.add(feature);
 
+=======
+>>>>>>> general-Layouting
       return new FeatureSubtreeResult(gFeature, current_node);
-
    }
 
    // Create the graphical representation of a feature
    protected GNode createFeatureNode(final Feature feature, final GPoint gPosition, final Node_type node_type) {
 
+<<<<<<< HEAD
       GNodeBuilder taskNodeBuilder = new GNodeBuilder(DefaultTypes.NODE)
+=======
+      GNodeBuilder nodeBuilder = new GNodeBuilder(FeatureModelTypes.ROOT)
+>>>>>>> general-Layouting
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass(node_type.cssClass())
          .position(gPosition)
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(new GLayoutOptions()
-            .vAlign(GConstants.VAlign.CENTER).hAlign(GConstants.HAlign.CENTER).minWidth(nodeWidth)
-            .minHeight(nodeHeight))
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label")
-            .addCssClass(Node_type.LABEL.cssClass()).build());
+            .vAlign(GConstants.VAlign.CENTER)
+            .hAlign(GConstants.HAlign.CENTER)
+            .minWidth(nodeWidth)
+            .minHeight(nodeHeight));
 
-      applyShapeData(feature, taskNodeBuilder);
-      GNode element = taskNodeBuilder.build();
+      // Marker circle on top: filled if optional, hollow if mandatory/root
+      final boolean isOptional = feature.isOptional();
+      final String markerStyle = isOptional ? "feature-marker-optional" : "feature-marker-mandatory";
 
-      return element;
+      nodeBuilder.add(
+         new GNodeBuilder("node:circle")
+            .id(feature.getId() + "_marker")
+            .addCssClass("feature-marker")
+            .addCssClass(markerStyle)
+            .size(GraphUtil.dimension(12, 12))
+            .build());
+
+      // Label under the marker
+      nodeBuilder.add(
+         new GLabelBuilder(DefaultTypes.LABEL)
+            .text(feature.getName())
+            .id(feature.getId() + "_label")
+            .addCssClass(Node_type.LABEL.cssClass())
+            .build());
+
+      applyShapeData(feature, nodeBuilder);
+      return nodeBuilder.build();
    }
 
    // Create the graphical representation of the feature relation
@@ -220,22 +322,29 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
          .build();
 
       gEdges.add(edge);
-
    }
 
    // Create a box with all existing constraints as strings
+   // coords is treated as: (centerX, topY) anchor under the rightmost leaf
    protected void createConstraintLegend(final List<Constraint> constraints, final GPoint coords) {
 
-      int dynamic_shift = 20 * constraints.size();
-      int static_shift = 100;
+      // Calculate size based on content
+      int lines = 1 /* title */ + 1 /* first sep */ + (constraints.size() * 2);
+      int lineHeight = 20;
+      int padding = 40;
+      int legendHeight = Math.max(200, lines * lineHeight + padding);
+      int legendWidth = 500; // fixed width; adjust as needed
+
       int id = 0;
 
-      GPoint legend_position = GraphUtil.copy(coords);
-      legend_position.setY(legend_position.getY() - dynamic_shift - static_shift);
+      // Center horizontally on coords.getX(), place top at coords.getY()
+      double topLeftX = coords.getX() - (legendWidth / 2.0);
+      double topLeftY = coords.getY();
+
       GNodeBuilder legendBuilder = new GNodeBuilder("node:rectangle")
          .id("cross-tree-contraints")
-         .size(GraphUtil.dimension(500, 800))
-         .position(legend_position)
+         .size(GraphUtil.dimension(legendWidth, legendHeight))
+         .position(GraphUtil.point(topLeftX, topLeftY))
          .layout(GConstants.Layout.VBOX)
          .addCssClass(Node_type.ROOT.cssClass());
 
@@ -250,47 +359,38 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       }
 
       GNode legend = legendBuilder.build();
-      legend.setPosition(GraphUtil.point(legend.getPosition().getX() - legend.getSize().getWidth() + nodeWidth,
-         legend.getPosition().getY()));
 
       gElements.add(legend);
-
    }
 
    // Create a label to draw a separating line using a specific symbol
    public GLabel createLineLabel(final int id, final String separator) {
-
       return new GLabelBuilder(DefaultTypes.LABEL)
          .id("constraints-label-line_" + id)
          .text(separator.repeat(30))
          .addCssClass(Node_type.OPTIONAL.cssClass())
          .addArgument("wrap", true)
          .build();
-
    }
 
    // Create the label for the constraints
    public GLabel createConstraintsTitle(final String label) {
-
       return new GLabelBuilder(DefaultTypes.LABEL)
          .id("constraints_title")
          .text(label)
          .addCssClass(Node_type.OPTIONAL.cssClass())
          .addArgument("wrap", true)
          .build();
-
    }
 
    // Create a label as GElement with a specific id and string value
    public GLabel createConstraintLabel(final String label, final int id) {
-
       return new GLabelBuilder(DefaultTypes.LABEL)
          .id("constraints-label_" + id)
          .text(label)
          .addCssClass(Node_type.LABEL.cssClass())
          .addArgument("wrap", true)
          .build();
-
    }
 
 }

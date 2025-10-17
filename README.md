@@ -226,13 +226,106 @@ Wir wollten zusätzlich **zwei weitere Clients** bereitstellen:
 Beide Setups sind bislang gescheitert (typische Ursachen: Client-Dependencies, Packaging, WebSocket/Endpoint/Diagrammtyp-Konfiguration).  
 
 
-## More information
 
-[FeatJAR](https://github.com/FeatureIDE/FeatJAR)
-For more information, please visit the [Eclipse GLSP Umbrella repository](https://github.com/eclipse-glsp/glsp) and the [Eclipse GLSP Website](https://www.eclipse.org/glsp/).
-If you have questions, please raise them in the [discussions](https://github.com/eclipse-glsp/glsp/discussions) and have a look at our [communication and support options](https://www.eclipse.org/glsp/contact/).
 
-## License
 
-This repository belongs to [FeatJAR](https://github.com/FeatureIDE/FeatJAR), a collection of Java libraries for feature-oriented software development.
-FeatJAR is released under the GNU Lesser General Public License v3.0.
+# Feature-Model-Editor (GLSP/EMF)
+
+Visualisierung eines Feature-Modells (featJAR) als Baumdiagramm mit:
+- farbcodierten Knoten für **Root**, **obligatorische** und **optionale** Features
+- **Markerpunkten** (gefüllt = optional, hohl = obligatorisch/root) oberhalb des Labels
+- **Constraints-Box**, dynamisch unter dem letzten Blatt und horizontal am Root ausgerichtet
+
+
+
+## Ziel
+
+Ein kompakter Editor, der featJAR-Featuremodelle als interaktiven Baum rendert, optional/obligatorisch klar kennzeichnet und Cross-Tree-Constraints gut lesbar darstellt.
+
+---
+
+## Überblick & Funktionen
+
+- **Auto-Layout** der Feature-Baumstruktur
+- **Marker** oberhalb des Labels:
+  - gefüllt = optional
+  - hohl = obligatorisch bzw. Root
+- **Constraints-Box**:
+  - **X-Position:** am Root zentriert (bleibt “in der Mitte” des Baums)
+  - **Y-Position:** dynamisch **unter dem rechten/letzten Blatt** (wächst mit dem Baum mit)
+
+---
+
+## Technik / Architektur
+
+- **Server:** GLSP + EMF
+- **Modell:** `featJAR.FeatureModel` (EMF)
+- **Darstellung:** `FeatureModelGModelFactory` erzeugt `GNode`/`GEdge`, `FeatureTreeLayouter` berechnet Positionen
+- **Styling:** CSS-Klassen für Root/Obligatorisch/Optional + Marker
+
+---
+
+## Wesentliche Änderungen
+
+### Styling (CSS)
+- Konsistente Palette & Schatten
+- Klassen:
+  - `.feature-node-root`, `.feature-node-obligatory`, `.feature-node-optional`
+  - `.feature-marker`, `.feature-marker-optional`, `.feature-marker-mandatory`
+- Marker als SVG-Kreis mit klaren Stroke/Fill-Regeln
+
+### Server-Code
+
+**`FeatureModelGModelFactory`**
+- Knotenaufbau: VBox-Layout, Marker (Kreis) + Label
+- Kinderauflösung robust: `Feature → groups → features` **oder** `Feature → features`
+- Kanten als `GEdge`
+- Constraints-Box:
+  - X am Root ausgerichtet
+  - Y via Anker unter rechtem Blatt (mit `marginY` Abstand)
+
+**`FeatureTreeLayouter`**
+- In-order-Layout (Blätter erhalten fortlaufend X, Y = Ebene)
+- Interne Knoten zentrieren sich über ihren Kindern
+- Helfer:
+  - `findRightmostLeaf`
+  - `computeAnchorBelowRightmostLeaf`
+  - Mapping TreeNode ↔︎ GNode
+
+---
+
+## Konfiguration & Tuning
+
+In `FeatureModelGModelFactory`:
+- `horizontalGap`, `verticalGap`: Abstände zwischen Knoten
+- `nodeWidth`, `nodeHeight`: Mindestgröße Knoten
+- Marker-Größe: `size(16, 16)` im Kreis-Shape
+- Constraints-Abstand: `marginY` beim Ankerpunkt
+
+---
+
+## Troubleshooting
+
+- **JFace/SWT-Icons fehlen** (`/icons/full/eview16/*.svg`):  
+  Fehlende Eclipse-Plug-in-Ressourcen; kosmetisch, Diagramm funktioniert dennoch.
+- **Log4j/SLF4J Warnungen**:  
+  Logging-Thema (keine Implementierung/Provider gefunden); Funktionalität nicht betroffen.
+- **Marker werden nicht angezeigt**:  
+  Prüfen, ob das Marker-Shape (`shape:circle`) erzeugt und die CSS-Klassen geladen werden.
+
+---
+
+## Was (noch) nicht geklappt hat
+
+Wir wollten zusätzlich **zwei weitere Clients** bereitstellen:
+- **VS Code-Client**
+- **Theia-Client**
+
+Beide Setups sind bislang gescheitert (typische Ursachen: Client-Dependencies, Packaging, WebSocket/Endpoint/Diagrammtyp-Konfiguration).  
+To-Dos:
+1. Versionsabgleich GLSP-Server ↔︎ Client-Pakete (Theia/VS Code).
+2. Minimalbeispiel-Client (GLSP Example) starten und unseren Diagrammtyp registrieren.
+3. Build/Run-Skripte fixen (yarn/npm, Peer-Dependencies).
+4. Webview/DevTools-Logs prüfen (404/WS-Fehler).
+
+
