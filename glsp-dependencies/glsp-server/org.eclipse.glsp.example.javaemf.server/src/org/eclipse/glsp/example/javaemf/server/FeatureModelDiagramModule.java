@@ -17,8 +17,8 @@
 package org.eclipse.glsp.example.javaemf.server;
 
 import org.eclipse.glsp.example.javaemf.server.handler.CreateFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.DeleteFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.FeatureModelLabelEditValidator;
-import org.eclipse.glsp.example.javaemf.server.handler.RenameFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelGModelFactory;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelSourceModelStorage;
 import org.eclipse.glsp.example.javaemf.server.palette.FeatureModelToolPaletteItemProvider;
@@ -78,8 +78,7 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
       binding.add(CreateFeatureNodeHandler.class);
-      // binding.add(DeleteFeatureNodeHandler.class);
-      binding.add(RenameFeatureNodeHandler.class);
+      binding.add(DeleteFeatureNodeHandler.class);
    }
 
    @Override
