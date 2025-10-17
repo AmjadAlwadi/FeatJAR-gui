@@ -67,13 +67,13 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 */
 	protected FeatJARSwitch<Adapter> modelSwitch = new FeatJARSwitch<Adapter>() {
 		@Override
-		public Adapter caseIdentifiable(Identifiable object) {
-			return createIdentifiableAdapter();
+		public Adapter caseFeatureModel(FeatureModel object) {
+			return createFeatureModelAdapter();
 		}
 
 		@Override
-		public Adapter caseFeatureModel(FeatureModel object) {
-			return createFeatureModelAdapter();
+		public Adapter caseIdentifiable(Identifiable object) {
+			return createIdentifiableAdapter();
 		}
 
 		@Override
@@ -84,11 +84,6 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 		@Override
 		public Adapter caseConstraint(Constraint object) {
 			return createConstraintAdapter();
-		}
-
-		@Override
-		public Adapter caseGroup(Group object) {
-			return createGroupAdapter();
 		}
 
 		@Override
@@ -111,20 +106,6 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.Identifiable <em>Identifiable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see featJAR.Identifiable
-	 * @generated
-	 */
-	public Adapter createIdentifiableAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link featJAR.FeatureModel <em>Feature Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -135,6 +116,20 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFeatureModelAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.Identifiable <em>Identifiable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.Identifiable
+	 * @generated
+	 */
+	public Adapter createIdentifiableAdapter() {
 		return null;
 	}
 
@@ -163,20 +158,6 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createConstraintAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.Group <em>Group</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see featJAR.Group
-	 * @generated
-	 */
-	public Adapter createGroupAdapter() {
 		return null;
 	}
 

@@ -62,8 +62,6 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 			return createFeature();
 		case FeatJARPackage.CONSTRAINT:
 			return createConstraint();
-		case FeatJARPackage.GROUP:
-			return createGroup();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -100,17 +98,6 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	public Constraint createConstraint() {
 		ConstraintImpl constraint = new ConstraintImpl();
 		return constraint;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Group createGroup() {
-		GroupImpl group = new GroupImpl();
-		return group;
 	}
 
 	/**

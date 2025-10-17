@@ -36,6 +36,20 @@
 		<developerConnection>scm:git@github.com:eclipse-glsp/glsp-examples.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
+	
+	<repositories>
+    <repository>
+        <id>eclipse-snapshots</id>
+        <url>https://repo.eclipse.org/content/repositories/emfcloud-snapshots/</url>
+        <releases>
+            <enabled>false</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </repository>
+</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.glsp.example</groupId>
@@ -45,4 +59,6 @@
 			<version>2.5.0</version>
 		</dependency>
 	</dependencies>
+	
+	
 </project>

@@ -13,8 +13,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link featJAR.Feature#getGroupIn <em>Group In</em>}</li>
- *   <li>{@link featJAR.Feature#getGroups <em>Groups</em>}</li>
+ *   <li>{@link featJAR.Feature#getFeatures <em>Features</em>}</li>
+ *   <li>{@link featJAR.Feature#getParent <em>Parent</em>}</li>
  *   <li>{@link featJAR.Feature#isOptional <em>Optional</em>}</li>
  * </ul>
  *
@@ -24,38 +24,42 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Feature extends Identifiable {
 	/**
-	 * Returns the value of the '<em><b>Group In</b></em>' reference.
+	 * Returns the value of the '<em><b>Features</b></em>' containment reference list.
+	 * The list contents are of type {@link featJAR.Feature}.
+	 * It is bidirectional and its opposite is '{@link featJAR.Feature#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Group In</em>' reference.
-	 * @see #setGroupIn(Group)
-	 * @see featJAR.FeatJARPackage#getFeature_GroupIn()
-	 * @model required="true"
+	 * @return the value of the '<em>Features</em>' containment reference list.
+	 * @see featJAR.FeatJARPackage#getFeature_Features()
+	 * @see featJAR.Feature#getParent
+	 * @model opposite="parent" containment="true"
 	 * @generated
 	 */
-	Group getGroupIn();
+	EList<Feature> getFeatures();
 
 	/**
-	 * Sets the value of the '{@link featJAR.Feature#getGroupIn <em>Group In</em>}' reference.
+	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link featJAR.Feature#getFeatures <em>Features</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Group In</em>' reference.
-	 * @see #getGroupIn()
+	 * @return the value of the '<em>Parent</em>' container reference.
+	 * @see #setParent(Feature)
+	 * @see featJAR.FeatJARPackage#getFeature_Parent()
+	 * @see featJAR.Feature#getFeatures
+	 * @model opposite="features" transient="false"
 	 * @generated
 	 */
-	void setGroupIn(Group value);
+	Feature getParent();
 
 	/**
-	 * Returns the value of the '<em><b>Groups</b></em>' reference list.
-	 * The list contents are of type {@link featJAR.Group}.
+	 * Sets the value of the '{@link featJAR.Feature#getParent <em>Parent</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Groups</em>' reference list.
-	 * @see featJAR.FeatJARPackage#getFeature_Groups()
-	 * @model
+	 * @param value the new value of the '<em>Parent</em>' container reference.
+	 * @see #getParent()
 	 * @generated
 	 */
-	EList<Group> getGroups();
+	void setParent(Feature value);
 
 	/**
 	 * Returns the value of the '<em><b>Optional</b></em>' attribute.

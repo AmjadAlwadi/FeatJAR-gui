@@ -16,26 +16,25 @@
 package org.eclipse.glsp.example.javaemf.server.handler;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.eclipse.emf.common.command.Command;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.command.RemoveCommand;
-import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelGModelFactory;
-import org.eclipse.glsp.server.emf.AbstractEMFOperationHandler;
+import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ActionHandler;
+import org.eclipse.glsp.server.actions.SelectAction;
+import org.eclipse.glsp.server.emf.EMFIdGenerator;
 import org.eclipse.glsp.server.emf.notation.EMFNotationModelState;
-import org.eclipse.glsp.server.operations.DeleteOperation;
 
 import com.google.inject.Inject;
 
 import featJAR.Feature;
 
-public class DeleteFeatureNodeHandler extends AbstractEMFOperationHandler<DeleteOperation> {
+public class SelectionActionHandler implements ActionHandler {
 
    @Inject
    protected EMFNotationModelState modelState;
+
+   @Inject
+   protected EMFIdGenerator idGenerator;
 
    public static Feature findFeatureById(final String id) {
 
@@ -53,28 +52,27 @@ public class DeleteFeatureNodeHandler extends AbstractEMFOperationHandler<Delete
    }
 
    @Override
-   public Optional<Command> createCommand(final DeleteOperation operation) {
-
-      List<String> gModelIds = operation.getElementIds();
-
-      CompoundCommand command = new CompoundCommand();
-
-      for (String id : gModelIds) {
-         command.append(delete(id));
-      }
-
-      return Optional.of(command);
-
+   public boolean handles(final Action action) {
+      return action instanceof SelectAction;
    }
 
-   protected Command delete(final String gModelId) {
+   @Override
+   public List<Class<? extends Action>> getHandledActionTypes() { return List.of(SelectAction.class); }
 
-      Feature element = findFeatureById(FeatureModelGModelFactory.featureIdMap.get(gModelId));
+   @Override
+   public List<Action> execute(final Action action) {
 
-      EditingDomain editingDomain = modelState.getEditingDomain();
-      return RemoveCommand.create(editingDomain, EObject.class.cast(element.eContainer()), element.eContainingFeature(),
-         element);
+      SelectAction selectAction = (SelectAction) action;
 
+      // Get the selected element IDs from the action
+      List<String> selectedIds = selectAction.getSelectedElementsIDs();
+
+      if (selectedIds.size() > 0) {
+         Feature element = findFeatureById(FeatureModelGModelFactory.featureIdMap.get(selectedIds.get(0)));
+         modelState.setProperty("currentSelection", element);
+      }
+
+      return List.of();
    }
 
 }

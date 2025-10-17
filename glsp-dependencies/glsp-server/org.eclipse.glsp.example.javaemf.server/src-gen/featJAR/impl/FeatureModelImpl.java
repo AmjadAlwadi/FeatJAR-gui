@@ -8,14 +8,12 @@ import featJAR.Feature;
 import featJAR.FeatureModel;
 
 import java.util.Collection;
-
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -27,7 +25,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link featJAR.impl.FeatureModelImpl#getRoot <em>Root</em>}</li>
+ *   <li>{@link featJAR.impl.FeatureModelImpl#getRoots <em>Roots</em>}</li>
  *   <li>{@link featJAR.impl.FeatureModelImpl#getConstraints <em>Constraints</em>}</li>
  * </ul>
  *
@@ -35,14 +33,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class FeatureModelImpl extends IdentifiableImpl implements FeatureModel {
 	/**
-	 * The cached value of the '{@link #getRoot() <em>Root</em>}' containment reference list.
+	 * The cached value of the '{@link #getRoots() <em>Roots</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRoot()
+	 * @see #getRoots()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Feature> root;
+	protected EList<Feature> roots;
 
 	/**
 	 * The cached value of the '{@link #getConstraints() <em>Constraints</em>}' containment reference list.
@@ -79,11 +77,11 @@ public class FeatureModelImpl extends IdentifiableImpl implements FeatureModel {
 	 * @generated
 	 */
 	@Override
-	public EList<Feature> getRoot() {
-		if (root == null) {
-			root = new EObjectContainmentEList<Feature>(Feature.class, this, FeatJARPackage.FEATURE_MODEL__ROOT);
+	public EList<Feature> getRoots() {
+		if (roots == null) {
+			roots = new EObjectContainmentEList<Feature>(Feature.class, this, FeatJARPackage.FEATURE_MODEL__ROOTS);
 		}
-		return root;
+		return roots;
 	}
 
 	/**
@@ -108,8 +106,8 @@ public class FeatureModelImpl extends IdentifiableImpl implements FeatureModel {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-		case FeatJARPackage.FEATURE_MODEL__ROOT:
-			return ((InternalEList<?>) getRoot()).basicRemove(otherEnd, msgs);
+		case FeatJARPackage.FEATURE_MODEL__ROOTS:
+			return ((InternalEList<?>) getRoots()).basicRemove(otherEnd, msgs);
 		case FeatJARPackage.FEATURE_MODEL__CONSTRAINTS:
 			return ((InternalEList<?>) getConstraints()).basicRemove(otherEnd, msgs);
 		}
@@ -124,8 +122,8 @@ public class FeatureModelImpl extends IdentifiableImpl implements FeatureModel {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case FeatJARPackage.FEATURE_MODEL__ROOT:
-			return getRoot();
+		case FeatJARPackage.FEATURE_MODEL__ROOTS:
+			return getRoots();
 		case FeatJARPackage.FEATURE_MODEL__CONSTRAINTS:
 			return getConstraints();
 		}
@@ -141,9 +139,9 @@ public class FeatureModelImpl extends IdentifiableImpl implements FeatureModel {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case FeatJARPackage.FEATURE_MODEL__ROOT:
-			getRoot().clear();
-			getRoot().addAll((Collection<? extends Feature>) newValue);
+		case FeatJARPackage.FEATURE_MODEL__ROOTS:
+			getRoots().clear();
+			getRoots().addAll((Collection<? extends Feature>) newValue);
 			return;
 		case FeatJARPackage.FEATURE_MODEL__CONSTRAINTS:
 			getConstraints().clear();
@@ -161,8 +159,8 @@ public class FeatureModelImpl extends IdentifiableImpl implements FeatureModel {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case FeatJARPackage.FEATURE_MODEL__ROOT:
-			getRoot().clear();
+		case FeatJARPackage.FEATURE_MODEL__ROOTS:
+			getRoots().clear();
 			return;
 		case FeatJARPackage.FEATURE_MODEL__CONSTRAINTS:
 			getConstraints().clear();
@@ -179,8 +177,8 @@ public class FeatureModelImpl extends IdentifiableImpl implements FeatureModel {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case FeatJARPackage.FEATURE_MODEL__ROOT:
-			return root != null && !root.isEmpty();
+		case FeatJARPackage.FEATURE_MODEL__ROOTS:
+			return roots != null && !roots.isEmpty();
 		case FeatJARPackage.FEATURE_MODEL__CONSTRAINTS:
 			return constraints != null && !constraints.isEmpty();
 		}

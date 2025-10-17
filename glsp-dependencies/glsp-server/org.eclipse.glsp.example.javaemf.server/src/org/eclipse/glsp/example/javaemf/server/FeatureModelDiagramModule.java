@@ -16,11 +16,16 @@
  ********************************************************************************/
 package org.eclipse.glsp.example.javaemf.server;
 
-import org.eclipse.glsp.example.javaemf.server.handler.CreateFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.CreateConstraintOperationHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.CreateObligatoryFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.CreateOptionalFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.DeleteFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.PasteOperationHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.SelectionActionHandler;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelGModelFactory;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelSourceModelStorage;
 import org.eclipse.glsp.example.javaemf.server.palette.FeatureModelToolPaletteItemProvider;
+import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -39,6 +44,7 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
       return FeatureModelDiagramConfiguration.class;
    }
 
+   // Experimentell
    // @Override
    // protected Class<? extends PopupModelFactory> bindPopupModelFactory() {
    // return FeaturesPopupModelFactory.class;
@@ -67,11 +73,26 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
       return FeatureModelToolPaletteItemProvider.class;
    }
 
+   // Experimentell
+   // @Override
+   // protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
+   // return FeatureModelLabelEditValidator.class;
+   // }
+
+   @Override
+   protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
+      super.configureActionHandlers(bindings);
+      bindings.add(SelectionActionHandler.class);
+   }
+
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
       super.configureOperationHandlers(binding);
-      binding.add(CreateFeatureNodeHandler.class);
+      binding.add(CreateObligatoryFeatureNodeHandler.class);
+      binding.add(CreateOptionalFeatureNodeHandler.class);
+      binding.add(CreateConstraintOperationHandler.class);
       binding.add(DeleteFeatureNodeHandler.class);
+      binding.add(PasteOperationHandler.class);
    }
 
    @Override
