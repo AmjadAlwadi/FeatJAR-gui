@@ -66,29 +66,30 @@ public class Gui {
         
         FeatJAR.log().message("\n" + Trees.traverse(rootTree, new TreePrinter()).get());
         
-        IFeatureModel loadedFeatureModel = IO.load(
+        IFeatureModel loadedFeatureModel1 = IO.load(
                 	Paths.get("./src/main/java/de/featjar/gui/EMFxmls/example2.uvl"),
                 	new UVLFeatureModelFormat())
         		.orElseThrow();
-        /*
-        IFeatureModel loadedFeatureModel = IO.load(
+        
+        IFeatureModel loadedFeatureModel2 = IO.load(
                         Paths.get("../formula/src/testFixtures/resources/formats/uvl/ABC-nAnBnC_01.uvl"),
                         new UVLFeatureModelFormat())
                 .orElseThrow();
         
-	    IFeatureModel loadedFeatureModel2 = IO.load(
+	    IFeatureModel loadedFeatureModel3 = IO.load(
 	    		  		Paths.get("../formula/src/testFixtures/resources/formats/uvl/nA_01.uvl"),
 	    		  		new UVLFeatureModelFormat())
 	    		.orElseThrow();
-	    */
+	    
         FeatJAR.log()
                 .message("\n"
-                        + Trees.traverse(loadedFeatureModel.getRoots().get(0), new TreePrinter())
+                        + Trees.traverse(loadedFeatureModel1.getRoots().get(0), new TreePrinter())
                                 .get());
-        
-        //TranslatorToEMF.EMFTranslate(newFeatureModel);
-        TranslatorToEMF.EMFTranslate(loadedFeatureModel);
-        //TranslatorToEMF.EMFTranslate(loadedFeatureModel2);
+       
+        TranslatorToEMF.EMFTranslate(newFeatureModel);
+        TranslatorToEMF.EMFTranslate(loadedFeatureModel1);
+        TranslatorToEMF.EMFTranslate(loadedFeatureModel2);
+        TranslatorToEMF.EMFTranslate(loadedFeatureModel3);
 	    
         IFeatureModel myChild = TranslatorFromEMF.FMTranslation("./src/main/java/de/featjar/gui/EMFxmls/My Model.featuremodel");
         

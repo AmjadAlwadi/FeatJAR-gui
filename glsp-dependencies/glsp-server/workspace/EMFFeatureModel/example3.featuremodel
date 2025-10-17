@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<featJAR:FeatureModel id=">37" name="@d2a02f4f-0967-437c-b3cc-eb5247dcb5e5" xmi:version="2.0"
+xmlns:xmi="http://www.omg.org/XMI"
+xmlns:featJAR="http://www.example.org/featJAR" >
+
+<roots id = "38" name = "Root" optional = "false" >
+
+<features id = "39" name = "A" optional = "true" />
+
+<features id = "40" name = "B" optional = "true" />
+
+<features id = "41" name = "C" optional = "true" />
+
+</roots>
+
+<constraints id = "42" name = "@d2e24dac-237b-4be7-a89c-6af30e552964" />
+
+</featJAR:FeatureModel>

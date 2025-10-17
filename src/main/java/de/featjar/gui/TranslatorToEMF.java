@@ -105,7 +105,7 @@ public class TranslatorToEMF {
 		List<? extends IFeatureTree> childTree = root.getChildren();
 		
 		//writing info down
-		String input = "<root id = \"" + giveID() + "\" name = \"" + rootName + "\" optional = \"false\"";
+		String input = "<roots id = \"" + giveID() + "\" name = \"" + rootName + "\" optional = \"false\"";
 		
 		//determine if we can already close the element
 		if (childTree.isEmpty()) {
@@ -131,7 +131,7 @@ public class TranslatorToEMF {
 		}
 
 		//closing element
-		input = "</root>\n\n";
+		input = "</roots>\n\n";
 		try {
 	    	Files.writeString(path, input, StandardOpenOption.APPEND);
 	    } catch (IOException e) {
