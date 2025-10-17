@@ -44,6 +44,7 @@ public class TranslatorToEMF {
 	}
 	
 	public static void EMFTranslate(IFeatureModel source) {
+		//fetching info about model
     	String name = source.getName().get();
     	//String id = source.getIdentifier().toString();
     	List<IFeatureTree> rootNodes = source.getRoots();
@@ -63,6 +64,7 @@ public class TranslatorToEMF {
         					+ "xmi:version=\"2.0\"\nxmlns:xmi=\"http://www.omg.org/XMI\"\n"
         					+ "xmlns:featJAR=\"http://www.example.org/featJAR\"";
         
+        //determine if we should already close the element
         if (rootNodes.isEmpty()) {
         	input += " />\n\n";
         } else {
@@ -101,9 +103,11 @@ public class TranslatorToEMF {
 		String rootName = root.getFeature().getName().get();
 		//String rootId = root.getFeature().getIdentifier().toString();
 		List<? extends IFeatureTree> childTree = root.getChildren();
+		
 		//writing info down
 		String input = "<root id = \"" + giveID() + "\" name = \"" + rootName + "\" optional = \"false\"";
 		
+		//determine if we can already close the element
 		if (childTree.isEmpty()) {
 			input += " />\n\n";
 		} else {
@@ -158,6 +162,7 @@ public class TranslatorToEMF {
             System.err.println("Error creating" + path.toString());
         }
 		
+		//determine if we should already close the element
 		if(childTree.isEmpty()) {
     		return;
     	}
@@ -167,7 +172,7 @@ public class TranslatorToEMF {
     		EMFaddFeatures(child, path);
     	}
 
-    	//determine if we should already close the element
+    	//close element after having added children
 		input = "</features>\n\n";
 		try {
         	Files.writeString(path, input, StandardOpenOption.APPEND);
@@ -175,7 +180,10 @@ public class TranslatorToEMF {
             System.err.println("Error creating" + path.toString());
         }
     }
-
+	
+	//TODO: a method to write down constraint
+	//incomplete; method isn't serializing the actual formula
+	//the emf model might also not be fitted for formulas
 	public static void EMFaddConstraints(IFeatureModel source, Path path) {
 		//fetching constraints
 		Collection<IConstraint> cons = source.getConstraints();
@@ -191,6 +199,7 @@ public class TranslatorToEMF {
 		}
     }
 	
+	//making a new directory for files, if not already there
 	public static void EMFFileDir(Path path) {
 		try {
 			Files.createDirectories(path);
@@ -222,6 +231,7 @@ public class TranslatorToEMF {
        	System.err.println("Error creating" + file.toString());
        }
 		
+       //creating a .notation file, necessary for the GLSP-Server/Client
        String filename2 = dir + "/" + name + ".notation";
        File file2 = new File(filename2);
        

@@ -67,6 +67,11 @@ public class Gui {
         FeatJAR.log().message("\n" + Trees.traverse(rootTree, new TreePrinter()).get());
         
         IFeatureModel loadedFeatureModel = IO.load(
+                	Paths.get("./src/main/java/de/featjar/gui/EMFxmls/example2.uvl"),
+                	new UVLFeatureModelFormat())
+        		.orElseThrow();
+        /*
+        IFeatureModel loadedFeatureModel = IO.load(
                         Paths.get("../formula/src/testFixtures/resources/formats/uvl/ABC-nAnBnC_01.uvl"),
                         new UVLFeatureModelFormat())
                 .orElseThrow();
@@ -75,15 +80,15 @@ public class Gui {
 	    		  		Paths.get("../formula/src/testFixtures/resources/formats/uvl/nA_01.uvl"),
 	    		  		new UVLFeatureModelFormat())
 	    		.orElseThrow();
-	    
+	    */
         FeatJAR.log()
                 .message("\n"
                         + Trees.traverse(loadedFeatureModel.getRoots().get(0), new TreePrinter())
                                 .get());
         
-        TranslatorToEMF.EMFTranslate(newFeatureModel);
+        //TranslatorToEMF.EMFTranslate(newFeatureModel);
         TranslatorToEMF.EMFTranslate(loadedFeatureModel);
-        TranslatorToEMF.EMFTranslate(loadedFeatureModel2);
+        //TranslatorToEMF.EMFTranslate(loadedFeatureModel2);
 	    
         IFeatureModel myChild = TranslatorFromEMF.FMTranslation("./src/main/java/de/featjar/gui/EMFxmls/My Model.featuremodel");
         

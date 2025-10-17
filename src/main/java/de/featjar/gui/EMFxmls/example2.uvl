@@ -1,0 +1,37 @@
+features
+        Boolean Root {name 'Root', abstract true}
+                optional
+                        Boolean A {name 'A', abstract false}
+                                optional
+                                        Boolean G {name 'G', abstract false}
+                                                optional
+                                                        Boolean K {name 'K', abstract false}
+                                                                optional
+                                                                        Boolean L {name 'L', abstract false}
+                                                                        Boolean M {name 'M', abstract false}
+                                                                        Boolean N {name 'N', abstract false}
+                                        Boolean H {name 'H', abstract false}
+                        Boolean B {name 'B', abstract false}
+                        Boolean C {name 'C', abstract false}
+                                optional
+                                        Boolean I {name 'I', abstract false}
+                                                optional
+                                                        Boolean R {name 'R', abstract false}
+                                                                optional
+                                                                        Boolean T {name 'T', abstract false}
+                                                                                optional
+                                                                                        Boolean V {name 'V', abstract false}
+                                                                                        Boolean W {name 'W', abstract false}
+                                                                        Boolean U {name 'U', abstract false}
+                                                        Boolean S {name 'S', abstract false}
+                        Boolean D {name 'D', abstract false}
+                        Boolean E {name 'E', abstract false}
+                        Boolean F {name 'F', abstract false}
+                                optional
+                                        Boolean J {name 'J', abstract false}
+                                                optional
+                                                        Boolean O {name 'O', abstract false}
+                                                                optional
+                                                                        Boolean P {name 'P', abstract false}
+                                                                                optional
+                                                                                        Boolean Q {name 'Q', abstract false}

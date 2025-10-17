@@ -54,7 +54,6 @@ public class TranslatorFromEMF {
 			if (stop.compareTo("feat") == 0) {
 				newFeatureModel.mutate().setName(name);
 		        newFeatureModel.mutate().setDescription("awesome description");
-		        //System.out.println("created model");
 			} else {
 				throw new IOException();
 			}
@@ -89,18 +88,20 @@ public class TranslatorFromEMF {
 	}
 
 	public static void FMaddRoot(IFeatureModel goal, BufferedReader reader) throws IOException {
+		/*How often  "name = readEMFFileCapsulatedWord(reader, '"')" needs to be called might need to be changed*/
+		/*Depending on how the glsp-server orders the attributes of the emf-elements*/
+		/*Or a smarter implementation*/
 		String name = readEMFFileCapsulatedWord(reader, '"');
 		name = readEMFFileCapsulatedWord(reader, '"');
 		IFeature rootFeature = goal.mutate().addFeature(name);
 		IFeatureTree rootTree = goal.mutate().addFeatureTreeRoot(rootFeature);
-		//System.out.println("added root");
 		
 		//check for early end
 		if (readEMFFileCheckingClosingTag(reader)) {
 			return;
 		}
 
-		//getting the kids 
+		//looking for child-features 
 		String stop;
 		while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
 			if (stop.compareTo("feat") == 0) {
@@ -115,6 +116,9 @@ public class TranslatorFromEMF {
 	}
 
 	public static void FMaddFeature(IFeatureModel goal, IFeatureTree hook, BufferedReader reader) throws IOException {
+		/*How often  "name/optional = readEMFFileCapsulatedWord(reader, '"')" needs to be called might need to be changed*/
+		/*Depending on how the glsp-server orders the attributes of the emf-elements*/
+		/*Or a smarter implementation*/
 		String name = readEMFFileCapsulatedWord(reader, '"');
 		name = readEMFFileCapsulatedWord(reader, '"');
 		String optional = readEMFFileCapsulatedWord(reader, '"');
@@ -124,8 +128,8 @@ public class TranslatorFromEMF {
 		if (optional.compareTo("true") == 0) {
 			tree.mutate().makeOptional();
 		}
-		//System.out.println("added feature");
 		
+		//early return
 		if (readEMFFileCheckingClosingTag(reader)) {
 			return;
 		}
@@ -136,16 +140,18 @@ public class TranslatorFromEMF {
 		    	//continue adding children...
 		    	if (stop.compareTo("feat") == 0) {
 					FMaddFeature(goal, tree, reader);
-				//unless closing element is read
+				//until closing element is read
 				} else if (stop.compareTo("/fea") == 0) {
 					return;
 				} else {
 					throw new IOException();
 				}
 		    	
+		    	/*
 		    	if (readEMFFileCheckingClosingTag(reader)) {
 					return;
 				}
+		    	*/
 		    }
 		} catch (IOException e) {
 			System.err.println("Error reading the file: Read something unexpected");
@@ -153,6 +159,10 @@ public class TranslatorFromEMF {
 		
 	}
 	/*
+	 * TODO: a method to add constraints
+	 * incomplete; method isn't parsing any formula
+	 * the emf model might also not be fitted for formulas
+	 * 
 	public static void FMaddConstraint(IFeatureModel goal, BufferedReader reader) {
 		IConstraint constraint1 = goal.mutate().addConstraint(Expressions.True);
 		ExpressionParser parser = new ExpressionParser();
