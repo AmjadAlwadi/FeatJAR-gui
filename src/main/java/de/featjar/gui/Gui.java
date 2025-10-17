@@ -85,7 +85,7 @@ public class Gui {
         TranslatorToEMF.EMFTranslate(loadedFeatureModel);
         TranslatorToEMF.EMFTranslate(loadedFeatureModel2);
 	    
-        IFeatureModel myChild = TranslatorFromEMF.FMTranslation("./src/main/java/de/featjar/gui/EMFxmls/My Model.tasklist");
+        IFeatureModel myChild = TranslatorFromEMF.FMTranslation("./src/main/java/de/featjar/gui/EMFxmls/My Model.featuremodel");
         IFeatureTree newRoot = myChild.getRoots().get(0);
         FeatJAR.log().message("\n" + Trees.traverse(newRoot, new TreePrinter()).get());
     }

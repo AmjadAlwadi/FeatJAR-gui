@@ -55,28 +55,10 @@ public class TranslatorToEMF {
     	EMFFileDir(path);
     	
     	String filename = dir + "/" + name + ".featuremodel";
-        File file = new File(filename);
         path = Paths.get(filename);
         
-        if (file != null) {
-            try {
-            	file.createNewFile();
-            } catch (IOException e) {
-            	System.err.println("Error creating" + file.toString());
-            }
-            if (!(file.isFile() && file.canWrite() && file.canRead())) {
-            	return false;
-            }
-            System.out.println(file + " created");
-        }
-        
-        //clearing the file in case somethings in there
-        try (FileWriter fileWriter = new FileWriter(file, false)) {
-            fileWriter.write("");
-        } catch (IOException e) {
-        	System.err.println("Error creating" + path.toString());
-        }
-
+        EMFFiles(filename, name);
+        	
         //writing preamble
         String input = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n"
         					+ "<featJAR:FeatureModel\nid=\">" + giveID() + "\"\nname=\"" + name + "\" "
@@ -269,12 +251,75 @@ public class TranslatorToEMF {
 		}
     }
 	
-	//makes a directory for the files (next to main file currently)
+	//creates the neccesary files
 	public static void EMFFileDir(Path path) {
 		try {
 			Files.createDirectories(path);
 		} catch (IOException e) {
 			System.err.println("Error creating Directory");
 		}
+	}
+	
+	public static void EMFFiles(String filename, String name) {
+		 File file = new File(filename);
+		
+		if (file != null) {
+            try {
+            	file.createNewFile();
+            } catch (IOException e) {
+            	System.err.println("Error creating" + file.toString());
+            }
+            if (!(file.isFile() && file.canWrite() && file.canRead())) {
+            	return;
+            }
+            System.out.println(file + " created");
+        }
+		
+		//clearing the file in case somethings in there
+        try (FileWriter fileWriter = new FileWriter(file, false)) {
+            fileWriter.write("");
+        } catch (IOException e) {
+        	System.err.println("Error creating" + file.toString());
+        }
+		
+        String filename2 = dir + "/" + name + ".notation";
+        File file2 = new File(filename2);
+        
+        if (file2 != null) {
+            try {
+            	file2.createNewFile();
+            } catch (IOException e) {
+            	System.err.println("Error creating" + file2.toString());
+            }
+            if (!(file2.isFile() && file2.canWrite() && file2.canRead())) {
+            	return;
+            }
+            System.out.println(file2 + " created");
+        }
+        
+        try (FileWriter fileWriter = new FileWriter(file2, false)) {
+            fileWriter.write("<?xml version=\"1.0\" encoding=\"ASCII\"?>\n"
+            		+ "<notation:Diagram xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:notation=\"http://www.eclipse.org/glsp/notation\">\n"
+            		+ "<semanticElement elementId=\"root\"/>\n"
+            		+ "<elements xsi:type=\"notation:Shape\">\n"
+            		+ "<semanticElement elementId=\"2f4667d1-97ac-4d40-92de-581ebfa12cbb\"/>\n"
+            		+ "<position x=\"333.0\" y=\"201.0\"/>\n"
+            		+ "<size width=\"79.34375\" height=\"25.0\"/>\n"
+            		+ "</elements>\n"
+            		+ "<elements xsi:type=\"notation:Shape\">\n"
+            		+ "<semanticElement elementId=\"0be70207-1f24-4213-98fb-433506118b52\"/>\n"
+            		+ "<position x=\"405.0\" y=\"121.0\"/>\n"
+            		+ "<size width=\"135.1875\" height=\"25.0\"/>\n"
+            		+ "</elements>\n"
+            		+ "<elements xsi:type=\"notation:Shape\">\n"
+            		+ "<semanticElement elementId=\"2525269f-c7c6-48cd-9c0e-552c6228f13d\"/>\n"
+            		+ "<position x=\"180.0\" y=\"128.0\"/>\n"
+            		+ "<size width=\"125.375\" height=\"25.0\"/>\n"
+            		+ "</elements>\n"
+            		+ "</notation:Diagram>");
+        } catch (IOException e) {
+        	System.err.println("Error creating" + file2.toString());
+        }
+		
 	}
 }
