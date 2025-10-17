@@ -39,7 +39,7 @@ import featJAR.FeatJARPackage;
 import featJAR.Feature;
 import featJAR.FeatureModel;
 
-public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
+public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
 
    @Inject
    protected EMFNotationModelState modelState;
@@ -47,17 +47,14 @@ public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNo
    @Inject
    protected EMFIdGenerator idGenerator;
 
-   public CreateFeatureNodeHandler() {
-      super(FeatureModelTypes.OBLIGATORY_FEATURE);
+   public CreateOptionalFeatureNodeHandler() {
+      super(FeatureModelTypes.OPTIONAL_FEATURE);
    }
 
    static int i = 10;
 
    @Override
    public Optional<Command> createCommand(final CreateNodeOperation operation) {
-
-      System.out.println("operation.getContainerId(): " + operation.getContainerId());
-      System.out.println("operation.getElementTypeId(): " + operation.getElementTypeId());
 
       GModelElement container = modelState.getIndex().get(operation.getContainerId()).orElseGet(modelState::getRoot);
       Optional<GPoint> absoluteLocation = operation.getLocation();
@@ -66,34 +63,12 @@ public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNo
 
       Feature newFeature = createFeature();
 
-      return Optional.of(createTaskAndShape(absoluteLocation));
+      return Optional.of(createFeatureAndNode(absoluteLocation));
 
    }
 
    @Override
    public String getLabel() { return "New Feature"; }
-
-   // protected Command createTaskAndShape(final Optional<GPoint> relativeLocation) {
-   // FeatureModel featureModel = modelState.getSemanticModel(FeatureModel.class).orElseThrow();
-   // Feature root = featureModel.getRoot();
-   //
-   // Diagram diagram = modelState.getNotationModel();
-   // EditingDomain editingDomain = modelState.getEditingDomain();
-   //
-   // Feature newFeature = createFeature();
-   // Command taskCommand = AddCommand.create(editingDomain, root,
-   // FeatJARPackage.Literals.FEATURE, newFeature);
-   //
-   // Shape shape = createShape((newFeature.getId()), relativeLocation);
-   // Command shapeCommand = AddCommand.create(editingDomain, diagram,
-   // NotationPackage.Literals.DIAGRAM__ELEMENTS, shape);
-   //
-   // CompoundCommand compoundCommand = new CompoundCommand();
-   // compoundCommand.append(taskCommand);
-   // compoundCommand.append(shapeCommand);
-   //
-   // return compoundCommand;
-   // }
 
    protected Optional<EObject> getSelectedElement() {
       // Hardcode: always return the root Feature of the model
@@ -102,7 +77,7 @@ public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNo
          .map(f -> (EObject) f);
    }
 
-   protected Command createTaskAndShape(final Optional<GPoint> relativeLocation) {
+   protected Command createFeatureAndNode(final Optional<GPoint> relativeLocation) {
       // 1. Retrieve the selected (clicked) element
       Optional<EObject> selectedElementOpt = getSelectedElement();
 
@@ -126,7 +101,6 @@ public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNo
          newFeature // what to add
       );
 
-      // 5. Return the compound command
       CompoundCommand compound = new CompoundCommand();
       compound.append(addCommand);
 
@@ -134,20 +108,10 @@ public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNo
    }
 
    protected Feature createFeature() {
-      Feature newTask = FeatJARFactory.eINSTANCE.createFeature();
-      newTask.setName(getLabel() + i++);
-      newTask.setId(idGenerator.getOrCreateId(newTask) + i++);
-      newTask.setOptional(false);
-      return newTask;
+      Feature newFeature = FeatJARFactory.eINSTANCE.createFeature();
+      newFeature.setName(getLabel() + i++);
+      newFeature.setId(idGenerator.getOrCreateId(newFeature) + i++);
+      newFeature.setOptional(true);
+      return newFeature;
    }
-
-   // protected Shape createShape(final String elementId, final Optional<GPoint> relativeLocation) {
-   // Shape newFeature = NotationFactory.eINSTANCE.createShape();
-   // newFeature.setPosition(relativeLocation.orElse(GraphUtil.point(0, 0)));
-   // newFeature.setSize(GraphUtil.dimension(60, 25));
-   // SemanticElementReference reference = NotationFactory.eINSTANCE.createSemanticElementReference();
-   // reference.setElementId(elementId);
-   // newFeature.setSemanticElement(reference);
-   // return newFeature;
-   // }
 }

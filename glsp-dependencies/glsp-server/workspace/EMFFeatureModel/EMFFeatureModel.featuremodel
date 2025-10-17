@@ -12,5 +12,7 @@
         <features id="firssdat layer casdhsdfilsadd 1" name="first layer child 1"/>
       </features>
     </features>
+    <features id="null33" name="New Feature32"/>
+    <features id="null37" name="New Feature36"/>
   </root>
 </featJAR:FeatureModel>
