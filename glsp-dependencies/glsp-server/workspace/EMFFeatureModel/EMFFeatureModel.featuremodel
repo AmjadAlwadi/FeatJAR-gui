@@ -1,73 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-
-<featJAR:FeatureModel id="featuremodel" name="hallo" xmi:version="2.0"
-  xmlns:xmi="http://www.omg.org/XMI"
-  xmlns:featJAR="http://www.example.org/featJAR">
-
-<root 
-  id = "root" 
-  optional="false"
-  name="root">
-
-
-    <features
-  id = "first layer child 1"
-  optional="false"
-  name="first layer child 1">
-  
-    <features
-  id = "first layersdfs casdhisdsadld 1"
-  optional="false"
-  name="first layer child 1"/>
-  
-  <features
-  id = "first layersdfs casdhisadld 1"
-  optional="false"
-  name="first layer child 1"/>
-  
-  <features
-  id = "first layersdfs casdhild 1"
-  optional="false"
-  name="first layer child 1"/>
-  
-  <features
-  id = "firssadt layersdfs casdhild 1"
-  optional="false"
-  name="first layer child 1"/>
-  
-  <features
-  id = "first layer casdhild 1"
-  optional="false"
-  name="first layer child 1">
-  
-  
-  <features
-  id = "first layer casdhsdfild 1"
-  optional="false"
-  name="first layer child 1"/>
-  
-  
-   <features
-  id = "firssdat layer casdhsdfild 1"
-  optional="false"
-  name="first layer child 1"/>
-  
-  
-     <features
-  id = "firssdat layer casdhsdfilsadd 1"
-  optional="false"
-  name="first layer child 1"/>
-  
-  </features>
-  
-  
-  
-  </features>
-
-
-  
+<featJAR:FeatureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:featJAR="http://www.example.org/featJAR" id="featuremodel" name="hallo">
+  <root id="root" name="root">
+    <features id="first layer child 1" name="first layer child 1">
+      <features id="first layersdfs casdhisdsadld 1" name="first layer child 1"/>
+      <features id="first layersdfs casdhisadld 1" name="first layer child 1"/>
+      <features id="first layersdfs casdhild 1" name="first layer child 1"/>
+      <features id="firssadt layersdfs casdhild 1" name="first layer child 1"/>
+      <features id="first layer casdhild 1" name="first layer child 1">
+        <features id="first layer casdhsdfild 1" name="first layer child 1"/>
+        <features id="firssdat layer casdhsdfild 1" name="first layer child 1"/>
+        <features id="firssdat layer casdhsdfilsadd 1" name="first layer child 1"/>
+      </features>
+    </features>
   </root>
-  
- 
 </featJAR:FeatureModel>

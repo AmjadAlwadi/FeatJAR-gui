@@ -20,23 +20,24 @@ import java.util.Optional;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.command.CompoundCommand;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.glsp.example.javaemf.server.FeatureModelTypes;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.emf.EMFCreateOperationHandler;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
-import org.eclipse.glsp.server.emf.model.notation.Diagram;
-import org.eclipse.glsp.server.emf.model.notation.NotationFactory;
-import org.eclipse.glsp.server.emf.model.notation.SemanticElementReference;
-import org.eclipse.glsp.server.emf.model.notation.Shape;
 import org.eclipse.glsp.server.emf.notation.EMFNotationModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.utils.LayoutUtil;
 
 import com.google.inject.Inject;
 
 import featJAR.FeatJARFactory;
+import featJAR.FeatJARPackage;
 import featJAR.Feature;
+import featJAR.FeatureModel;
 
 public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
 
@@ -50,63 +51,103 @@ public class CreateFeatureNodeHandler extends EMFCreateOperationHandler<CreateNo
       super(FeatureModelTypes.OBLIGATORY_FEATURE);
    }
 
+   static int i = 10;
+
    @Override
    public Optional<Command> createCommand(final CreateNodeOperation operation) {
 
       System.out.println("operation.getContainerId(): " + operation.getContainerId());
       System.out.println("operation.getElementTypeId(): " + operation.getElementTypeId());
-      System.out.println("operation.getKind(): " + operation.getKind());
 
-      // GModelElement container = modelState.getIndex().get(operation.getContainerId()).orElseGet(modelState::getRoot);
-      // Optional<GPoint> absoluteLocation = operation.getLocation();
-      // Optional<GPoint> relativeLocation = absoluteLocation
-      // .map(location -> LayoutUtil.getRelativeLocation(location, container));
+      GModelElement container = modelState.getIndex().get(operation.getContainerId()).orElseGet(modelState::getRoot);
+      Optional<GPoint> absoluteLocation = operation.getLocation();
+      Optional<GPoint> relativeLocation = absoluteLocation
+         .map(location -> LayoutUtil.getRelativeLocation(location, container));
 
       Feature newFeature = createFeature();
 
-      // return Optional.of(createTaskAndShape(null));
-      return Optional.empty();
+      return Optional.of(createTaskAndShape(absoluteLocation));
 
    }
 
    @Override
-   public String getLabel() { return "Feature"; }
+   public String getLabel() { return "New Feature"; }
+
+   // protected Command createTaskAndShape(final Optional<GPoint> relativeLocation) {
+   // FeatureModel featureModel = modelState.getSemanticModel(FeatureModel.class).orElseThrow();
+   // Feature root = featureModel.getRoot();
+   //
+   // Diagram diagram = modelState.getNotationModel();
+   // EditingDomain editingDomain = modelState.getEditingDomain();
+   //
+   // Feature newFeature = createFeature();
+   // Command taskCommand = AddCommand.create(editingDomain, root,
+   // FeatJARPackage.Literals.FEATURE, newFeature);
+   //
+   // Shape shape = createShape((newFeature.getId()), relativeLocation);
+   // Command shapeCommand = AddCommand.create(editingDomain, diagram,
+   // NotationPackage.Literals.DIAGRAM__ELEMENTS, shape);
+   //
+   // CompoundCommand compoundCommand = new CompoundCommand();
+   // compoundCommand.append(taskCommand);
+   // compoundCommand.append(shapeCommand);
+   //
+   // return compoundCommand;
+   // }
+
+   protected Optional<EObject> getSelectedElement() {
+      // Hardcode: always return the root Feature of the model
+      return modelState.getSemanticModel(FeatureModel.class)
+         .map(FeatureModel::getRoot)
+         .map(f -> (EObject) f);
+   }
 
    protected Command createTaskAndShape(final Optional<GPoint> relativeLocation) {
-      // CoreFeature root = modelState.getSemanticModel(CoreFeature.class).orElseThrow();
-      Diagram diagram = modelState.getNotationModel();
+      // 1. Retrieve the selected (clicked) element
+      Optional<EObject> selectedElementOpt = getSelectedElement();
+
+      // 2. If no element selected, default to root model
+      EObject parentElement = selectedElementOpt
+         .filter(Feature.class::isInstance)
+         .orElseGet(() -> modelState.getSemanticModel(FeatureModel.class)
+            .map(FeatureModel::getRoot)
+            .orElseThrow());
+
+      // 3. Create the new feature instance
+      Feature newFeature = createFeature();
+
+      // 4. Build EMF AddCommand
       EditingDomain editingDomain = modelState.getEditingDomain();
 
-      // Feature newFeature = createTask();
-      // Command taskCommand = AddCommand.create(editingDomain, root,
-      // FeatJARPackage.Literals.FEATURE, newFeature);
+      Command addCommand = AddCommand.create(
+         editingDomain,
+         parentElement, // where to add
+         FeatJARPackage.Literals.FEATURE__FEATURES, // the containment reference
+         newFeature // what to add
+      );
 
-      // Shape shape = createShape((newFeature.getId()), relativeLocation);
-      // Command shapeCommand = AddCommand.create(editingDomain, diagram,
-      // NotationPackage.Literals.DIAGRAM__ELEMENTS, shape);
+      // 5. Return the compound command
+      CompoundCommand compound = new CompoundCommand();
+      compound.append(addCommand);
 
-      CompoundCommand compoundCommand = new CompoundCommand();
-      // compoundCommand.append(taskCommand);
-      // compoundCommand.append(shapeCommand);
-
-      return compoundCommand;
+      return compound;
    }
 
    protected Feature createFeature() {
       Feature newTask = FeatJARFactory.eINSTANCE.createFeature();
-      newTask.setName(getLabel());
-      newTask.setId(idGenerator.getOrCreateId(newTask));
+      newTask.setName(getLabel() + i++);
+      newTask.setId(idGenerator.getOrCreateId(newTask) + i++);
       newTask.setOptional(false);
       return newTask;
    }
 
-   protected Shape createShape(final String elementId, final Optional<GPoint> relativeLocation) {
-      Shape newTask = NotationFactory.eINSTANCE.createShape();
-      newTask.setPosition(relativeLocation.orElse(GraphUtil.point(0, 0)));
-      newTask.setSize(GraphUtil.dimension(60, 25));
-      SemanticElementReference reference = NotationFactory.eINSTANCE.createSemanticElementReference();
-      reference.setElementId(elementId);
-      newTask.setSemanticElement(reference);
-      return newTask;
-   }
+   // protected Shape createShape(final String elementId, final Optional<GPoint> relativeLocation) {
+   // Shape newFeature = NotationFactory.eINSTANCE.createShape();
+   // newFeature.setPosition(relativeLocation.orElse(GraphUtil.point(0, 0)));
+   // newFeature.setSize(GraphUtil.dimension(60, 25));
+   // SemanticElementReference reference = NotationFactory.eINSTANCE.createSemanticElementReference();
+   // reference.setElementId(elementId);
+   // newFeature.setSemanticElement(reference);
+   // return newFeature;
+   // }
 }
