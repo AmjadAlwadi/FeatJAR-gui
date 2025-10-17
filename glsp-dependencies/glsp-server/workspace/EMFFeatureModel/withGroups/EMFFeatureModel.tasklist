@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<featJAR:FeatureModel
+    id="featuremodel_001"
+    name="LayeredFeatureModel"
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:featJAR="http://www.example.org/featJAR">
+
+  <root id = "root_0" name = "layer_0:root" optional= "false" >
+    <groups id = "group_1" name = "layer_1:Group1" type="OR" lowerBound = "0" upperBound = "-1" >
+      <features id = "node_1" name = "layer_1:Nodde1" optional="false" >
+
+      	<groups id= "group_3" name = "layer_2:Group1" type = "SPECIAL" lowerBound = "0" upperBound = "2" >
+      		<features id = "node_5" name="layer_2:Nodde1" optional = "false" />
+      		<features id = "node_6" name="layer_2:Nodde2" optional = "false" />
+      	</groups>
+
+      </features>
+      <features id = "node_2"  name ="layer_1:Nodde2" optional = "true" />
+    </groups>
+
+    <groups id = "group_2" name = "layer_1:Group2" type = "TRUE" lowerBound = "0" upperBound = "-1" >
+      <features id = "node_3" optional = "false" name = "layer_1:Nodde3" />
+      <features id = "node_4" optional = "false" name = "layer_1:Nodde4" >
+      	<groups id = "group_4" name = "layer_2:Group2" type = "TRUE" lowerBound = "0" upperBound = "-1" >
+      		<features id = "node_7" name = "layer_2:Nodde3" optional = "true" />
+      		<features id = "node_8" name = "layer_2:Nodde4" optional = "true" />
+      	</groups>
+      </features>
+    </groups>
+
+    <groups id = "group_4" name = "layer_1:Group2" type = "XOR" lowerBound = "1" upperBound = "1" >
+      <features id = "node_9" name = "layer_1:Group2" optional = "true" />
+      <features id = "node_10" name = "layer_1:Group2" optional = "true" >
+        <groups id = "group_5" name = "layer_2:Group3" type = "OR" lowerBound = "0" upperBound = "-1" >
+          <features id = "node_11" name = "layer_2:Nodde3" optional = "false" >
+            <groups id = "group_6" name = "layer_3:Group1" type = "TRUE" lowerBound = "0" upperBound = "-1" >
+              <features id = "node_12" name = "layer_3:Nodde1" optional = "true" />
+            </groups>
+          </features>
+        </groups>
+      </features>
+    </groups>
+
+  </root>
+
+  <constraints id = "const_001" name = "A and B and C" />
+  <constraints id = "const_002" name = "A or B and not C" />
+  <constraints id = "const_003" name = "(A and B) or (C and D)" />
+  <constraints id = "const_004" name = "FeatureX implies FeatureY" />
+
+</featJAR:FeatureModel>

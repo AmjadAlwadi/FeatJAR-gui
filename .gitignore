@@ -1,9 +1,13 @@
-tasklist-eclipse/app/**
+    tasklist-eclipse/app/**
 !tasklist-eclipse/app/diagram.html
 
 *.log
 *.ttf
 
+.classpath
+.project
+.settings/
+build/
 bin
 .bin
 target

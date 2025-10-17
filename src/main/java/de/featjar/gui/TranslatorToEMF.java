@@ -35,87 +35,95 @@ import java.util.Collection;
 import java.util.List;
 
 public class TranslatorToEMF {
-	public static boolean EMFTranslate(IFeatureModel source) {
+	private static int idCounter = 0;
+	private static String dir = "./src/main/java/de/featjar/gui/EMFxmls";
+	
+	private static String giveID() {
+		idCounter++;
+		return String.valueOf(idCounter);
+	}
+	
+	public static void EMFTranslate(IFeatureModel source) {
     	String name = source.getName().get();
-    	String id = source.getIdentifier().toString();
+    	//String id = source.getIdentifier().toString();
+    	List<IFeatureTree> rootNodes = source.getRoots();
     	
     	//Creating new File for the GLSP-Client/Server to read
-    	
-    	String filename = "./src/main/java/de/featjar/gui/EMFxmls";
-    	Path path = Paths.get(filename);
+    	Path path = Paths.get(dir);
     	EMFFileDir(path);
     	
-    	filename = "./src/main/java/de/featjar/gui/EMFxmls/" + name + ".tasklist";
-        File file = new File(filename);
+    	String filename = dir + "/" + name + ".featuremodel";
         path = Paths.get(filename);
         
-        if (file != null) {
-            try {
-            	file.createNewFile();
-            } catch (IOException e) {
-            	System.err.println("Error creating" + file.toString());
-            }
-            if (!(file.isFile() && file.canWrite() && file.canRead())) {
-            	return false;
-            }
-            System.out.println(file + " created");
-        }
-        
-        //clearing the file in case somethings in there
-        try (FileWriter fileWriter = new FileWriter(file, false)) {
-            fileWriter.write("");
-        } catch (IOException e) {
-        	System.err.println("Error creating" + file.toString());
-        }
+        EMFFiles(filename, name);
 
         //writing preamble
         String input = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n"
-        					+ "<featJAR:FeatureModel id=\">" + id + "\" name=\"" + name + "\" "
+        					+ "<featJAR:FeatureModel id=\">" + giveID() + "\" name=\"" + name + "\" "
         					+ "xmi:version=\"2.0\"\nxmlns:xmi=\"http://www.omg.org/XMI\"\n"
-        					+ "xmlns:featJAR=\"http://www.example.org/featJAR\">\n\n";
+        					+ "xmlns:featJAR=\"http://www.example.org/featJAR\"";
+        
+        if (rootNodes.isEmpty()) {
+        	input += " />\n\n";
+        } else {
+        	input += " >\n\n";
+        }
+        
         try {
         	Files.writeString(path, input, StandardOpenOption.WRITE);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
+        }
+        
+        if (rootNodes.isEmpty()) {
+        	return;
         }
 
-        //getting the roots (should only be one) and writing them down
-    	List<IFeatureTree> rootNodes = source.getRoots();
+        //going over the roots (should only be one) and writing them down
     	for (IFeatureTree root : rootNodes) {
-    		EMFaddRoot(root, path, file);
+    		EMFaddRoot(root, path);
     	}
 
     	//getting the constraints
-    	EMFaddConstraints(source, path, file);
+    	EMFaddConstraints(source, path);
 
     	//closing element
     	input = "</featJAR:FeatureModel>";
     	try {
         	Files.writeString(path, input, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
         }
-
-    	return true;
 	}
 
-	public static void EMFaddRoot(IFeatureTree root, Path path, File file) {
+	public static void EMFaddRoot(IFeatureTree root, Path path) {
 		//fetching info about root
 		String rootName = root.getFeature().getName().get();
-		String rootId = root.getFeature().getIdentifier().toString();
-
+		//String rootId = root.getFeature().getIdentifier().toString();
+		List<? extends IFeatureTree> childTree = root.getChildren();
 		//writing info down
-		String input = "<root\nid = \"" + rootId + "\"\noptional=\"false\"\nname=\"" + rootName + "\">\n\n";
+		String input = "<root id = \"" + giveID() + "\" name = \"" + rootName + "\" optional = \"false\"";
+		
+		if (childTree.isEmpty()) {
+			input += " />\n\n";
+		} else {
+			input += " >\n\n";
+		}
+		
 		try {
         	Files.writeString(path, input, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
         }
+		
+		//check for early return
+		if(childTree.isEmpty()) {
+    		return;
+    	}
 
 		//getting the children
-		List<? extends IFeatureTree> childTree = root.getChildren();
 		for (IFeatureTree feature : childTree) {
-			EMFaddFeatures(feature, path, file);
+			EMFaddFeatures(feature, path);
 		}
 
 		//closing element
@@ -123,66 +131,62 @@ public class TranslatorToEMF {
 		try {
 	    	Files.writeString(path, input, StandardOpenOption.APPEND);
 	    } catch (IOException e) {
-	        System.err.println("Error creating" + file.toString());
+	        System.err.println("Error creating" + path.toString());
 	    }
 	}
 
-	public static void EMFaddFeatures(IFeatureTree feature, Path path, File file) {
+	public static void EMFaddFeatures(IFeatureTree feature, Path path) {
 		//fetching info about node 
 		String featureName = feature.getFeature().getName().get();
-		String featureId = feature.getFeature().getIdentifier().toString();
+		//String featureId = feature.getFeature().getIdentifier().toString();
 		boolean optional = feature.isOptional();
-		int amountChildren = feature.getChildrenCount();
-
+		List<? extends IFeatureTree> childTree = feature.getChildren();
+		
 		//writing info down
-		String input = "<features\nid = \"" + featureId + "\"\noptional=\"" + optional + "\"\nname=\"" + featureName + "\"";
-		try {
-        	Files.writeString(path, input, StandardOpenOption.APPEND);
-        } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
-        }
+		String input = "<features id = \"" + giveID() + "\" name = \"" + featureName + "\" optional = \"" + optional + "\"";
 
 		//determine if we can already close the element
-    	if(amountChildren == 0) {
-    		input = "/>\n\n";
+    	if(childTree.isEmpty()) {
+    		input += " />\n\n";
     	} else {
-	    	input = ">\n\n";
+	    	input += " >\n\n";
     	}
 
 		try {
         	Files.writeString(path, input, StandardOpenOption.APPEND);
         } catch (IOException e) {
-            System.err.println("Error creating" + file.toString());
+            System.err.println("Error creating" + path.toString());
         }
+		
+		if(childTree.isEmpty()) {
+    		return;
+    	}
 
 		//getting the children
-		List<? extends IFeatureTree> childTree = feature.getChildren();
     	for (IFeatureTree child : childTree) {
-    		EMFaddFeatures(child, path, file);
+    		EMFaddFeatures(child, path);
     	}
 
     	//determine if we should already close the element
-    	if(amountChildren != 0) {
-    		input = "</features>\n\n";
-    		try {
-            	Files.writeString(path, input, StandardOpenOption.APPEND);
-            } catch (IOException e) {
-                System.err.println("Error creating" + file.toString());
-            }
-    	}
+		input = "</features>\n\n";
+		try {
+        	Files.writeString(path, input, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            System.err.println("Error creating" + path.toString());
+        }
     }
 
-	public static void EMFaddConstraints(IFeatureModel source, Path path, File file) {
+	public static void EMFaddConstraints(IFeatureModel source, Path path) {
 		//fetching constraints
 		Collection<IConstraint> cons = source.getConstraints();
 		for (IConstraint con : cons) {
 			String conName = con.getName().get();
-			String conId = con.getIdentifier().toString();
-			String input = "<constraints\nid = \"" + conId + "\"\nname=\"" + conName + "\"/>\n\n";
+			//String conId = con.getIdentifier().toString();
+			String input = "<constraints id = \"" + giveID() + "\" name = \"" + conName + "\" />\n\n";
 			try {
 	        	Files.writeString(path, input, StandardOpenOption.APPEND);
 	        } catch (IOException e) {
-	            System.err.println("Error creating" + file.toString());
+	            System.err.println("Error creating" + path.toString());
 	        }
 		}
     }
@@ -193,5 +197,68 @@ public class TranslatorToEMF {
 		} catch (IOException e) {
 			System.err.println("Error creating Directory");
 		}
+	}
+	
+	//writing the necessary files 
+	public static void EMFFiles(String filename, String name) {
+		 File file = new File(filename);
+		
+		if (file != null) {
+           try {
+           	file.createNewFile();
+           } catch (IOException e) {
+           	System.err.println("Error creating" + file.toString());
+           }
+           if (!(file.isFile() && file.canWrite() && file.canRead())) {
+           	return;
+           }
+           System.out.println(file + " created");
+       }
+		
+		//clearing the file in case somethings in there
+       try (FileWriter fileWriter = new FileWriter(file, false)) {
+           fileWriter.write("");
+       } catch (IOException e) {
+       	System.err.println("Error creating" + file.toString());
+       }
+		
+       String filename2 = dir + "/" + name + ".notation";
+       File file2 = new File(filename2);
+       
+       if (file2 != null) {
+           try {
+           	file2.createNewFile();
+           } catch (IOException e) {
+           	System.err.println("Error creating" + file2.toString());
+           }
+           if (!(file2.isFile() && file2.canWrite() && file2.canRead())) {
+           	return;
+           }
+           System.out.println(file2 + " created");
+       }
+       
+       try (FileWriter fileWriter = new FileWriter(file2, false)) {
+           fileWriter.write("<?xml version=\"1.0\" encoding=\"ASCII\"?>\n"
+           		+ "<notation:Diagram xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:notation=\"http://www.eclipse.org/glsp/notation\">\n"
+           		+ "<semanticElement elementId=\"root\"/>\n"
+           		+ "<elements xsi:type=\"notation:Shape\">\n"
+           		+ "<semanticElement elementId=\"2f4667d1-97ac-4d40-92de-581ebfa12cbb\"/>\n"
+           		+ "<position x=\"333.0\" y=\"201.0\"/>\n"
+           		+ "<size width=\"79.34375\" height=\"25.0\"/>\n"
+           		+ "</elements>\n"
+           		+ "<elements xsi:type=\"notation:Shape\">\n"
+           		+ "<semanticElement elementId=\"0be70207-1f24-4213-98fb-433506118b52\"/>\n"
+           		+ "<position x=\"405.0\" y=\"121.0\"/>\n"
+           		+ "<size width=\"135.1875\" height=\"25.0\"/>\n"
+           		+ "</elements>\n"
+           		+ "<elements xsi:type=\"notation:Shape\">\n"
+           		+ "<semanticElement elementId=\"2525269f-c7c6-48cd-9c0e-552c6228f13d\"/>\n"
+           		+ "<position x=\"180.0\" y=\"128.0\"/>\n"
+           		+ "<size width=\"125.375\" height=\"25.0\"/>\n"
+           		+ "</elements>\n"
+           		+ "</notation:Diagram>");
+       } catch (IOException e) {
+       	System.err.println("Error creating" + file2.toString());
+       }
 	}
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<featJAR:FeatureModel
+id=">1"
+name="My Model" 
+xmi:version="2.0"
+xmlns:xmi="http://www.omg.org/XMI"
+xmlns:featJAR="http://www.example.org/featJAR" >
+
+<root id = "2" name = "root" optional = "false" >
+
+<groups id = "3" name = "Range[0, -1]" type = "TRUE" lowerBound = "0" upperBound = "-1" >
+
+<features id = "4" name = "child1" optional = "true" >
+<groups id = "5" name = "Range[0, -1]" type = "TRUE" lowerBound = "0" upperBound = "-1" >
+
+<features id = "6" name = "child5" optional = "true" />
+<features id = "7" name = "child6" optional = "true" />
+</groups>
+
+</features>
+
+<features id = "8" name = "child2" optional = "true" />
+<features id = "9" name = "child3" optional = "true" />
+<features id = "10" name = "child4" optional = "true" />
+</groups>
+
+</root>
+
+<constraints id = "11" name = "true" />
+<constraints id = "12" name = "true" />
+<constraints id = "13" name = "false" />
+</featJAR:FeatureModel>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<featJAR:FeatureModel id=">1" name="My Model" xmi:version="2.0"
+xmlns:xmi="http://www.omg.org/XMI"
+xmlns:featJAR="http://www.example.org/featJAR" >
+
+<root id = "2" name = "root" optional = "false" >
+
+<features id = "3" name = "layer1-node1" optional = "true" >
+
+    <features id = "4" name = "layer2-node1" optional = "false" />
+
+    <features id = "5" name = "layer2-node2" optional = "true" />
+
+</features>
+
+<features id = "6" name = "layer1-node2" optional = "false" />
+
+<features id = "7" name = "layer1-node3" optional = "false" >
+
+    <features id = "12" name = "layer2-node3" optional = "true" />
+
+    <features id = "13" name = "layer2-node4" optional = "true" >
+
+        <features id = "15" name = "layer3-node1" optional = "true" />
+
+        <features id = "16" name = "layer3-node2" optional = "true" >
+
+            <features id = "17" name = "layer4-node1" optional = "false" />
+
+        </features>
+
+    </features>
+
+    <features id = "14" name = "layer2-node5" optional = "false" />
+
+</features>
+
+<features id = "8" name = "layer1-node4" optional = "true" >
+
+    <features id = "18" name = "layer2-node6" optional = "true" >
+
+        <features id = "19" name = "layer3-node3" optional = "false" >
+
+            <features id = "20" name = "layer4-node2" optional = "true" >
+
+                <features id = "21" name = "layer5-node1" optional = "false" />
+
+            </features>
+
+        </features>
+
+    </features>
+
+</features>
+
+</root>
+
+<constraints id = "9" name = "@9" />
+
+<constraints id = "10" name = "@10" />
+
+<constraints id = "11" name = "@11" />
+
+</featJAR:FeatureModel>

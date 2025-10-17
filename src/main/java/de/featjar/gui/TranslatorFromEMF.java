@@ -26,7 +26,9 @@ import de.featjar.feature.model.IConstraint;
 import de.featjar.feature.model.IFeature;
 import de.featjar.feature.model.IFeatureModel;
 import de.featjar.feature.model.IFeatureTree;
+import de.featjar.formula.io.textual.Symbols;
 import de.featjar.formula.structure.Expressions;
+import de.featjar.formula.structure.IExpression;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -56,6 +58,16 @@ public class TranslatorFromEMF {
 			} else {
 				throw new IOException();
 			}
+			
+			//skipping lines
+			readEMFFileCapsulatedWord(reader, '"');
+			readEMFFileCapsulatedWord(reader, '"');
+			readEMFFileCapsulatedWord(reader, '"');
+			
+			//check for an early end
+			if (readEMFFileCheckingClosingTag(reader)) {
+				return newFeatureModel;
+			}
 
 			//getting the roots (which should only be one)
 			while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
@@ -65,7 +77,7 @@ public class TranslatorFromEMF {
 					return newFeatureModel;
 				} else if (stop.compareTo("cons") == 0) {
 					//TODO: constraints
-					FMaddConstraint(newFeatureModel, reader);
+					//FMaddConstraint(newFeatureModel, reader);
 				} else {
 					throw new IOException();
 				}
@@ -79,10 +91,14 @@ public class TranslatorFromEMF {
 	public static void FMaddRoot(IFeatureModel goal, BufferedReader reader) throws IOException {
 		String name = readEMFFileCapsulatedWord(reader, '"');
 		name = readEMFFileCapsulatedWord(reader, '"');
-		name = readEMFFileCapsulatedWord(reader, '"');
 		IFeature rootFeature = goal.mutate().addFeature(name);
 		IFeatureTree rootTree = goal.mutate().addFeatureTreeRoot(rootFeature);
 		//System.out.println("added root");
+		
+		//check for early end
+		if (readEMFFileCheckingClosingTag(reader)) {
+			return;
+		}
 
 		//getting the kids 
 		String stop;
@@ -99,9 +115,9 @@ public class TranslatorFromEMF {
 	}
 
 	public static void FMaddFeature(IFeatureModel goal, IFeatureTree hook, BufferedReader reader) throws IOException {
-		String optional = readEMFFileCapsulatedWord(reader, '"');
-		optional = readEMFFileCapsulatedWord(reader, '"');
 		String name = readEMFFileCapsulatedWord(reader, '"');
+		name = readEMFFileCapsulatedWord(reader, '"');
+		String optional = readEMFFileCapsulatedWord(reader, '"');
 		IFeature feature = goal.mutate().addFeature(name);
 		IFeatureTree tree = hook.mutate().addFeatureBelow(feature);
 		
@@ -109,39 +125,42 @@ public class TranslatorFromEMF {
 			tree.mutate().makeOptional();
 		}
 		//System.out.println("added feature");
-
-		int character;
-		try {
-			if ((character = reader.read()) != -1) {
-			    char ch = (char) character;
-			    //returning to parent, when no further children
-			    if(ch == '/') {
-			    	return;
-			    }
-			    String stop;
-			    while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
-			    	//continue adding children...
-			    	if (stop.compareTo("feat") == 0) {
-						FMaddFeature(goal, tree, reader);
-					//unless closing element is read
-					} else if (stop.compareTo("/fea") == 0) {
-						return;
-					} else {
-						throw new IOException();
-					}
-			    }
-			} else {
-				throw new IOException();
-			}
-		} catch (IOException e) {
-			System.err.println("Error reading the file");
+		
+		if (readEMFFileCheckingClosingTag(reader)) {
+			return;
 		}
+		
+		try {			
+			String stop;
+		    while (!((stop = readEMFFileAfterChar(reader, '<')).isBlank())) {
+		    	//continue adding children...
+		    	if (stop.compareTo("feat") == 0) {
+					FMaddFeature(goal, tree, reader);
+				//unless closing element is read
+				} else if (stop.compareTo("/fea") == 0) {
+					return;
+				} else {
+					throw new IOException();
+				}
+		    	
+		    	if (readEMFFileCheckingClosingTag(reader)) {
+					return;
+				}
+		    }
+		} catch (IOException e) {
+			System.err.println("Error reading the file: Read something unexpected");
+		}
+		
 	}
-	
+	/*
 	public static void FMaddConstraint(IFeatureModel goal, BufferedReader reader) {
 		IConstraint constraint1 = goal.mutate().addConstraint(Expressions.True);
+		ExpressionParser parser = new ExpressionParser();
+		serialiser
+		parser.setSymbols();
+		Result<IExpression> parse = parser.parse("");
 	}
-
+	*/
 	//getting the word thats between the next instance of walls (like ", as in "word")
 	public static String readEMFFileCapsulatedWord(BufferedReader reader, char walls) {
 		StringBuilder result = new StringBuilder();
@@ -192,5 +211,23 @@ public class TranslatorFromEMF {
 			System.err.println("Error reading");
 		}
 		return "";
+	}
+	
+	//checks if either / or > comes next, to determine if the element continues or not
+	public static boolean readEMFFileCheckingClosingTag(BufferedReader reader) throws IOException {
+		int character;
+		try {
+			while((character = reader.read()) != -1) {
+			    char ch = (char) character;
+			    if(ch == '/') {
+			        return true;
+			    } else if (ch == '>') {
+			    	return false;
+			    }
+			}
+		} catch (IOException e) {
+			System.err.println("Error reading");
+		}
+		throw new IOException();
 	}
 }
