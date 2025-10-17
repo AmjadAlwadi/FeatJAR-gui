@@ -52,11 +52,8 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
 
    @Override
    public Optional<Command> createCommand(final CreateNodeOperation operation) {
-      System.out.println("obligatory");
       Feature newFeature = createFeature();
-
       return Optional.of(createFeatureAndNode());
-
    }
 
    @Override
@@ -100,7 +97,6 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
 
          // Setting id
          newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
-         newFeature.setOptional(false);
 
          CompoundCommand compound = new CompoundCommand();
          compound.append(addCommand);
@@ -126,7 +122,6 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
 
       // Setting id
       newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
-      newFeature.setOptional(false);
 
       CompoundCommand compound = new CompoundCommand();
       compound.append(addCommand);

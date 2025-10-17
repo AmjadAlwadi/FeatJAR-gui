@@ -53,7 +53,6 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
    @Override
    public Optional<Command> createCommand(final CreateNodeOperation operation) {
 
-      System.out.println("optioanl");
       Feature newFeature = createFeature();
       return Optional.of(createFeatureAndNode());
 
@@ -73,8 +72,6 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
 
       Optional<Feature> selectedFeature = modelState.getProperty("currentSelection",
          (Class<Feature>) (Class<?>) Feature.class);
-
-      System.out.println("asdfdf: " + selectedFeature.get());
 
       // 2. If no element selected, default to root model
       Feature parentElement = selectedFeature
@@ -102,7 +99,6 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
 
          // Setting id
          newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
-         // newFeature.setOptional(true);
 
          CompoundCommand compound = new CompoundCommand();
          compound.append(addCommand);
@@ -128,7 +124,6 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
 
       // Setting id
       newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
-      // newFeature.setOptional(true);
 
       CompoundCommand compound = new CompoundCommand();
       compound.append(addCommand);

@@ -126,18 +126,15 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TreeNode rootTree = FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode);
       double marginY = 160; // tweak spacing below the last leaf
 
-  
       double rootCenterX = rootTree.x + (nodeWidth / 2.0);
       double legendTopY = FeatureTreeLayouter.computeYBelowDeepestRightmostLeaf(rootTree, nodeHeight, marginY);
 
       createConstraintLegend(emfFeatureModel.getConstraints(),
-         GraphUtil.point(gRoot.gNode.getPosition().getX() + 225, legendTopY));
+         GraphUtil.point(gRoot.gNode.getPosition().getX() + 190, legendTopY));
 
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(gEdges);
    }
-
-
 
    // Run to automatically layout the feature nodes nicely
    protected void layoutFeatureTree(final FeatureSubtreeResult gRoot) {
@@ -195,7 +192,6 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
    }
 
-
    // Create the graphical representation of a feature
    protected GNode createFeatureNode(final Feature feature, final GPoint gPosition, final Node_type node_type) {
 
@@ -205,13 +201,15 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
          .position(gPosition)
          .layout(GConstants.Layout.VBOX)
          .layoutOptions(new GLayoutOptions()
-            .vAlign(GConstants.VAlign.CENTER)
-            .hAlign(GConstants.HAlign.CENTER)
-            .minWidth(nodeWidth)
-            .minHeight(nodeHeight));
+            .vAlign(GConstants.VAlign.CENTER).hAlign(GConstants.HAlign.CENTER).minWidth(nodeWidth)
+            .minHeight(nodeHeight))
+         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label")
+            .addCssClass(Node_type.LABEL.cssClass()).build());
 
-      applyShapeData(feature, nodeBuilder);
-      return nodeBuilder.build();
+      applyShapeData(feature, taskNodeBuilder);
+      GNode element = taskNodeBuilder.build();
+
+      return element;
    }
 
    // Create the graphical representation of the feature relation

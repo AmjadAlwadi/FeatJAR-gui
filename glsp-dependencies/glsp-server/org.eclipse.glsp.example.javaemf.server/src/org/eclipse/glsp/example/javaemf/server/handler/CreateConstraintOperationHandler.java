@@ -32,7 +32,7 @@ public class CreateConstraintOperationHandler extends EMFCreateOperationHandler<
       super(FeatureModelTypes.CONSTRAINT);
    }
 
-   static int i = 10;
+   static int i = 0;
 
    @Override
    public Optional<Command> createCommand(final CreateNodeOperation operation) {
