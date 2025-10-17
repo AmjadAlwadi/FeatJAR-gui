@@ -195,7 +195,7 @@ public interface FeatJARPackage extends EPackage {
 	int FEATURE__NAME = IDENTIFIABLE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Group In</b></em>' reference.
+	 * The feature id for the '<em><b>Group In</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -204,7 +204,7 @@ public interface FeatJARPackage extends EPackage {
 	int FEATURE__GROUP_IN = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Groups</b></em>' reference list.
+	 * The feature id for the '<em><b>Groups</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -323,7 +323,7 @@ public interface FeatJARPackage extends EPackage {
 	int GROUP__NAME = IDENTIFIABLE__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Features</b></em>' reference list.
+	 * The feature id for the '<em><b>Features</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -332,7 +332,7 @@ public interface FeatJARPackage extends EPackage {
 	int GROUP__FEATURES = IDENTIFIABLE_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Group Parent</b></em>' reference.
+	 * The feature id for the '<em><b>Group Parent</b></em>' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -460,10 +460,10 @@ public interface FeatJARPackage extends EPackage {
 	EClass getFeature();
 
 	/**
-	 * Returns the meta object for the reference '{@link featJAR.Feature#getGroupIn <em>Group In</em>}'.
+	 * Returns the meta object for the container reference '{@link featJAR.Feature#getGroupIn <em>Group In</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Group In</em>'.
+	 * @return the meta object for the container reference '<em>Group In</em>'.
 	 * @see featJAR.Feature#getGroupIn()
 	 * @see #getFeature()
 	 * @generated
@@ -471,10 +471,10 @@ public interface FeatJARPackage extends EPackage {
 	EReference getFeature_GroupIn();
 
 	/**
-	 * Returns the meta object for the reference list '{@link featJAR.Feature#getGroups <em>Groups</em>}'.
+	 * Returns the meta object for the containment reference list '{@link featJAR.Feature#getGroups <em>Groups</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Groups</em>'.
+	 * @return the meta object for the containment reference list '<em>Groups</em>'.
 	 * @see featJAR.Feature#getGroups()
 	 * @see #getFeature()
 	 * @generated
@@ -524,10 +524,10 @@ public interface FeatJARPackage extends EPackage {
 	EClass getGroup();
 
 	/**
-	 * Returns the meta object for the reference list '{@link featJAR.Group#getFeatures <em>Features</em>}'.
+	 * Returns the meta object for the containment reference list '{@link featJAR.Group#getFeatures <em>Features</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Features</em>'.
+	 * @return the meta object for the containment reference list '<em>Features</em>'.
 	 * @see featJAR.Group#getFeatures()
 	 * @see #getGroup()
 	 * @generated
@@ -535,10 +535,10 @@ public interface FeatJARPackage extends EPackage {
 	EReference getGroup_Features();
 
 	/**
-	 * Returns the meta object for the reference '{@link featJAR.Group#getGroupParent <em>Group Parent</em>}'.
+	 * Returns the meta object for the container reference '{@link featJAR.Group#getGroupParent <em>Group Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Group Parent</em>'.
+	 * @return the meta object for the container reference '<em>Group Parent</em>'.
 	 * @see featJAR.Group#getGroupParent()
 	 * @see #getGroup()
 	 * @generated
@@ -664,7 +664,7 @@ public interface FeatJARPackage extends EPackage {
 		EClass FEATURE = eINSTANCE.getFeature();
 
 		/**
-		 * The meta object literal for the '<em><b>Group In</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Group In</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -672,7 +672,7 @@ public interface FeatJARPackage extends EPackage {
 		EReference FEATURE__GROUP_IN = eINSTANCE.getFeature_GroupIn();
 
 		/**
-		 * The meta object literal for the '<em><b>Groups</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Groups</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -716,7 +716,7 @@ public interface FeatJARPackage extends EPackage {
 		EClass GROUP = eINSTANCE.getGroup();
 
 		/**
-		 * The meta object literal for the '<em><b>Features</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Features</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -724,7 +724,7 @@ public interface FeatJARPackage extends EPackage {
 		EReference GROUP__FEATURES = eINSTANCE.getGroup_Features();
 
 		/**
-		 * The meta object literal for the '<em><b>Group Parent</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Group Parent</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

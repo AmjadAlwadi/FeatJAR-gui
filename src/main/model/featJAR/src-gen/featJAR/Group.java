@@ -26,34 +26,38 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Group extends Identifiable {
 	/**
-	 * Returns the value of the '<em><b>Features</b></em>' reference list.
+	 * Returns the value of the '<em><b>Features</b></em>' containment reference list.
 	 * The list contents are of type {@link featJAR.Feature}.
+	 * It is bidirectional and its opposite is '{@link featJAR.Feature#getGroupIn <em>Group In</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Features</em>' reference list.
+	 * @return the value of the '<em>Features</em>' containment reference list.
 	 * @see featJAR.FeatJARPackage#getGroup_Features()
-	 * @model required="true"
+	 * @see featJAR.Feature#getGroupIn
+	 * @model opposite="groupIn" containment="true"
 	 * @generated
 	 */
 	EList<Feature> getFeatures();
 
 	/**
-	 * Returns the value of the '<em><b>Group Parent</b></em>' reference.
+	 * Returns the value of the '<em><b>Group Parent</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link featJAR.Feature#getGroups <em>Groups</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Group Parent</em>' reference.
+	 * @return the value of the '<em>Group Parent</em>' container reference.
 	 * @see #setGroupParent(Feature)
 	 * @see featJAR.FeatJARPackage#getGroup_GroupParent()
-	 * @model required="true"
+	 * @see featJAR.Feature#getGroups
+	 * @model opposite="groups" required="true" transient="false"
 	 * @generated
 	 */
 	Feature getGroupParent();
 
 	/**
-	 * Sets the value of the '{@link featJAR.Group#getGroupParent <em>Group Parent</em>}' reference.
+	 * Sets the value of the '{@link featJAR.Group#getGroupParent <em>Group Parent</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Group Parent</em>' reference.
+	 * @param value the new value of the '<em>Group Parent</em>' container reference.
 	 * @see #getGroupParent()
 	 * @generated
 	 */

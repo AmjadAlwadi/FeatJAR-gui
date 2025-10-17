@@ -24,35 +24,39 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Feature extends Identifiable {
 	/**
-	 * Returns the value of the '<em><b>Group In</b></em>' reference.
+	 * Returns the value of the '<em><b>Group In</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link featJAR.Group#getFeatures <em>Features</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Group In</em>' reference.
+	 * @return the value of the '<em>Group In</em>' container reference.
 	 * @see #setGroupIn(Group)
 	 * @see featJAR.FeatJARPackage#getFeature_GroupIn()
-	 * @model required="true"
+	 * @see featJAR.Group#getFeatures
+	 * @model opposite="features" transient="false"
 	 * @generated
 	 */
 	Group getGroupIn();
 
 	/**
-	 * Sets the value of the '{@link featJAR.Feature#getGroupIn <em>Group In</em>}' reference.
+	 * Sets the value of the '{@link featJAR.Feature#getGroupIn <em>Group In</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Group In</em>' reference.
+	 * @param value the new value of the '<em>Group In</em>' container reference.
 	 * @see #getGroupIn()
 	 * @generated
 	 */
 	void setGroupIn(Group value);
 
 	/**
-	 * Returns the value of the '<em><b>Groups</b></em>' reference list.
+	 * Returns the value of the '<em><b>Groups</b></em>' containment reference list.
 	 * The list contents are of type {@link featJAR.Group}.
+	 * It is bidirectional and its opposite is '{@link featJAR.Group#getGroupParent <em>Group Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Groups</em>' reference list.
+	 * @return the value of the '<em>Groups</em>' containment reference list.
 	 * @see featJAR.FeatJARPackage#getFeature_Groups()
-	 * @model
+	 * @see featJAR.Group#getGroupParent
+	 * @model opposite="groupParent" containment="true"
 	 * @generated
 	 */
 	EList<Group> getGroups();

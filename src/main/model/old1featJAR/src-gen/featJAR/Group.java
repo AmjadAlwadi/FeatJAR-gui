@@ -13,7 +13,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link featJAR.Group#getMadeOf <em>Made Of</em>}</li>
+ *   <li>{@link featJAR.Group#getFeatures <em>Features</em>}</li>
  *   <li>{@link featJAR.Group#getGroupParent <em>Group Parent</em>}</li>
  *   <li>{@link featJAR.Group#getType <em>Type</em>}</li>
  *   <li>{@link featJAR.Group#getLowerBound <em>Lower Bound</em>}</li>
@@ -26,16 +26,16 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Group extends Identifiable {
 	/**
-	 * Returns the value of the '<em><b>Made Of</b></em>' reference list.
+	 * Returns the value of the '<em><b>Features</b></em>' reference list.
 	 * The list contents are of type {@link featJAR.Feature}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Made Of</em>' reference list.
-	 * @see featJAR.FeatJARPackage#getGroup_MadeOf()
+	 * @return the value of the '<em>Features</em>' reference list.
+	 * @see featJAR.FeatJARPackage#getGroup_Features()
 	 * @model required="true"
 	 * @generated
 	 */
-	EList<Feature> getMadeOf();
+	EList<Feature> getFeatures();
 
 	/**
 	 * Returns the value of the '<em><b>Group Parent</b></em>' reference.

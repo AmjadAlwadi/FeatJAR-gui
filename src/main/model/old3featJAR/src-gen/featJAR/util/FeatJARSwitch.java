@@ -66,9 +66,36 @@ public class FeatJARSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+		case FeatJARPackage.IDENTIFIABLE: {
+			Identifiable identifiable = (Identifiable) theEObject;
+			T result = caseIdentifiable(identifiable);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case FeatJARPackage.CORE_FEATURE: {
+			CoreFeature coreFeature = (CoreFeature) theEObject;
+			T result = caseCoreFeature(coreFeature);
+			if (result == null)
+				result = caseIdentifiable(coreFeature);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
+		case FeatJARPackage.EDGE: {
+			Edge edge = (Edge) theEObject;
+			T result = caseEdge(edge);
+			if (result == null)
+				result = caseIdentifiable(edge);
+			if (result == null)
+				result = defaultCase(theEObject);
+			return result;
+		}
 		case FeatJARPackage.FEATURE: {
 			Feature feature = (Feature) theEObject;
 			T result = caseFeature(feature);
+			if (result == null)
+				result = caseIdentifiable(feature);
 			if (result == null)
 				result = defaultCase(theEObject);
 			return result;
@@ -76,6 +103,51 @@ public class FeatJARSwitch<T> extends Switch<T> {
 		default:
 			return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Identifiable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIdentifiable(Identifiable object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Core Feature</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Core Feature</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCoreFeature(CoreFeature object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Edge</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Edge</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseEdge(Edge object) {
+		return null;
 	}
 
 	/**

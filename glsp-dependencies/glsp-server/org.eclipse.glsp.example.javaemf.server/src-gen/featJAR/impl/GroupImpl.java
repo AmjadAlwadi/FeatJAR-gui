@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -17,7 +18,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +41,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class GroupImpl extends IdentifiableImpl implements Group {
 	/**
-	 * The cached value of the '{@link #getFeatures() <em>Features</em>}' reference list.
+	 * The cached value of the '{@link #getFeatures() <em>Features</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getFeatures()
@@ -46,16 +49,6 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	 * @ordered
 	 */
 	protected EList<Feature> features;
-
-	/**
-	 * The cached value of the '{@link #getGroupParent() <em>Group Parent</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGroupParent()
-	 * @generated
-	 * @ordered
-	 */
-	protected Feature groupParent;
 
 	/**
 	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -144,7 +137,8 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	@Override
 	public EList<Feature> getFeatures() {
 		if (features == null) {
-			features = new EObjectResolvingEList<Feature>(Feature.class, this, FeatJARPackage.GROUP__FEATURES);
+			features = new EObjectContainmentWithInverseEList<Feature>(Feature.class, this,
+					FeatJARPackage.GROUP__FEATURES, FeatJARPackage.FEATURE__GROUP_IN);
 		}
 		return features;
 	}
@@ -156,16 +150,9 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	 */
 	@Override
 	public Feature getGroupParent() {
-		if (groupParent != null && groupParent.eIsProxy()) {
-			InternalEObject oldGroupParent = (InternalEObject) groupParent;
-			groupParent = (Feature) eResolveProxy(oldGroupParent);
-			if (groupParent != oldGroupParent) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatJARPackage.GROUP__GROUP_PARENT,
-							oldGroupParent, groupParent));
-			}
-		}
-		return groupParent;
+		if (eContainerFeatureID() != FeatJARPackage.GROUP__GROUP_PARENT)
+			return null;
+		return (Feature) eInternalContainer();
 	}
 
 	/**
@@ -173,8 +160,9 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Feature basicGetGroupParent() {
-		return groupParent;
+	public NotificationChain basicSetGroupParent(Feature newGroupParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject) newGroupParent, FeatJARPackage.GROUP__GROUP_PARENT, msgs);
+		return msgs;
 	}
 
 	/**
@@ -184,11 +172,22 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	 */
 	@Override
 	public void setGroupParent(Feature newGroupParent) {
-		Feature oldGroupParent = groupParent;
-		groupParent = newGroupParent;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatJARPackage.GROUP__GROUP_PARENT, oldGroupParent,
-					groupParent));
+		if (newGroupParent != eInternalContainer()
+				|| (eContainerFeatureID() != FeatJARPackage.GROUP__GROUP_PARENT && newGroupParent != null)) {
+			if (EcoreUtil.isAncestor(this, newGroupParent))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newGroupParent != null)
+				msgs = ((InternalEObject) newGroupParent).eInverseAdd(this, FeatJARPackage.FEATURE__GROUPS,
+						Feature.class, msgs);
+			msgs = basicSetGroupParent(newGroupParent, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatJARPackage.GROUP__GROUP_PARENT, newGroupParent,
+					newGroupParent));
 	}
 
 	/**
@@ -267,15 +266,62 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case FeatJARPackage.GROUP__FEATURES:
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getFeatures()).basicAdd(otherEnd, msgs);
+		case FeatJARPackage.GROUP__GROUP_PARENT:
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			return basicSetGroupParent((Feature) otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case FeatJARPackage.GROUP__FEATURES:
+			return ((InternalEList<?>) getFeatures()).basicRemove(otherEnd, msgs);
+		case FeatJARPackage.GROUP__GROUP_PARENT:
+			return basicSetGroupParent(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+		case FeatJARPackage.GROUP__GROUP_PARENT:
+			return eInternalContainer().eInverseRemove(this, FeatJARPackage.FEATURE__GROUPS, Feature.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case FeatJARPackage.GROUP__FEATURES:
 			return getFeatures();
 		case FeatJARPackage.GROUP__GROUP_PARENT:
-			if (resolve)
-				return getGroupParent();
-			return basicGetGroupParent();
+			return getGroupParent();
 		case FeatJARPackage.GROUP__TYPE:
 			return getType();
 		case FeatJARPackage.GROUP__LOWER_BOUND:
@@ -353,7 +399,7 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 		case FeatJARPackage.GROUP__FEATURES:
 			return features != null && !features.isEmpty();
 		case FeatJARPackage.GROUP__GROUP_PARENT:
-			return groupParent != null;
+			return getGroupParent() != null;
 		case FeatJARPackage.GROUP__TYPE:
 			return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 		case FeatJARPackage.GROUP__LOWER_BOUND:

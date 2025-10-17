@@ -56,11 +56,37 @@ public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+		case FeatJARPackage.CORE_FEATURE:
+			return createCoreFeature();
+		case FeatJARPackage.EDGE:
+			return createEdge();
 		case FeatJARPackage.FEATURE:
 			return createFeature();
 		default:
 			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public CoreFeature createCoreFeature() {
+		CoreFeatureImpl coreFeature = new CoreFeatureImpl();
+		return coreFeature;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Edge createEdge() {
+		EdgeImpl edge = new EdgeImpl();
+		return edge;
 	}
 
 	/**

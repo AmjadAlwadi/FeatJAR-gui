@@ -72,18 +72,23 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 		}
 
 		@Override
-		public Adapter caseCoreFeature(CoreFeature object) {
-			return createCoreFeatureAdapter();
-		}
-
-		@Override
-		public Adapter caseEdge(Edge object) {
-			return createEdgeAdapter();
+		public Adapter caseFeatureModel(FeatureModel object) {
+			return createFeatureModelAdapter();
 		}
 
 		@Override
 		public Adapter caseFeature(Feature object) {
 			return createFeatureAdapter();
+		}
+
+		@Override
+		public Adapter caseConstraint(Constraint object) {
+			return createConstraintAdapter();
+		}
+
+		@Override
+		public Adapter caseGroup(Group object) {
+			return createGroupAdapter();
 		}
 
 		@Override
@@ -120,30 +125,16 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.CoreFeature <em>Core Feature</em>}'.
+	 * Creates a new adapter for an object of class '{@link featJAR.FeatureModel <em>Feature Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see featJAR.CoreFeature
+	 * @see featJAR.FeatureModel
 	 * @generated
 	 */
-	public Adapter createCoreFeatureAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link featJAR.Edge <em>Edge</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see featJAR.Edge
-	 * @generated
-	 */
-	public Adapter createEdgeAdapter() {
+	public Adapter createFeatureModelAdapter() {
 		return null;
 	}
 
@@ -158,6 +149,34 @@ public class FeatJARAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createFeatureAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.Constraint <em>Constraint</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.Constraint
+	 * @generated
+	 */
+	public Adapter createConstraintAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link featJAR.Group <em>Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see featJAR.Group
+	 * @generated
+	 */
+	public Adapter createGroupAdapter() {
 		return null;
 	}
 

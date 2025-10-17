@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link featJAR.Feature#getGroupIn <em>Group In</em>}</li>
- *   <li>{@link featJAR.Feature#getParentOfGroup <em>Parent Of Group</em>}</li>
+ *   <li>{@link featJAR.Feature#getGroups <em>Groups</em>}</li>
  *   <li>{@link featJAR.Feature#isOptional <em>Optional</em>}</li>
  * </ul>
  *
@@ -46,16 +46,16 @@ public interface Feature extends Identifiable {
 	void setGroupIn(Group value);
 
 	/**
-	 * Returns the value of the '<em><b>Parent Of Group</b></em>' reference list.
+	 * Returns the value of the '<em><b>Groups</b></em>' reference list.
 	 * The list contents are of type {@link featJAR.Group}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parent Of Group</em>' reference list.
-	 * @see featJAR.FeatJARPackage#getFeature_ParentOfGroup()
+	 * @return the value of the '<em>Groups</em>' reference list.
+	 * @see featJAR.FeatJARPackage#getFeature_Groups()
 	 * @model
 	 * @generated
 	 */
-	EList<Group> getParentOfGroup();
+	EList<Group> getGroups();
 
 	/**
 	 * Returns the value of the '<em><b>Optional</b></em>' attribute.

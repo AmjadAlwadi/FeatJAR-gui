@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<featJAR:FeatureModel
+id=">22"
+name="@2c0542aa-46a0-4010-842a-b5c478158d92" 
+xmi:version="2.0"
+xmlns:xmi="http://www.omg.org/XMI"
+xmlns:featJAR="http://www.example.org/featJAR" >
+
+<root id = "23" name = "Root" optional = "false" >
+
+<groups id = "24" name = "Range[0, -1]" type = "TRUE" lowerBound = "0" upperBound = "-1" />
+
+<groups id = "25" name = "Range[0, -1]" type = "TRUE" lowerBound = "0" upperBound = "-1" >
+
+<features id = "26" name = "A" optional = "true" />
+</groups>
+
+</root>
+
+<constraints id = "27" name = "not(+)" />
+</featJAR:FeatureModel>

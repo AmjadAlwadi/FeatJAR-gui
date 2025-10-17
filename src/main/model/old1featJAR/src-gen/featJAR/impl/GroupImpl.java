@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link featJAR.impl.GroupImpl#getMadeOf <em>Made Of</em>}</li>
+ *   <li>{@link featJAR.impl.GroupImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link featJAR.impl.GroupImpl#getGroupParent <em>Group Parent</em>}</li>
  *   <li>{@link featJAR.impl.GroupImpl#getType <em>Type</em>}</li>
  *   <li>{@link featJAR.impl.GroupImpl#getLowerBound <em>Lower Bound</em>}</li>
@@ -38,14 +38,14 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class GroupImpl extends IdentifiableImpl implements Group {
 	/**
-	 * The cached value of the '{@link #getMadeOf() <em>Made Of</em>}' reference list.
+	 * The cached value of the '{@link #getFeatures() <em>Features</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getMadeOf()
+	 * @see #getFeatures()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Feature> madeOf;
+	protected EList<Feature> features;
 
 	/**
 	 * The cached value of the '{@link #getGroupParent() <em>Group Parent</em>}' reference.
@@ -142,11 +142,11 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	 * @generated
 	 */
 	@Override
-	public EList<Feature> getMadeOf() {
-		if (madeOf == null) {
-			madeOf = new EObjectResolvingEList<Feature>(Feature.class, this, FeatJARPackage.GROUP__MADE_OF);
+	public EList<Feature> getFeatures() {
+		if (features == null) {
+			features = new EObjectResolvingEList<Feature>(Feature.class, this, FeatJARPackage.GROUP__FEATURES);
 		}
-		return madeOf;
+		return features;
 	}
 
 	/**
@@ -270,8 +270,8 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-		case FeatJARPackage.GROUP__MADE_OF:
-			return getMadeOf();
+		case FeatJARPackage.GROUP__FEATURES:
+			return getFeatures();
 		case FeatJARPackage.GROUP__GROUP_PARENT:
 			if (resolve)
 				return getGroupParent();
@@ -295,9 +295,9 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-		case FeatJARPackage.GROUP__MADE_OF:
-			getMadeOf().clear();
-			getMadeOf().addAll((Collection<? extends Feature>) newValue);
+		case FeatJARPackage.GROUP__FEATURES:
+			getFeatures().clear();
+			getFeatures().addAll((Collection<? extends Feature>) newValue);
 			return;
 		case FeatJARPackage.GROUP__GROUP_PARENT:
 			setGroupParent((Feature) newValue);
@@ -323,8 +323,8 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-		case FeatJARPackage.GROUP__MADE_OF:
-			getMadeOf().clear();
+		case FeatJARPackage.GROUP__FEATURES:
+			getFeatures().clear();
 			return;
 		case FeatJARPackage.GROUP__GROUP_PARENT:
 			setGroupParent((Feature) null);
@@ -350,8 +350,8 @@ public class GroupImpl extends IdentifiableImpl implements Group {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-		case FeatJARPackage.GROUP__MADE_OF:
-			return madeOf != null && !madeOf.isEmpty();
+		case FeatJARPackage.GROUP__FEATURES:
+			return features != null && !features.isEmpty();
 		case FeatJARPackage.GROUP__GROUP_PARENT:
 			return groupParent != null;
 		case FeatJARPackage.GROUP__TYPE:

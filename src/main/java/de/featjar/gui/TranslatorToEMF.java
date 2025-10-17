@@ -54,7 +54,7 @@ public class TranslatorToEMF {
     	Path path = Paths.get(dir);
     	EMFFileDir(path);
     	
-    	String filename = dir + "/" + name + ".tasklist";
+    	String filename = dir + "/" + name + ".featuremodel";
         File file = new File(filename);
         path = Paths.get(filename);
         

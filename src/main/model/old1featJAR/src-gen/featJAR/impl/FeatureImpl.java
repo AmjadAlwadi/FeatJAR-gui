@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * </p>
  * <ul>
  *   <li>{@link featJAR.impl.FeatureImpl#getGroupIn <em>Group In</em>}</li>
- *   <li>{@link featJAR.impl.FeatureImpl#getParentOfGroup <em>Parent Of Group</em>}</li>
+ *   <li>{@link featJAR.impl.FeatureImpl#getGroups <em>Groups</em>}</li>
  *   <li>{@link featJAR.impl.FeatureImpl#isOptional <em>Optional</em>}</li>
  * </ul>
  *
@@ -46,14 +46,14 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	protected Group groupIn;
 
 	/**
-	 * The cached value of the '{@link #getParentOfGroup() <em>Parent Of Group</em>}' reference list.
+	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParentOfGroup()
+	 * @see #getGroups()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Group> parentOfGroup;
+	protected EList<Group> groups;
 
 	/**
 	 * The default value of the '{@link #isOptional() <em>Optional</em>}' attribute.
@@ -142,12 +142,11 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	 * @generated
 	 */
 	@Override
-	public EList<Group> getParentOfGroup() {
-		if (parentOfGroup == null) {
-			parentOfGroup = new EObjectResolvingEList<Group>(Group.class, this,
-					FeatJARPackage.FEATURE__PARENT_OF_GROUP);
+	public EList<Group> getGroups() {
+		if (groups == null) {
+			groups = new EObjectResolvingEList<Group>(Group.class, this, FeatJARPackage.FEATURE__GROUPS);
 		}
-		return parentOfGroup;
+		return groups;
 	}
 
 	/**
@@ -186,8 +185,8 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 			if (resolve)
 				return getGroupIn();
 			return basicGetGroupIn();
-		case FeatJARPackage.FEATURE__PARENT_OF_GROUP:
-			return getParentOfGroup();
+		case FeatJARPackage.FEATURE__GROUPS:
+			return getGroups();
 		case FeatJARPackage.FEATURE__OPTIONAL:
 			return isOptional();
 		}
@@ -206,9 +205,9 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 		case FeatJARPackage.FEATURE__GROUP_IN:
 			setGroupIn((Group) newValue);
 			return;
-		case FeatJARPackage.FEATURE__PARENT_OF_GROUP:
-			getParentOfGroup().clear();
-			getParentOfGroup().addAll((Collection<? extends Group>) newValue);
+		case FeatJARPackage.FEATURE__GROUPS:
+			getGroups().clear();
+			getGroups().addAll((Collection<? extends Group>) newValue);
 			return;
 		case FeatJARPackage.FEATURE__OPTIONAL:
 			setOptional((Boolean) newValue);
@@ -228,8 +227,8 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 		case FeatJARPackage.FEATURE__GROUP_IN:
 			setGroupIn((Group) null);
 			return;
-		case FeatJARPackage.FEATURE__PARENT_OF_GROUP:
-			getParentOfGroup().clear();
+		case FeatJARPackage.FEATURE__GROUPS:
+			getGroups().clear();
 			return;
 		case FeatJARPackage.FEATURE__OPTIONAL:
 			setOptional(OPTIONAL_EDEFAULT);
@@ -248,8 +247,8 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 		switch (featureID) {
 		case FeatJARPackage.FEATURE__GROUP_IN:
 			return groupIn != null;
-		case FeatJARPackage.FEATURE__PARENT_OF_GROUP:
-			return parentOfGroup != null && !parentOfGroup.isEmpty();
+		case FeatJARPackage.FEATURE__GROUPS:
+			return groups != null && !groups.isEmpty();
 		case FeatJARPackage.FEATURE__OPTIONAL:
 			return optional != OPTIONAL_EDEFAULT;
 		}

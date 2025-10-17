@@ -22,22 +22,13 @@ public interface FeatJARFactory extends EFactory {
 	FeatJARFactory eINSTANCE = featJAR.impl.FeatJARFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Core Feature</em>'.
+	 * Returns a new object of class '<em>Feature Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Core Feature</em>'.
+	 * @return a new object of class '<em>Feature Model</em>'.
 	 * @generated
 	 */
-	CoreFeature createCoreFeature();
-
-	/**
-	 * Returns a new object of class '<em>Edge</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Edge</em>'.
-	 * @generated
-	 */
-	Edge createEdge();
+	FeatureModel createFeatureModel();
 
 	/**
 	 * Returns a new object of class '<em>Feature</em>'.
@@ -47,6 +38,24 @@ public interface FeatJARFactory extends EFactory {
 	 * @generated
 	 */
 	Feature createFeature();
+
+	/**
+	 * Returns a new object of class '<em>Constraint</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Constraint</em>'.
+	 * @generated
+	 */
+	Constraint createConstraint();
+
+	/**
+	 * Returns a new object of class '<em>Group</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Group</em>'.
+	 * @generated
+	 */
+	Group createGroup();
 
 	/**
 	 * Returns the package supported by this factory.

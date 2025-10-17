@@ -10,6 +10,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -17,7 +18,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,17 +39,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class FeatureImpl extends IdentifiableImpl implements Feature {
 	/**
-	 * The cached value of the '{@link #getGroupIn() <em>Group In</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGroupIn()
-	 * @generated
-	 * @ordered
-	 */
-	protected Group groupIn;
-
-	/**
-	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' reference list.
+	 * The cached value of the '{@link #getGroups() <em>Groups</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getGroups()
@@ -101,16 +94,9 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	 */
 	@Override
 	public Group getGroupIn() {
-		if (groupIn != null && groupIn.eIsProxy()) {
-			InternalEObject oldGroupIn = (InternalEObject) groupIn;
-			groupIn = (Group) eResolveProxy(oldGroupIn);
-			if (groupIn != oldGroupIn) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, FeatJARPackage.FEATURE__GROUP_IN,
-							oldGroupIn, groupIn));
-			}
-		}
-		return groupIn;
+		if (eContainerFeatureID() != FeatJARPackage.FEATURE__GROUP_IN)
+			return null;
+		return (Group) eInternalContainer();
 	}
 
 	/**
@@ -118,8 +104,9 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Group basicGetGroupIn() {
-		return groupIn;
+	public NotificationChain basicSetGroupIn(Group newGroupIn, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject) newGroupIn, FeatJARPackage.FEATURE__GROUP_IN, msgs);
+		return msgs;
 	}
 
 	/**
@@ -129,11 +116,22 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	 */
 	@Override
 	public void setGroupIn(Group newGroupIn) {
-		Group oldGroupIn = groupIn;
-		groupIn = newGroupIn;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, FeatJARPackage.FEATURE__GROUP_IN, oldGroupIn,
-					groupIn));
+		if (newGroupIn != eInternalContainer()
+				|| (eContainerFeatureID() != FeatJARPackage.FEATURE__GROUP_IN && newGroupIn != null)) {
+			if (EcoreUtil.isAncestor(this, newGroupIn))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newGroupIn != null)
+				msgs = ((InternalEObject) newGroupIn).eInverseAdd(this, FeatJARPackage.GROUP__FEATURES, Group.class,
+						msgs);
+			msgs = basicSetGroupIn(newGroupIn, msgs);
+			if (msgs != null)
+				msgs.dispatch();
+		} else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, FeatJARPackage.FEATURE__GROUP_IN, newGroupIn,
+					newGroupIn));
 	}
 
 	/**
@@ -144,7 +142,8 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	@Override
 	public EList<Group> getGroups() {
 		if (groups == null) {
-			groups = new EObjectResolvingEList<Group>(Group.class, this, FeatJARPackage.FEATURE__GROUPS);
+			groups = new EObjectContainmentWithInverseEList<Group>(Group.class, this, FeatJARPackage.FEATURE__GROUPS,
+					FeatJARPackage.GROUP__GROUP_PARENT);
 		}
 		return groups;
 	}
@@ -178,13 +177,60 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case FeatJARPackage.FEATURE__GROUP_IN:
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			return basicSetGroupIn((Group) otherEnd, msgs);
+		case FeatJARPackage.FEATURE__GROUPS:
+			return ((InternalEList<InternalEObject>) (InternalEList<?>) getGroups()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+		case FeatJARPackage.FEATURE__GROUP_IN:
+			return basicSetGroupIn(null, msgs);
+		case FeatJARPackage.FEATURE__GROUPS:
+			return ((InternalEList<?>) getGroups()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+		case FeatJARPackage.FEATURE__GROUP_IN:
+			return eInternalContainer().eInverseRemove(this, FeatJARPackage.GROUP__FEATURES, Group.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 		case FeatJARPackage.FEATURE__GROUP_IN:
-			if (resolve)
-				return getGroupIn();
-			return basicGetGroupIn();
+			return getGroupIn();
 		case FeatJARPackage.FEATURE__GROUPS:
 			return getGroups();
 		case FeatJARPackage.FEATURE__OPTIONAL:
@@ -246,7 +292,7 @@ public class FeatureImpl extends IdentifiableImpl implements Feature {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 		case FeatJARPackage.FEATURE__GROUP_IN:
-			return groupIn != null;
+			return getGroupIn() != null;
 		case FeatJARPackage.FEATURE__GROUPS:
 			return groups != null && !groups.isEmpty();
 		case FeatJARPackage.FEATURE__OPTIONAL:
