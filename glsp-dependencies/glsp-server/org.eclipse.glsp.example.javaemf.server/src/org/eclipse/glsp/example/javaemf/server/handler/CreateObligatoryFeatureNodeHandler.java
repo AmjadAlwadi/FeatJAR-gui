@@ -57,7 +57,7 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
    }
 
    @Override
-   public String getLabel() { return "New Obligatory Feature"; }
+   public String getLabel() { return "New Feature"; }
 
    protected FeatureModel getFeatureModel() { return modelState.getSemanticModel(FeatureModel.class).get(); }
 
@@ -131,7 +131,7 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
 
    protected Feature createFeature() {
       Feature newFeature = FeatJARFactory.eINSTANCE.createFeature();
-      newFeature.setName(getLabel() + i++);
+      newFeature.setName(getLabel() + " " + i++);
       newFeature.setOptional(false);
       return newFeature;
    }

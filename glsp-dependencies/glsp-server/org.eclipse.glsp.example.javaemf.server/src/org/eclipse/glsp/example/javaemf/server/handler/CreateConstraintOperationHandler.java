@@ -67,7 +67,7 @@ public class CreateConstraintOperationHandler extends EMFCreateOperationHandler<
 
    protected Constraint createConstraint() {
       Constraint newConstraint = FeatJARFactory.eINSTANCE.createConstraint();
-      newConstraint.setName(getLabel() + i++);
+      newConstraint.setName(getLabel() + " " + i++);
       newConstraint.setId(getLabel() + "_" + idGenerator.getOrCreateId(newConstraint) + i++);
       return newConstraint;
    }

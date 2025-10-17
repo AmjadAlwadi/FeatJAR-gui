@@ -5,4 +5,6 @@
   </roots>
   <constraints id="21" name="@b66e0127-9210-4c1d-89ae-9ddb59cb7681"/>
   <constraints id="New Constraint_null1" name="Newasdfdsafdsafdsafdsafsadfdsfdsfdsf Constraint0"/>
+  <constraints id="New Constraint_null1" name="New Constraint0"/>
+  <constraints id="New Constraint_null3" name="New Constraint2"/>
 </featJAR:FeatureModel>

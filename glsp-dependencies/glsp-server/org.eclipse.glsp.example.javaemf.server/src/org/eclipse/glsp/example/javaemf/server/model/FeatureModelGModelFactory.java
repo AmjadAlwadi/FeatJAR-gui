@@ -126,11 +126,11 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TreeNode rootTree = FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode);
       double marginY = 160; // tweak spacing below the last leaf
 
-      double rootCenterX = rootTree.x + (nodeWidth / 2.0);
+      double rootCenterX = rootTree.x;
       double legendTopY = FeatureTreeLayouter.computeYBelowDeepestRightmostLeaf(rootTree, nodeHeight, marginY);
 
       createConstraintLegend(emfFeatureModel.getConstraints(),
-         GraphUtil.point(gRoot.gNode.getPosition().getX() + 190, legendTopY));
+         GraphUtil.point(rootCenterX, legendTopY));
 
       graph.getChildren().addAll(gElements);
       graph.getChildren().addAll(gEdges);
@@ -235,12 +235,12 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       int lineHeight = 20;
       int padding = 40;
       int legendHeight = Math.max(200, lines * lineHeight + padding);
-      int legendWidth = 500; // fixed width; adjust as needed
+      int legendWidth = 290; // fixed width; adjust as needed
 
       int id = 0;
 
       // Center horizontally on coords.getX(), place top at coords.getY()
-      double topLeftX = coords.getX() - (legendWidth / 2.0);
+      double topLeftX = coords.getX();
       double topLeftY = coords.getY();
 
       GNodeBuilder legendBuilder = new GNodeBuilder("node:rectangle")
@@ -261,6 +261,10 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       }
 
       GNode legend = legendBuilder.build();
+
+      legend.setPosition(
+         GraphUtil.point(legend.getPosition().getX() + (nodeWidth / 2) - (legendWidth / 2),
+            legend.getPosition().getY()));
 
       gElements.add(legend);
    }

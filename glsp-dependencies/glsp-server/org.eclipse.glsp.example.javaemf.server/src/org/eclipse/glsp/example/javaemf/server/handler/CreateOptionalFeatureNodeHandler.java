@@ -59,7 +59,7 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
    }
 
    @Override
-   public String getLabel() { return "New Optional Feature"; }
+   public String getLabel() { return "New Feature"; }
 
    protected FeatureModel getFeatureModel() { return modelState.getSemanticModel(FeatureModel.class).get(); }
 
