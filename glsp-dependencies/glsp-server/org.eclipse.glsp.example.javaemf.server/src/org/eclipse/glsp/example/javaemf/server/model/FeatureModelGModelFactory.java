@@ -45,7 +45,6 @@ import org.eclipse.glsp.server.emf.notation.EMFNotationGModelFactory;
 import featJAR.Constraint;
 import featJAR.Feature;
 import featJAR.FeatureModel;
-// import featJAR.Group;
 
 public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
@@ -92,7 +91,13 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       TRUE,
    }
 
-   public static void render() {
+   protected void clearAllGraphicalElements() {
+      gElements.clear();
+      gExpressions.clear();
+      gEdges.clear();
+      FeatureTreeLayouter.clear();
+      featureIdMap.clear();
+      emfFeatures.clear();
 
    }
 
@@ -101,18 +106,15 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       FeatureModel emfFeatureModel = FeatureModel.class.cast(semanticModel);
       GGraph graph = GGraph.class.cast(newRoot);
 
-      // if (emfFeatureModel.getRoot().size() == 0) {
-      // return;
-      // }
+      // If no root element is found, then render nothing
+      if (emfFeatureModel.getRoots().size() == 0) {
+         return;
+      }
 
-      Feature emfRoot = emfFeatureModel.getRoot();
+      clearAllGraphicalElements();
 
-      gElements.clear();
-      gExpressions.clear();
-      gEdges.clear();
-      featureIdMap.clear();
-      emfFeatures.clear();
-      FeatureTreeLayouter.clear();
+      // Render for now only the first root
+      Feature emfRoot = emfFeatureModel.getRoots().get(0);
 
       // Create the graphical elements without applying layout first
       FeatureSubtreeResult gRoot = createFeatureSubtree(emfRoot, true);
@@ -166,21 +168,19 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       // For Autolayouting
       TreeNode current_node = new TreeNode(gFeature.getId());
 
-      // Rendering children nodes recursively
-      // int children_number = feature.getParentOfGroup().;
-
       for (Feature child : feature.getFeatures()) {
 
          FeatureSubtreeResult gChild = createFeatureSubtree(child, false);
 
          // Add child in TreeLayouter
          current_node.addChild(gChild.treeNode);
+
          // Connect parent and child with an edge
          createEdge(feature, child, gFeature, gChild.gNode);
+
       }
 
       gElements.add(gFeature);
-
       featureIdMap.put(gFeature.getId(), feature.getId());
       emfFeatures.add(feature);
 
@@ -222,24 +222,6 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       gEdges.add(edge);
 
    }
-
-   // // Create the graphical representation of the constraint
-   // protected void createGroupConstraint(final Group_type type, final Feature parent_feature,
-   // final GNode parent_node) {
-   //
-   // int shift = 30;
-   // GPoint current_position = GraphUtil.copy(parent_node.getPosition());
-   // current_position.setY(current_position.getY() + shift);
-   //
-   // GNode constraintNode = new GNodeBuilder("node:circle")
-   // .id(idGenerator.getOrCreateId(parent_feature) + "_contraint")
-   // .addCssClass(Node_type.ROOT.cssClass())
-   // .position(
-   // GraphUtil.point(current_position.getX() + node_width / 2, current_position.getY() - 15))
-   // .size(GraphUtil.dimension(30, 30))
-   // .build();
-   //
-   // }
 
    // Create a box with all existing constraints as strings
    protected void createConstraintLegend(final List<Constraint> constraints, final GPoint coords) {

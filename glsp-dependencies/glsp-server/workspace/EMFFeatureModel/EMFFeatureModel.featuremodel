@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <featJAR:FeatureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:featJAR="http://www.example.org/featJAR" id="featuremodel" name="hallo">
-  <root id="root" name="root">
+  <roots id="root" name="root">
     <features id="first layer child 1" name="first layer child 1">
       <features id="first layersdfs casdhisdsadld 1" name="first layer child 1"/>
       <features id="first layersdfs casdhisadld 1" name="first layer child 1"/>
@@ -14,5 +14,8 @@
     </features>
     <features id="null33" name="New Feature32"/>
     <features id="null37" name="New Feature36"/>
-  </root>
+  </roots>
+  
+  <constraints name="sadfdsfa" id="dsafdsaf"/>
+  
 </featJAR:FeatureModel>

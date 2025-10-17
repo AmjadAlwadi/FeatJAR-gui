@@ -73,7 +73,7 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
    protected Optional<EObject> getSelectedElement() {
       // Hardcode: always return the root Feature of the model
       return modelState.getSemanticModel(FeatureModel.class)
-         .map(FeatureModel::getRoot)
+         .map(FeatureModel::getRoots)
          .map(f -> (EObject) f);
    }
 
@@ -85,7 +85,7 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
       EObject parentElement = selectedElementOpt
          .filter(Feature.class::isInstance)
          .orElseGet(() -> modelState.getSemanticModel(FeatureModel.class)
-            .map(FeatureModel::getRoot)
+            .map(FeatureModel::getRoots).map(f -> (EObject) f).stream().findFirst()
             .orElseThrow());
 
       // 3. Create the new feature instance
@@ -110,7 +110,7 @@ public class CreateOptionalFeatureNodeHandler extends EMFCreateOperationHandler<
    protected Feature createFeature() {
       Feature newFeature = FeatJARFactory.eINSTANCE.createFeature();
       newFeature.setName(getLabel() + i++);
-      newFeature.setId(idGenerator.getOrCreateId(newFeature) + i++);
+      newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
       newFeature.setOptional(true);
       return newFeature;
    }

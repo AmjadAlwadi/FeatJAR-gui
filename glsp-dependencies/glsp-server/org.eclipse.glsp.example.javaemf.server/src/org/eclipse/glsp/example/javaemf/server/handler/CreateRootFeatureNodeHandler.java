@@ -37,7 +37,6 @@ import com.google.inject.Inject;
 import featJAR.FeatJARFactory;
 import featJAR.FeatJARPackage;
 import featJAR.Feature;
-import featJAR.FeatureModel;
 
 public class CreateRootFeatureNodeHandler extends EMFCreateOperationHandler<CreateNodeOperation> {
 
@@ -77,11 +76,7 @@ public class CreateRootFeatureNodeHandler extends EMFCreateOperationHandler<Crea
       Optional<EObject> selectedElementOpt = getSelectedElement();
 
       // 2. If no element selected, default to root model
-      EObject parentElement = selectedElementOpt
-         .filter(Feature.class::isInstance)
-         .orElseGet(() -> modelState.getSemanticModel(FeatureModel.class)
-            .map(FeatureModel::getRoot)
-            .orElseThrow());
+      EObject parentElement = selectedElementOpt.get();
 
       // 3. Create the new feature instance
       Feature newFeature = createFeature();
@@ -105,7 +100,7 @@ public class CreateRootFeatureNodeHandler extends EMFCreateOperationHandler<Crea
    protected Feature createFeature() {
       Feature newRoot = FeatJARFactory.eINSTANCE.createFeature();
       newRoot.setName(getLabel() + i++);
-      newRoot.setId(idGenerator.getOrCreateId(newRoot) + i++);
+      newRoot.setId(getLabel() + "_" + idGenerator.getOrCreateId(newRoot) + i++);
       newRoot.setOptional(false);
       return newRoot;
    }

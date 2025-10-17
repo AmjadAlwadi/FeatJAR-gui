@@ -19,103 +19,106 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * @generated
  */
 public class FeatJARFactoryImpl extends EFactoryImpl implements FeatJARFactory {
-   /**
-    * Creates the default factory implementation.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public static FeatJARFactory init() {
-      try {
-         FeatJARFactory theFeatJARFactory = (FeatJARFactory)EPackage.Registry.INSTANCE.getEFactory(FeatJARPackage.eNS_URI);
-         if (theFeatJARFactory != null) {
-            return theFeatJARFactory;
-         }
-      }
-      catch (Exception exception) {
-         EcorePlugin.INSTANCE.log(exception);
-      }
-      return new FeatJARFactoryImpl();
-   }
+	/**
+	 * Creates the default factory implementation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public static FeatJARFactory init() {
+		try {
+			FeatJARFactory theFeatJARFactory = (FeatJARFactory) EPackage.Registry.INSTANCE
+					.getEFactory(FeatJARPackage.eNS_URI);
+			if (theFeatJARFactory != null) {
+				return theFeatJARFactory;
+			}
+		} catch (Exception exception) {
+			EcorePlugin.INSTANCE.log(exception);
+		}
+		return new FeatJARFactoryImpl();
+	}
 
-   /**
-    * Creates an instance of the factory.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public FeatJARFactoryImpl() {
-      super();
-   }
+	/**
+	 * Creates an instance of the factory.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FeatJARFactoryImpl() {
+		super();
+	}
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public EObject create(EClass eClass) {
-      switch (eClass.getClassifierID()) {
-         case FeatJARPackage.FEATURE_MODEL: return createFeatureModel();
-         case FeatJARPackage.FEATURE: return createFeature();
-         case FeatJARPackage.CONSTRAINT: return createConstraint();
-         default:
-            throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
-      }
-   }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EObject create(EClass eClass) {
+		switch (eClass.getClassifierID()) {
+		case FeatJARPackage.FEATURE_MODEL:
+			return createFeatureModel();
+		case FeatJARPackage.FEATURE:
+			return createFeature();
+		case FeatJARPackage.CONSTRAINT:
+			return createConstraint();
+		default:
+			throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public FeatureModel createFeatureModel() {
-      FeatureModelImpl featureModel = new FeatureModelImpl();
-      return featureModel;
-   }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public FeatureModel createFeatureModel() {
+		FeatureModelImpl featureModel = new FeatureModelImpl();
+		return featureModel;
+	}
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public Feature createFeature() {
-      FeatureImpl feature = new FeatureImpl();
-      return feature;
-   }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Feature createFeature() {
+		FeatureImpl feature = new FeatureImpl();
+		return feature;
+	}
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public Constraint createConstraint() {
-      ConstraintImpl constraint = new ConstraintImpl();
-      return constraint;
-   }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Constraint createConstraint() {
+		ConstraintImpl constraint = new ConstraintImpl();
+		return constraint;
+	}
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   public FeatJARPackage getFeatJARPackage() {
-      return (FeatJARPackage)getEPackage();
-   }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public FeatJARPackage getFeatJARPackage() {
+		return (FeatJARPackage) getEPackage();
+	}
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @deprecated
-    * @generated
-    */
-   @Deprecated
-   public static FeatJARPackage getPackage() {
-      return FeatJARPackage.eINSTANCE;
-   }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @deprecated
+	 * @generated
+	 */
+	@Deprecated
+	public static FeatJARPackage getPackage() {
+		return FeatJARPackage.eINSTANCE;
+	}
 
 } //FeatJARFactoryImpl

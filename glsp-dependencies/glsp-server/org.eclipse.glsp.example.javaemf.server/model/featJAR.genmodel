@@ -10,7 +10,7 @@
   <testsDirectory xsi:nil="true"/>
   <genPackages prefix="FeatJAR" disposableProviderFactory="true" ecorePackage="featJAR.ecore#/">
     <genClasses ecoreClass="featJAR.ecore#//FeatureModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference featJAR.ecore#//FeatureModel/root"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference featJAR.ecore#//FeatureModel/roots"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference featJAR.ecore#//FeatureModel/constraints"/>
     </genClasses>
     <genClasses ecoreClass="featJAR.ecore#//Identifiable">

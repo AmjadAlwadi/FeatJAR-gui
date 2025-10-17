@@ -71,10 +71,8 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
    public String getLabel() { return "New Feature"; }
 
    protected Optional<EObject> getSelectedElement() {
-      // Hardcode: always return the root Feature of the model
       return modelState.getSemanticModel(FeatureModel.class)
-         .map(FeatureModel::getRoot)
-         .map(f -> (EObject) f);
+         .flatMap(model -> model.getRoots().stream().findFirst().map(e -> (EObject) e));
    }
 
    protected Command createFeatureAndNode(final Optional<GPoint> relativeLocation) {
@@ -85,7 +83,7 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
       EObject parentElement = selectedElementOpt
          .filter(Feature.class::isInstance)
          .orElseGet(() -> modelState.getSemanticModel(FeatureModel.class)
-            .map(FeatureModel::getRoot)
+            .map(FeatureModel::getRoots).stream().findFirst().map(f -> (EObject) f)
             .orElseThrow());
 
       // 3. Create the new feature instance
@@ -110,7 +108,7 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
    protected Feature createFeature() {
       Feature newFeature = FeatJARFactory.eINSTANCE.createFeature();
       newFeature.setName(getLabel() + i++);
-      newFeature.setId(idGenerator.getOrCreateId(newFeature) + i++);
+      newFeature.setId(getLabel() + "_" + idGenerator.getOrCreateId(newFeature) + i++);
       newFeature.setOptional(false);
       return newFeature;
    }
