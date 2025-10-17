@@ -114,4 +114,5 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
       newFeature.setOptional(false);
       return newFeature;
    }
+
 }
