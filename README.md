@@ -1,41 +1,3 @@
-# Dokumentation
-Wir erstellten in einem GLSP-Java/EMF-Server Feature-Knoten (semantisch: featJAR.Feature) und visualisierten sie als GNodes im Diagramm. Das Anlegen erfolgte per Operation vom Client; die Darstellung entstand über eine GModel-Factory aus dem (EMF-)Semantik- und Notationsmodell.
-
-Datei 1: CreateTaskNodeHandler
-Zweck: Reagierte auf CreateNodeOperation und lag einen neuen Feature-Knoten an.
-* Erbt von EMFCreateOperationHandler<CreateNodeOperation> und ist für Typ TaskListModelTypes.OBLIGATORY_FEATURE registrierte.
-* Holt aus EMFNotationModelState:
-    * Semantik: Wurzel-Feature (FeatJAR/Ecore).
-    * Notation: Diagram (Notation-Modell).
-    * EditingDomain für EMF-Commands (Undo/Redo).
-* Semantikerzeugung: createTask() baut ein featJAR.Feature, setzt Name („Feature“ + Zähler über setInitialName), id, Flags (optional=false, root=false).
-* Kopplung Semantik↔Notation: Mit EMFIdGenerator wird eine stabile ID erzeugt; diese kommt in eine SemanticElementReference der Shape.
-* Notation/Visuals: createShape(...) erzeugt eine Shape mit Position (relativ zum Container via LayoutUtil) und Größe (60×25).
-* Transaktion: Zwei AddCommands (Semantik hinzufügen + Shape ins Diagramm), in einem CompoundCommandkombiniert → Undo/Redo-fähig.
-
-Datei 2: TaskListGModelFactory
-Zweck: Übersetzt Semantik + Notation in das GModel (was der Client rendert).
-* Erbt von EMFNotationGModelFactory (liefert u. a. applyShapeData(...) für Position/Größe aus dem Notationsmodell).
-* In fillRootElement(...):
-    * Kapselt das GModelRoot als GGraph.
-    * Iteriert die Kinder des semantischen Feature und baut für jedes Kind einen GNode.
-* Knotentypen/Styling:
-    * createOptionalFeatureNode(...) → TaskListModelTypes.OPTIONAL_FEATURE
-    * createObligatoryFeatureNode(...) → TaskListModelTypes.OBLIGATORY_FEATURE(Diese Typen matchen deine CSS/Client-Views.)
-* Labels & Layout: Fügt ein GLabel mit feature.getName() hinzu, Layout HBOX mit linker Padding-Option; applyShapeData übernimmt Position/Size aus Notation.
-Ablauf „Knoten anlegen“
-1. Client sendet CreateNodeOperation → CreateTaskNodeHandler läuft.
-2. Handler erzeugt Semantik (featJAR.Feature) und Notation (Shape) und führt einen CompoundCommand aus.
-3. GLSP aktualisiert das GModel über die Factory → neuer GNode mit Label erscheint im Diagramm.
-Was schon funktioniert
-* Konsistentes Semantik-/Notation-Modell (EMF) mit Undo/Redo.
-* Id-Stabilität zwischen Semantik und Notation (EMFIdGenerator).
-* Visuelle Unterscheidung optional/obligatorisch über Knotentypen; Label-Text aus Feature.name.
-* Position/Größe kommen aus dem Notation-Modell (Factory ruft applyShapeData).
-
-
-
-
 # FeatJAR-gui
 
 This repository contains classes for enabling a graphical user interface.
@@ -131,6 +93,16 @@ Import the provided [`example project`](glsp-server/workspace/TaskListExample/) 
 
 Currently the server is not expecting/waiting for connections from other clients like Theia or VSCode; it can only be started with `TaskListEditor.launch`.
 
+## Tanslating between EMF-Model and FeatJAR-Model
+
+Under `FeatJAR-gui/src/main/java/de/featjar/gui/` are two classes for translating. `TranslatorToEMF` takes a FeatureModel and writes a fitting `.featuremodel`
+and `.notation` file, for the GLSP-Server/Client to read.
+`TRanslatorFromEMF` takes a `.featuremodel` file and creates a FeatureModel.
+Under `FeatJAR-gui/src/main/java/de/featjar/gui/EMFxmls/` is a `.uvl` file. `Gui.java` creates a `.featuremodel` from it, alongside other examples.
+Constraints are not yet supported.
+Groups are also not included in the current version of the programm. But there is another git-branch which contains a version of the classes with groups included.
+
+
 ## Bugs
 
 Removing elements from the EMF-Model (in Eclipse Modeling Tools) may cause errors, when trying to generated the source-code.
@@ -224,108 +196,3 @@ Wir wollten zusätzlich **zwei weitere Clients** bereitstellen:
 - **Theia-Client**
 
 Beide Setups sind bislang gescheitert (typische Ursachen: Client-Dependencies, Packaging, WebSocket/Endpoint/Diagrammtyp-Konfiguration).  
-
-
-
-
-
-# Feature-Model-Editor (GLSP/EMF)
-
-Visualisierung eines Feature-Modells (featJAR) als Baumdiagramm mit:
-- farbcodierten Knoten für **Root**, **obligatorische** und **optionale** Features
-- **Markerpunkten** (gefüllt = optional, hohl = obligatorisch/root) oberhalb des Labels
-- **Constraints-Box**, dynamisch unter dem letzten Blatt und horizontal am Root ausgerichtet
-
-
-
-## Ziel
-
-Ein kompakter Editor, der featJAR-Featuremodelle als interaktiven Baum rendert, optional/obligatorisch klar kennzeichnet und Cross-Tree-Constraints gut lesbar darstellt.
-
----
-
-## Überblick & Funktionen
-
-- **Auto-Layout** der Feature-Baumstruktur
-- **Marker** oberhalb des Labels:
-  - gefüllt = optional
-  - hohl = obligatorisch bzw. Root
-- **Constraints-Box**:
-  - **X-Position:** am Root zentriert (bleibt “in der Mitte” des Baums)
-  - **Y-Position:** dynamisch **unter dem rechten/letzten Blatt** (wächst mit dem Baum mit)
-
----
-
-## Technik / Architektur
-
-- **Server:** GLSP + EMF
-- **Modell:** `featJAR.FeatureModel` (EMF)
-- **Darstellung:** `FeatureModelGModelFactory` erzeugt `GNode`/`GEdge`, `FeatureTreeLayouter` berechnet Positionen
-- **Styling:** CSS-Klassen für Root/Obligatorisch/Optional + Marker
-
----
-
-## Wesentliche Änderungen
-
-### Styling (CSS)
-- Konsistente Palette & Schatten
-- Klassen:
-  - `.feature-node-root`, `.feature-node-obligatory`, `.feature-node-optional`
-  - `.feature-marker`, `.feature-marker-optional`, `.feature-marker-mandatory`
-- Marker als SVG-Kreis mit klaren Stroke/Fill-Regeln
-
-### Server-Code
-
-**`FeatureModelGModelFactory`**
-- Knotenaufbau: VBox-Layout, Marker (Kreis) + Label
-- Kinderauflösung robust: `Feature → groups → features` **oder** `Feature → features`
-- Kanten als `GEdge`
-- Constraints-Box:
-  - X am Root ausgerichtet
-  - Y via Anker unter rechtem Blatt (mit `marginY` Abstand)
-
-**`FeatureTreeLayouter`**
-- In-order-Layout (Blätter erhalten fortlaufend X, Y = Ebene)
-- Interne Knoten zentrieren sich über ihren Kindern
-- Helfer:
-  - `findRightmostLeaf`
-  - `computeAnchorBelowRightmostLeaf`
-  - Mapping TreeNode ↔︎ GNode
-
----
-
-## Konfiguration & Tuning
-
-In `FeatureModelGModelFactory`:
-- `horizontalGap`, `verticalGap`: Abstände zwischen Knoten
-- `nodeWidth`, `nodeHeight`: Mindestgröße Knoten
-- Marker-Größe: `size(16, 16)` im Kreis-Shape
-- Constraints-Abstand: `marginY` beim Ankerpunkt
-
----
-
-## Troubleshooting
-
-- **JFace/SWT-Icons fehlen** (`/icons/full/eview16/*.svg`):  
-  Fehlende Eclipse-Plug-in-Ressourcen; kosmetisch, Diagramm funktioniert dennoch.
-- **Log4j/SLF4J Warnungen**:  
-  Logging-Thema (keine Implementierung/Provider gefunden); Funktionalität nicht betroffen.
-- **Marker werden nicht angezeigt**:  
-  Prüfen, ob das Marker-Shape (`shape:circle`) erzeugt und die CSS-Klassen geladen werden.
-
----
-
-## Was (noch) nicht geklappt hat
-
-Wir wollten zusätzlich **zwei weitere Clients** bereitstellen:
-- **VS Code-Client**
-- **Theia-Client**
-
-Beide Setups sind bislang gescheitert (typische Ursachen: Client-Dependencies, Packaging, WebSocket/Endpoint/Diagrammtyp-Konfiguration).  
-To-Dos:
-1. Versionsabgleich GLSP-Server ↔︎ Client-Pakete (Theia/VS Code).
-2. Minimalbeispiel-Client (GLSP Example) starten und unseren Diagrammtyp registrieren.
-3. Build/Run-Skripte fixen (yarn/npm, Peer-Dependencies).
-4. Webview/DevTools-Logs prüfen (404/WS-Fehler).
-
-
