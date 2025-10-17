@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<featJAR:FeatureModel id=">12" name="@efd574cf-4ed1-40a7-a53c-47711cb314c4" xmi:version="2.0"
+xmlns:xmi="http://www.omg.org/XMI"
+xmlns:featJAR="http://www.example.org/featJAR" >
+
+<roots id = "13" name = "Root" optional = "false" >
+
+<features id = "14" name = "A" optional = "true" >
+
+<features id = "15" name = "G" optional = "true" >
+
+<features id = "16" name = "K" optional = "true" >
+
+<features id = "17" name = "L" optional = "true" />
+
+<features id = "18" name = "M" optional = "true" />
+
+<features id = "19" name = "N" optional = "true" />
+
+</features>
+
+</features>
+
+<features id = "20" name = "H" optional = "true" />
+
+</features>
+
+<features id = "21" name = "B" optional = "true" />
+
+<features id = "22" name = "C" optional = "true" >
+
+<features id = "23" name = "I" optional = "true" >
+
+<features id = "24" name = "R" optional = "true" >
+
+<features id = "25" name = "T" optional = "true" >
+
+<features id = "26" name = "V" optional = "true" />
+
+<features id = "27" name = "W" optional = "true" />
+
+</features>
+
+<features id = "28" name = "U" optional = "true" />
+
+</features>
+
+<features id = "29" name = "S" optional = "true" />
+
+</features>
+
+</features>
+
+<features id = "30" name = "D" optional = "true" />
+
+<features id = "31" name = "E" optional = "true" />
+
+<features id = "32" name = "F" optional = "true" >
+
+<features id = "33" name = "J" optional = "true" >
+
+<features id = "34" name = "O" optional = "true" >
+
+<features id = "35" name = "P" optional = "true" >
+
+<features id = "36" name = "Q" optional = "true" />
+
+</features>
+
+</features>
+
+</features>
+
+</features>
+
+</roots>
+
+</featJAR:FeatureModel>

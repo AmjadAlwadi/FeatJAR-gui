@@ -4,7 +4,7 @@
 xmlns:xmi="http://www.omg.org/XMI"
 xmlns:featJAR="http://www.example.org/featJAR" >
 
-<root id = "2" name = "root" optional = "false" >
+<roots id = "2" name = "root" optional = "false" >
 
 <features id = "3" name = "layer1-node1" optional = "true" >
 
@@ -54,7 +54,7 @@ xmlns:featJAR="http://www.example.org/featJAR" >
 
 </features>
 
-</root>
+</roots>
 
 <constraints id = "9" name = "@9" />
 
