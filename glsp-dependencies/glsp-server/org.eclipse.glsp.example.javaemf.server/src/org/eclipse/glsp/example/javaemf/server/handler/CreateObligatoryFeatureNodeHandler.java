@@ -70,21 +70,28 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
    @Override
    public String getLabel() { return "New Feature"; }
 
-   protected Optional<EObject> getSelectedElement() {
+   protected Optional<FeatureModel> getFeatureModel() { return modelState.getSemanticModel(FeatureModel.class); }
+
+   protected Optional<Feature> getRoot() {
       return modelState.getSemanticModel(FeatureModel.class)
-         .flatMap(model -> model.getRoots().stream().findFirst().map(e -> (EObject) e));
+         .flatMap(model -> model.getRoots().stream().findFirst());
    }
 
    protected Command createFeatureAndNode(final Optional<GPoint> relativeLocation) {
-      // 1. Retrieve the selected (clicked) element
-      Optional<EObject> selectedElementOpt = getSelectedElement();
+
+      Optional<Feature> selectedFeature = modelState.getProperty("currentSelection",
+         (Class<Feature>) (Class<?>) Feature.class);
 
       // 2. If no element selected, default to root model
-      EObject parentElement = selectedElementOpt
-         .filter(Feature.class::isInstance)
-         .orElseGet(() -> modelState.getSemanticModel(FeatureModel.class)
-            .map(FeatureModel::getRoots).stream().findFirst().map(f -> (EObject) f)
-            .orElseThrow());
+      Feature parentElement = selectedFeature
+         .or(() -> getRoot())
+         .orElse(null);
+
+      EObject eParent = EObject.class.cast(parentElement);
+
+      if (parentElement == null) {
+         eParent = EObject.class.cast(getFeatureModel());
+      }
 
       // 3. Create the new feature instance
       Feature newFeature = createFeature();
@@ -94,7 +101,7 @@ public class CreateObligatoryFeatureNodeHandler extends EMFCreateOperationHandle
 
       Command addCommand = AddCommand.create(
          editingDomain,
-         parentElement, // where to add
+         eParent, // where to add
          FeatJARPackage.Literals.FEATURE__FEATURES, // the containment reference
          newFeature // what to add
       );

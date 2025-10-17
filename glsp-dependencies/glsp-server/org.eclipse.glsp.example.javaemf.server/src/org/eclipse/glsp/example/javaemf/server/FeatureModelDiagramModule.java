@@ -22,9 +22,11 @@ import org.eclipse.glsp.example.javaemf.server.handler.CreateOptionalFeatureNode
 import org.eclipse.glsp.example.javaemf.server.handler.CreateRootFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.DeleteFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.PasteOperationHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.SelectionActionHandler;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelGModelFactory;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelSourceModelStorage;
 import org.eclipse.glsp.example.javaemf.server.palette.FeatureModelToolPaletteItemProvider;
+import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.emf.EMFIdGenerator;
@@ -77,6 +79,12 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
    // protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
    // return FeatureModelLabelEditValidator.class;
    // }
+
+   @Override
+   protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
+      super.configureActionHandlers(bindings);
+      bindings.add(SelectionActionHandler.class);
+   }
 
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {

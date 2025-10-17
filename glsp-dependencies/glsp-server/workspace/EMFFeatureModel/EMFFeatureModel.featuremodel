@@ -3,19 +3,31 @@
   <roots id="root" name="root">
     <features id="first layer child 1" name="first layer child 1">
       <features id="first layersdfs casdhisdsadld 1" name="first layer child 1"/>
-      <features id="first layersdfs casdhisadld 1" name="first layer child 1"/>
+      <features id="first layersdfs casdhisadld 1" name="first layer child 1">
+        <features id="New Feature_null17" name="New Feature16"/>
+      </features>
       <features id="first layersdfs casdhild 1" name="first layer child 1"/>
-      <features id="firssadt layersdfs casdhild 1" name="first layer child 1"/>
+      <features id="firssadt layersdfs casdhild 1" name="first layer child 1">
+        <features id="New Feature_null13" name="New Feature12"/>
+      </features>
       <features id="first layer casdhild 1" name="first layer child 1">
         <features id="first layer casdhsdfild 1" name="first layer child 1"/>
-        <features id="firssdat layer casdhsdfild 1" name="first layer child 1"/>
-        <features id="firssdat layer casdhsdfilsadd 1" name="first layer child 1"/>
+        <features id="firssdat layer casdhsdfild 1" name="first layer child 1">
+          <features id="New Feature_null45" name="New Feature44"/>
+        </features>
+        <features id="firssdat layer casdhsdfilsadd 1" name="first layer child 1">
+          <features id="New Feature_null29" name="New Feature28">
+            <features id="New Feature_null33" name="New Feature32"/>
+            <features id="New Feature_null37" name="New Feature36"/>
+            <features id="New Feature_null41" name="New Feature40"/>
+          </features>
+        </features>
       </features>
     </features>
     <features id="null33" name="New Feature32"/>
     <features id="null37" name="New Feature36"/>
+    <features id="New Feature_null21" name="New Feature20"/>
+    <features id="New Feature_null25" name="New Feature24"/>
   </roots>
-  
-  <constraints name="sadfdsfa" id="dsafdsaf"/>
-  
+  <constraints id="dsafdsaf" name="sadfdsfa"/>
 </featJAR:FeatureModel>

@@ -1,5 +1,6 @@
 package org.eclipse.glsp.example.javaemf.server.handler;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.emf.common.command.Command;
@@ -36,8 +37,22 @@ public class PasteOperationHandler extends EMFOperationHandler<PasteOperation> {
    @Override
    public Optional<Command> createCommand(final PasteOperation operation) {
 
-      // String constraint = operation.getClipboardData().get(operation);
-      String constraint = "asdfasdfdsa";
+      Map<String, String> clipboardData = operation.getClipboardData();
+      String lastValue = clipboardData.isEmpty()
+         ? null
+         : clipboardData.entrySet()
+            .stream()
+            .skip(clipboardData.size() - 1)
+            .findFirst()
+            .map(Map.Entry::getValue)
+            .orElse(null);
+
+      if (lastValue == null) {
+         return Optional.empty();
+      }
+
+      String constraint = lastValue != null ? lastValue : "";
+
       return Optional.of(createConstraintAndPlaceInsideBox(constraint));
 
    }
@@ -47,17 +62,12 @@ public class PasteOperationHandler extends EMFOperationHandler<PasteOperation> {
 
    protected Command createConstraintAndPlaceInsideBox(final String constraint) {
 
-      System.out.println("before");
-
       // 2. If no element selected, default to root model
       EObject parentElement = modelState.getSemanticModel(FeatureModel.class).get();
 
-      System.out.println("after");
-
       // 3. Create the new feature instance
-      Constraint newConstraint = createConstraint();
+      Constraint newConstraint = createConstraint(constraint);
 
-      System.out.println("after");
       // 4. Build EMF AddCommand
       EditingDomain editingDomain = modelState.getEditingDomain();
 
@@ -67,18 +77,16 @@ public class PasteOperationHandler extends EMFOperationHandler<PasteOperation> {
          FeatJARPackage.Literals.FEATURE_MODEL__CONSTRAINTS, // the containment reference
          newConstraint // what to add
       );
-      System.out.println("after");
 
       CompoundCommand compound = new CompoundCommand();
       compound.append(addCommand);
-      System.out.println("after");
 
       return compound;
    }
 
-   protected Constraint createConstraint() {
+   protected Constraint createConstraint(final String value) {
       Constraint newConstraint = FeatJARFactory.eINSTANCE.createConstraint();
-      newConstraint.setName(getLabel() + i++);
+      newConstraint.setName(value);
       newConstraint.setId("new_" + getLabel() + "_" + idGenerator.getOrCreateId(newConstraint) + i++);
       return newConstraint;
    }
