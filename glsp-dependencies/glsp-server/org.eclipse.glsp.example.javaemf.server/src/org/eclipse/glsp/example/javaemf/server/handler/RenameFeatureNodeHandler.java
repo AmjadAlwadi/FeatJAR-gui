@@ -108,7 +108,7 @@ public class RenameFeatureNodeHandler extends AbstractEMFOperationHandler<Delete
       // //
       // // System.out.println(emfFeatureModel.getRoot().get(0).getName());
       // //
-      findFeatureById(FeatureModelGModelFactory.featureIdMap.get(gModelIds.get(0))).setName("Mohammad");
+      // findFeatureById(FeatureModelGModelFactory.featureIdMap.get(gModelIds.get(0))).setName("Mohammad");
       // //
       // // System.out.println(emfFeatureModel.getRoot().get(0).getName());
       //
@@ -128,8 +128,6 @@ public class RenameFeatureNodeHandler extends AbstractEMFOperationHandler<Delete
 
       // return Optional.of(new CompoundCommand("Updated label", Collections.emptyList()));
 
-      System.out.println("sdfsd : " + gModelIds.get(0));
-
       return Optional.of(delete(gModelIds.get(0)));
 
       // modelState.execute(null);
@@ -142,6 +140,10 @@ public class RenameFeatureNodeHandler extends AbstractEMFOperationHandler<Delete
       // FeatureModelGModelFactory.emfFeatures.get(emfIndex);
 
       Feature element = findFeatureById(FeatureModelGModelFactory.featureIdMap.get(gModelId));
+
+      System.out.println(EObject.class.cast(element.eContainer()));
+      System.out.println();
+      System.out.println(element.eContainingFeature());
 
       EditingDomain editingDomain = modelState.getEditingDomain();
       return RemoveCommand.create(editingDomain, EObject.class.cast(element.eContainer()), element.eContainingFeature(),

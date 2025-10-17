@@ -1,8 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<featJAR:FeatureModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:featJAR="http://www.example.org/featJAR" id="featuremodel_001" name="LayeredFeatureModel">
-  <root id="root_0" name="Amjad"/>
-  <constraints id="const_001" name="A and B and C"/>
-  <constraints id="const_002" name="A or B and not C"/>
-  <constraints id="const_003" name="(A and B) or (C and D)"/>
-  <constraints id="const_004" name="FeatureX implies FeatureY"/>
+
+
+<featJAR:FeatureModel id="featuremodel" name="hallo" xmi:version="2.0"
+  xmlns:xmi="http://www.omg.org/XMI"
+  xmlns:featJAR="http://www.example.org/featJAR">
+
+<root 
+  id = "root" 
+  optional="false"
+  name="root">
+
+
+    <features
+  id = "first layer child 1"
+  optional="false"
+  name="first layer child 1">
+  
+    <features
+  id = "first layersdfs casdhisdsadld 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "first layersdfs casdhisadld 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "first layersdfs casdhild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "firssadt layersdfs casdhild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  <features
+  id = "first layer casdhild 1"
+  optional="false"
+  name="first layer child 1">
+  
+  
+  <features
+  id = "first layer casdhsdfild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  
+   <features
+  id = "firssdat layer casdhsdfild 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  
+     <features
+  id = "firssdat layer casdhsdfilsadd 1"
+  optional="false"
+  name="first layer child 1"/>
+  
+  </features>
+  
+  
+  
+  </features>
+
+
+  
+  </root>
+  
+ 
 </featJAR:FeatureModel>
