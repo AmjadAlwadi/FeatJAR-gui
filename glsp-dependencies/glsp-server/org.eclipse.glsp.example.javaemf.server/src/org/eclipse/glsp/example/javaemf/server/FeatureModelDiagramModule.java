@@ -20,6 +20,9 @@ import org.eclipse.glsp.example.javaemf.server.handler.CreateConstraintOperation
 import org.eclipse.glsp.example.javaemf.server.handler.CreateObligatoryFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.CreateOptionalFeatureNodeHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.DeleteFeatureNodeHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.FeatureModelLabelEditValidator;
+import org.eclipse.glsp.example.javaemf.server.handler.FeatureNodeLabelEditHandler;
+import org.eclipse.glsp.example.javaemf.server.handler.FeatureNodeLabelEditOperationHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.PasteOperationHandler;
 import org.eclipse.glsp.example.javaemf.server.handler.SelectionActionHandler;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureModelGModelFactory;
@@ -33,6 +36,7 @@ import org.eclipse.glsp.server.emf.EMFSourceModelStorage;
 import org.eclipse.glsp.server.emf.idgen.AttributeIdGenerator;
 import org.eclipse.glsp.server.emf.notation.EMFNotationDiagramModule;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
+import org.eclipse.glsp.server.features.directediting.LabelEditValidator;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.operations.OperationHandler;
 
@@ -73,16 +77,17 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
       return FeatureModelToolPaletteItemProvider.class;
    }
 
-   // Experimentell
-   // @Override
-   // protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
-   // return FeatureModelLabelEditValidator.class;
-   // }
+   @Override
+   protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
+      return FeatureModelLabelEditValidator.class;
+   }
 
    @Override
    protected void configureActionHandlers(final MultiBinding<ActionHandler> bindings) {
       super.configureActionHandlers(bindings);
       bindings.add(SelectionActionHandler.class);
+      bindings.add(FeatureNodeLabelEditHandler.class);
+
    }
 
    @Override
@@ -93,6 +98,8 @@ public class FeatureModelDiagramModule extends EMFNotationDiagramModule {
       binding.add(CreateConstraintOperationHandler.class);
       binding.add(DeleteFeatureNodeHandler.class);
       binding.add(PasteOperationHandler.class);
+      binding.add(FeatureNodeLabelEditOperationHandler.class);
+
    }
 
    @Override

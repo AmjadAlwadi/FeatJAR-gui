@@ -6,7 +6,13 @@ import {
     LogLevel,
     TYPES,
     configureModelElement,
-    GNode
+    editLabelFeature,
+    GLabel,
+    GLabelView,
+    GNode,
+    GPort,
+    CircularNodeView,
+    selectFeature
 } from '@eclipse-glsp/client';
 import { Container, ContainerModule } from 'inversify';
 import '../css/diagram.css';
@@ -16,11 +22,13 @@ const taskListDiagramModule = new ContainerModule((bind, unbind, isBound, rebind
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
 
-    const context = { bind, isBound }; // ✅ only these are needed
+    const context = { bind, isBound };
     configureDefaultModelElements(context);
 
-    // ✅ Register your custom shape (older GLSP API)
     configureModelElement(context, 'new-shape-type', GNode, MyCustomShapeView);
+    configureModelElement(context, 'label:heading', GLabel, GLabelView, {enable : [editLabelFeature]});
+    configureModelElement(context, 'event:port', GPort, CircularNodeView, { disable: [selectFeature] });
+
 });
 
 export function initializeTasklistDiagramContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {

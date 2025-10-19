@@ -27,14 +27,15 @@ public class FeatureModelDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<ShapeTypeHint> getShapeTypeHints() {
       // tasks can be moved, deleted and resized
-      return List.of(new ShapeTypeHint(FeatureModelTypes.OBLIGATORY_FEATURE, false, true, false, true),
-         new ShapeTypeHint(FeatureModelTypes.OPTIONAL_FEATURE, false, true, false, true),
-         new ShapeTypeHint(FeatureModelTypes.ROOT, false, true, false, true));
+      return List.of(new ShapeTypeHint(FeatureModelTypes.OBLIGATORY_FEATURE, false, true, false, false),
+         new ShapeTypeHint(FeatureModelTypes.OPTIONAL_FEATURE, false, true, false, false),
+         new ShapeTypeHint(FeatureModelTypes.ROOT, false, true, false, false),
+         new ShapeTypeHint(FeatureModelTypes.NODE, false, true, false, false));
    }
 
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
-      return List.of(new EdgeTypeHint(FeatureModelTypes.LINK, true, true, false, false, null, null));
+      return List.of(new EdgeTypeHint(FeatureModelTypes.LINK, false, true, false, false, null, null));
    }
 
 }

@@ -18,6 +18,7 @@ package org.eclipse.glsp.example.javaemf.server.handler;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import org.eclipse.glsp.example.javaemf.server.FeatureModelTypes;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
@@ -37,11 +38,11 @@ public class FeatureModelLabelEditValidator implements LabelEditValidator {
          return ValidationStatus.error("Name must not be empty");
       }
 
-      Set<GNode> taskNodes = modelState.getIndex().getAllByClass(GNode.class);
-      Stream<GLabel> otherLabels = taskNodes.stream()
+      Set<GNode> featureNodes = modelState.getIndex().getAllByClass(GNode.class);
+      Stream<GLabel> otherLabels = featureNodes.stream()
          .filter(e -> !e.getId().equals(element.getId()))
          .flatMap(n -> n.getChildren().stream())
-         .filter(c -> "node".equals(c.getType()))
+         .filter(c -> FeatureModelTypes.EDITABLE_LABEL.equals(c.getType()))
          .filter(GLabel.class::isInstance)
          .map(GLabel.class::cast);
 

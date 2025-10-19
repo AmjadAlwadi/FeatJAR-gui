@@ -27,9 +27,11 @@ import org.eclipse.glsp.example.javaemf.server.model.FeatureTreeLayouter.Feature
 import org.eclipse.glsp.example.javaemf.server.model.FeatureTreeLayouter.LayoutContext;
 import org.eclipse.glsp.example.javaemf.server.model.FeatureTreeLayouter.TreeNode;
 import org.eclipse.glsp.graph.DefaultTypes;
+import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
@@ -51,8 +53,10 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    // All graphical elements (GModel Elements)
    public static Map<String, String> featureIdMap = new HashMap<>();
    public static List<Feature> emfFeatures = new ArrayList<>();
-   List<GNode> gElements = new ArrayList<>();
-   List<GEdge> gEdges = new ArrayList<>();
+   public static Map<String, String> constraintIdMap = new HashMap<>();
+   public static List<Constraint> emfConstraints = new ArrayList<>();
+   List<GNode> gNodes = new ArrayList<>();
+   List<GModelElement> gElements = new ArrayList<>();
    List<String> gExpressions = new ArrayList<>();
 
    // Layout information
@@ -60,6 +64,7 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    double verticalGap = 100;
    int nodeWidth = 100;
    int nodeHeight = 30;
+   GDimension portSize = GraphUtil.dimension(nodeWidth / 3, nodeHeight / 3);
 
    // GElement Type
    enum Node_type {
@@ -92,13 +97,14 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    }
 
    protected void clearAllGraphicalElements() {
-      gElements.clear();
-      gExpressions.clear();
-      gEdges.clear();
       FeatureTreeLayouter.clear();
+      gElements.clear();
+      gNodes.clear();
+      gExpressions.clear();
       featureIdMap.clear();
       emfFeatures.clear();
-
+      emfConstraints.clear();
+      constraintIdMap.clear();
    }
 
    @Override
@@ -122,18 +128,12 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       // Autolayouting the feature tree
       layoutFeatureTree(gRoot);
 
-      // Place constraints box under the rightmost (last) leaf, centered horizontally
-      TreeNode rootTree = FeatureTreeLayouter.mapGNodeToTreeNode(gRoot.gNode);
-      double marginY = 160; // tweak spacing below the last leaf
+      // Creating the constraint box and autolayouting it
+      GNode legend = createConstraintLegend(emfFeatureModel.getConstraints(),
+         layoutConstraintLegend(gRoot.gNode));
 
-      double rootCenterX = rootTree.x;
-      double legendTopY = FeatureTreeLayouter.computeYBelowDeepestRightmostLeaf(rootTree, nodeHeight, marginY);
-
-      createConstraintLegend(emfFeatureModel.getConstraints(),
-         GraphUtil.point(rootCenterX, legendTopY));
-
+      graph.getChildren().addAll(gNodes);
       graph.getChildren().addAll(gElements);
-      graph.getChildren().addAll(gEdges);
    }
 
    // Run to automatically layout the feature nodes nicely
@@ -144,8 +144,27 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
       // Map computed positions back to the GNodes
       for (TreeNode node : FeatureTreeLayouter.allTreeNodes) {
-         FeatureTreeLayouter.mapTreeNodeToGNode(node, gElements).setPosition(GraphUtil.point(node.x, node.y));
+         GNode gNode = FeatureTreeLayouter.mapTreeNodeToGNode(node, gNodes);
+         gNode.setPosition(GraphUtil.point(node.x, node.y));
+
+         // Experimentell ports
+         // GPoint portPosition = GraphUtil.point(node.x + nodeWidth / 2 - portSize.getWidth() / 2,
+         // node.y + nodeHeight - portSize.getHeight() / 2);
+         // GPort.class.cast(gNode.getChildren().get(1)).setPosition(portPosition);
+
       }
+   }
+
+   // Place constraints box under the rightmost (last) leaf, centered horizontally
+   protected GPoint layoutConstraintLegend(final GNode gRoot) {
+
+      TreeNode rootTree = FeatureTreeLayouter.mapGNodeToTreeNode(gRoot);
+      double marginY = 160; // tweak spacing below the last leaf
+
+      double rootCenterX = rootTree.x;
+      double legendTopY = FeatureTreeLayouter.computeYBelowDeepestRightmostLeaf(rootTree, nodeHeight, marginY);
+
+      return GraphUtil.point(rootCenterX, legendTopY);
    }
 
    // Create Feature Subtree without Autolayouting
@@ -184,7 +203,9 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
       }
 
       // Save all graphical elements and a semantic map
-      gElements.add(gFeature);
+      gNodes.add(gFeature);
+
+      // Save a link to find feature later in the operation handlers
       featureIdMap.put(gFeature.getId(), feature.getId());
       emfFeatures.add(feature);
 
@@ -195,7 +216,7 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    // Create the graphical representation of a feature
    protected GNode createFeatureNode(final Feature feature, final GPoint gPosition, final Node_type node_type) {
 
-      GNodeBuilder taskNodeBuilder = new GNodeBuilder(DefaultTypes.NODE)
+      GNodeBuilder featureNodeBuilder = new GNodeBuilder(DefaultTypes.NODE)
          .id(idGenerator.getOrCreateId(feature))
          .addCssClass(node_type.cssClass())
          .position(gPosition)
@@ -203,13 +224,25 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
          .layoutOptions(new GLayoutOptions()
             .vAlign(GConstants.VAlign.CENTER).hAlign(GConstants.HAlign.CENTER).minWidth(nodeWidth)
             .minHeight(nodeHeight))
-         .add(new GLabelBuilder(DefaultTypes.LABEL).text(feature.getName()).id(feature.getId() + "_label")
+         .add(new GLabelBuilder(FeatureModelTypes.EDITABLE_LABEL)
+            .text(feature.getName())
+            .id(feature.getId() + "_label")
             .addCssClass(Node_type.LABEL.cssClass()).build());
 
-      applyShapeData(feature, taskNodeBuilder);
-      GNode element = taskNodeBuilder.build();
+      // Experimentell ports
+      // GPort port = new GPortBuilder("event:port")
+      // .position(GraphUtil.point(0, 0))
+      // .size(portSize).build();
+      //
+      // featureNodeBuilder.add(port);
 
-      return element;
+      applyShapeData(feature, featureNodeBuilder);
+      GNode featureNode = featureNodeBuilder.build();
+
+      // featureNode.getChildren().add(port);
+      // gElements.add(port);
+
+      return featureNode;
    }
 
    // Create the graphical representation of the feature relation
@@ -223,12 +256,12 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
          .target(gTarget)
          .build();
 
-      gEdges.add(edge);
+      gElements.add(edge);
    }
 
    // Create a box with all existing constraints as strings
    // coords is treated as: (centerX, topY) anchor under the rightmost leaf
-   protected void createConstraintLegend(final List<Constraint> constraints, final GPoint coords) {
+   protected GNode createConstraintLegend(final List<Constraint> constraints, final GPoint coords) {
 
       // Calculate size based on content
       int lines = 1 /* title */ + 1 /* first sep */ + (constraints.size() * 2);
@@ -256,7 +289,7 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
 
       // Add constraint strings
       for (Constraint constraint : constraints) {
-         legendBuilder.add(createConstraintLabel(constraint.getName(), id++));
+         legendBuilder.add(createConstraintLabel(constraint, id++));
          legendBuilder.add(createLineLabel(id++, "-"));
       }
 
@@ -267,6 +300,8 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
             legend.getPosition().getY()));
 
       gElements.add(legend);
+
+      return legend;
    }
 
    // Create a label to draw a separating line using a specific symbol
@@ -290,13 +325,21 @@ public class FeatureModelGModelFactory extends EMFNotationGModelFactory {
    }
 
    // Create a label as GElement with a specific id and string value
-   public GLabel createConstraintLabel(final String label, final int id) {
-      return new GLabelBuilder(DefaultTypes.LABEL)
-         .id("constraints-label_" + id)
-         .text(label)
+   public GLabel createConstraintLabel(final Constraint constraint, final int id) {
+
+      String gId = "constraints-label_" + id;
+
+      GLabel gConstraint = new GLabelBuilder(FeatureModelTypes.EDITABLE_LABEL)
+         .id(gId)
+         .text(constraint.getName())
          .addCssClass(Node_type.LABEL.cssClass())
          .addArgument("wrap", true)
          .build();
+
+      emfConstraints.add(constraint);
+      constraintIdMap.put(gId, constraint.getId());
+
+      return gConstraint;
    }
 
 }
