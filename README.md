@@ -7,7 +7,7 @@
   <p align="center">
     <a href="#project-overview">Overview</a> •
     <a href="#architecture">Architecture</a> •
-    <a href="#feature-model-overview--layout">Feature Model</a> •
+    <a href="#feature-model-overview-and-layout">Feature Model</a> •
     <a href="#server-side-services--handlers">Server-Side</a> •
     <a href="#client-limitations-and-customizations">Client Customizations</a> •
     <a href="#server–client-integration">Clients Integration</a> •
@@ -85,7 +85,7 @@
 
 
 
-## Feature Model Overview & Layout(optional part, mentioned before)
+## Feature Model Overview and Layout
 
 ### Overview & Functions
 - Auto-layout of feature tree.
@@ -368,6 +368,11 @@ Ensures a consistent and visually organized diagram, linking EMF features to gra
 - **Custom shapes** are possible, but **resizing and dynamic rendering** are limited.  
 - **Icons and images** are difficult to integrate due to client-side limitations.  
 - **CSS classes** provide the easiest way to visually distinguish EMF elements.
+
+
+
+
+
 ## Server–Client Integration
 
 ### Purpose
