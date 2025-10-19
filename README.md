@@ -18,14 +18,13 @@
 
 <p align="center">
   <a href="https://github.com/AmjadAlwadi">
-    <img src="https://img.shields.io/badge/Amjad%20Alwadi-8A2BE2
-    " alt="Amjad Alwadi">
+    <img src="https://img.shields.io/badge/Amjad%20Alwadi-8A2BE2" alt="Amjad Alwadi">
   </a>
   <a href="https://github.com/MohammadNayfHamsho">
-    <img src="https://img.shields.io/badge/Mohammad%20Hamsho-009688
-    " alt="Mohammad Hamsho">
+    <img src="https://img.shields.io/badge/Mohammad%20Hamsho-009688" alt="Mohammad Hamsho">
   </a>
 </p>
+
 
 ---
 
