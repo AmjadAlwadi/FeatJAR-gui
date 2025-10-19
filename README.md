@@ -1,3 +1,26 @@
+
+<div align="center">
+  <img src="feature_modelling_logo.png" width="300px">
+
+  <br><br>
+
+  <p align="center">
+    <a href="#project-overview">Overview</a> •
+    <a href="#architecture">Architecture</a> •
+    <a href="#feature-model-overview--layout">Feature Model</a> •
+    <a href="#server-side-services--handlers">Server-Side</a> •
+    <a href="#client-limitations-and-customizations">Client Customizations</a> •
+    <a href="#server–client-integration">Clients Integration</a> •
+    <a href="#emf-model">EMF Model</a> •
+    <a href="#building-the-project">Build</a> •
+    <a href="#running-and-debugging-the-example">Run</a> •
+    <a href="#bugs-and-known-issues">Issues</a>
+  </p>
+</div>
+
+---
+
+
 # GLSP Feature Modeler 
 
 ## Project Overview
