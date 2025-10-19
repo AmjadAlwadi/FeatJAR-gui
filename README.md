@@ -6,19 +6,31 @@
 
   <p align="center">
     <a href="#project-overview">Overview</a> •
-    <a href="#architecture">Architecture</a> •
-    <a href="#feature-model-overview-and-layout">Feature Model</a> •
-    <a href="#server-side-services--handlers">Server-Side</a> •
-    <a href="#client-limitations-and-customizations">Client Customizations</a> •
-    <a href="#server–client-integration">Clients Integration</a> •
-    <a href="#emf-model">EMF Model</a> •
     <a href="#building-the-project">Build</a> •
     <a href="#running-and-debugging-the-example">Run</a> •
-    <a href="#bugs-and-known-issues">Issues</a>
-  </p>
+    <a href="#architecture">Architecture</a> •
+    <a href="#server-structure-and-classes-description">Server-Structure</a> •
+    <a href="#client-and-customizations">Client Customizations</a> • </br>
+    <a href="#multi-client-integration-support">Multi Client Integration</a> •
+    <a href="#emf-model">EMF Model</a> •
+    <a href="#translating-between-the-different-model-types">Model Transformation</a> •
 </div>
 
+<p align="center">
+  <a href="https://github.com/AmjadAlwadi">
+    <img src="https://img.shields.io/badge/Amjad%20Alwadi-8A2BE2
+    " alt="Amjad Alwadi">
+  </a>
+  <a href="https://github.com/MohammadNayfHamsho">
+    <img src="https://img.shields.io/badge/Mohammad%20Hamsho-009688
+    " alt="Mohammad Hamsho">
+  </a>
+</p>
+
 ---
+
+
+
 
 
 # GLSP Feature Modeler 
@@ -29,42 +41,88 @@
 
 - Creating, visualizing, and editing **feature nodes** (`featJAR.Feature`) in a **model-driven approach**.
 - Ensuring **stable ID mapping**, **undo/redo support**, and proper **visual distinction** between **optional** and **obligatory** features.
-- Producing **documentation, code structure**, and a **working prototype** for assessment.
 
+</br>
+</br>
 
-
-
-
-
-## Short description
 `GLSP Feature Modeler` extends a GLSP Java/EMF server to manage and render `featJAR.Feature` elements as diagram nodes (GNodes). Users create nodes from the client; the server updates the EMF semantic and notation models and the GModel factory converts those models into shapes and labels the client renders. The implementation ensures stable IDs, undo/redo support, and visual distinction between optional and obligatory features.
 
 
+`GLSP Feature Modeler` extends a GLSP Java/EMF server to manage and render `featJAR.Feature` elements as diagram nodes (GNodes).
+
+The client translates a specific feature model (generated either programmatrically or parsed from a file) to another format EMF format, This source file is then sent to the server to be converted to a GModel, this GModel will then be sent back to the client to be rendered. 
+
+<br>
+
+<div align="center">
+
+---
+```mermaid
+graph LR;
+    Feature-Model-->EMF-Model-->GModel;
+    GModel-->EMF-Model-->Feature-Model;
+    
+    style Feature-Model fill:#ffcccc,stroke:#ff6666,stroke-width:2px,color:#000000;
+    style GModel fill:#ccffcc,stroke:#66cc66,stroke-width:2px,color:#000000;
+    style EMF-Model fill:#ccccff,stroke:#6666ff,stroke-width:2px,color:#000000;
+```
+
+</div>
+
+---
+<br>
+
+ Users can create/delete/modify feature-nodes/constraints from the client; the server updates the EMF semantic and notation models and the GModel factory on the server converts those models into shapes and labels which the client renders. The implementation ensures stable IDs, undo/redo support, and visual distinction between optional and obligatory features.
+
+</br>
+
+## **Building the Project**
+
+To build the **GLSP** part of the project, run the following command in glsp-dependencies:
+
+```
+yarn build
+```
+
+To compile the entire project with the glsp-dependencies, we provide gradle support for that, run
+
+```
+./gradlew build
+```
+
+---
+</br>
+
+
+## **Running and Debugging the Example**
+
+To test the **FeatureModel diagram editor**, a launch configuration for eclipse is already provided.  
+In your Eclipse workspace, navigate to:  
+`org.eclipse.glsp.example.javaemf.editor`
+
+Then run or debug the example by right-clicking on **FeatureModelEditor.launch** and selecting:  
+**Run As → FeatureModelEditor**
+
+This will open a **second instance of Eclipse** with the GLSP FeatureModel editor plugins preinstalled.  
+Import the provided example project into this workspace and open the `.FeatureModel` file to launch the diagram editor.
+
+
+
+</br>
 
 
 
 
-## Goal
-- Implement reliable creation and visualization of feature nodes (`featJAR.Feature`) in a GLSP/EMF environment.
-- Keep semantic (EMF) and notation models consistent and synchronized.
-- Provide undo/redo support for creation operations.
-- Ensure stable ID mapping between semantic elements and notation shapes.
-- Render nodes with appropriate types (optional / obligatory) and labels taken from `Feature.name`.
 
-
-
-
-
-
-## Architecture
+## **Architecture**
 
 ### Client 
 
-- Sends **operations** (`CreateNodeOperation`, `DeleteOperation`, etc.) to the server.
+- Sends **actions/operations** (`CreateNodeOperation`, `DeleteOperation`, etc.) to the server.
 - Renders **GModel elements** (`GGraph`, `GNode`, `GLabel`) provided by the server.
 
 ### Server (GLSP Java / EMF)
-
+- **EMF Model**: A structured representation that stores our data,encompassing both the semantic and notation models.
 - **Operation Handlers** manage incoming operations and create/update EMF semantic and notation elements.
 - **EditingDomain** and EMF `Command`s handle transactional updates.
 - **EMFIdGenerator** ensures stable **semantic ↔ notation mapping**.
@@ -75,55 +133,11 @@
 - **Notation Model:** Diagram positions and sizes for rendering.  
 - **GModel:** Client-facing graphical model generated by **GModel Factory**.
 
-### GModel Factory (`TaskListGModelFactory`)
 
-- Converts semantic + notation models into **GNodes/GLabels** for rendering.
-- Applies **position, size, and styling** (node types: optional/obligatory).
+</br>
 
 
-
-
-
-
-## Feature Model Overview and Layout
-
-### Overview & Functions
-- Auto-layout of feature tree.
-- Feature markers above labels: filled = optional, hollow = obligatory/root.
-- Constraints box: X centered at root, Y below rightmost leaf.
-
-### Technology & Architecture
-- Server: GLSP + EMF.
-- Model: `featJAR.FeatureModel`.
-- Rendering: `FeatureModelGModelFactory` generates GNodes/GEdges; `FeatureTreeLayouter` computes positions.
-- Styling: CSS classes for Root/Obligatory/Optional nodes and markers.
-
-### Key Updates
-- **Styling (CSS)**: consistent palette, shadows, SVG circle markers.
-  - Classes: `.feature-node-root`, `.feature-node-obligatory`, `.feature-node-optional`
-  - Marker classes: `.feature-marker`, `.feature-marker-optional`, `.feature-marker-mandatory`
-- **Server (FeatureModelGModelFactory)**:
-  - VBox layout: marker + label
-  - Child resolution: Feature → groups → features or Feature → features
-  - Edges as GEdge
-  - Constraints box: X at root, Y via anchor below rightmost leaf (`marginY`)
-- **FeatureTreeLayouter**:
-  - In-order layout: leaves sequential X, Y = level
-  - Internal nodes centered over children
-  - Helpers: `findRightmostLeaf`, `computeAnchorBelowRightmostLeaf`
-  - Mapping TreeNode ↔ GNode
-
-### Configuration & Tuning
-- `horizontalGap` / `verticalGap`: spacing between nodes
-- `nodeWidth` / `nodeHeight`: minimum node size
-- Marker size: `16x16`
-- Constraint box spacing: `marginY` at anchor
-
-
-
-
-
-## **Server-Side Services & Handlers**
+## **Server Structure and Classes Description**
 
 ### **Configuration: Diagram Editing Permissions**
 
@@ -135,6 +149,14 @@ In the Class **FeatureModelDiagramConfiguration**, defines what actions are allo
 - Ensures that some elements (like root nodes) are fixed and cannot be resized or recreated.  
 - Controls links: creation and deletion are allowed, reconnection is restricted.
 
+</br>
+
+---
+
+</br>
+
+
+
 ### **Class: FeatureModelDiagramModule**
 
 **Purpose**  
@@ -143,11 +165,14 @@ Connects all services, factories, and handlers for the feature model diagram, de
 **What it does**  
 - Binds **diagram configuration**, **GModel factory**, **model storage**, and **ID generator**.  
 - Registers **tool palette**, **label validator**, and **operation handlers** for creating and renaming nodes.  
-- Defines the diagram type for GLSP (`tasklist-diagram`).
+- Defines the diagram type for GLSP (`FeatureModel-diagram`).
 
 **Result**  
 - Centralizes diagram setup and ensures consistent behavior for node creation, editing, and rendering.
 
+</br>
+
+---
 ### **Class: FeatureModelTypes**
 
 **Purpose**  
@@ -162,6 +187,9 @@ Defines the mapping between EMF model elements and GModel types, ensuring the cl
 - Provides a consistent reference for all semantic elements when converting them to GModel nodes and edges.  
 - Guarantees that the client knows how to display and interact with each feature or connection type.
 
+</br>
+
+---
 ### **Class: FeatureTreeLayouter**
 
 **Purpose**  
@@ -179,6 +207,9 @@ Provides an **automatic tree layout** for feature nodes, calculating positions f
 - Automatically positions internal and leaf nodes to produce an organized tree structure.  
 - Supports mapping between semantic GModel nodes and layout nodes for rendering.
 
+</br>
+
+---
 ### **Creation Operation Handlers**
 
 **Purpose**  
@@ -209,6 +240,9 @@ These handlers manage the **creation of nodes and edges** in the feature model d
   - **Graphical GModel** (nodes/edges in the client).  
 - All creation operations support **undo/redo** and maintain **stable IDs**.
 
+</br>
+
+---
 ### **Delete Operation Handler**
 
 **Purpose**  
@@ -223,6 +257,9 @@ It ensures that removed elements are deleted both from the **semantic EMF model*
    - Maintains EMF transactional integrity for undo/redo support.  
 4. Combines all individual remove commands into a **`CompoundCommand`** for execution.  
 
+</br>
+
+---
 **Utility**  
 - **`findFeatureById(String id)`** – Searches the list of all EMF features (`FeatureModelGModelFactory.emfFeatures`) to locate a feature by its ID.  
 - Handles cases where the feature list or ID is `null` gracefully.  
@@ -232,6 +269,9 @@ It ensures that removed elements are deleted both from the **semantic EMF model*
 - Supports **undo/redo** via EMF transactional commands.  
 - Ensures consistent mapping between semantic and graphical models after deletion.
 
+</br>
+
+---
 ### **Class: FeatureModelLabelEditValidator**
 
 **Purpose**  
@@ -248,6 +288,9 @@ Handles **server-side validation** when a label of a diagram element is edited, 
 - Prevents empty names and informs users about potential conflicts.  
 - Lays the foundation for safe client-side label editing once the corresponding client feature is implemented.
 
+</br>
+
+---
 ### **Class: Label Edit Validator**
 
 **Purpose**  
@@ -262,6 +305,9 @@ Validates feature node labels to ensure they are not empty and mostly unique.
 - Keeps labels meaningful and mostly unique.  
 - Lays the foundation for safe direct editing from the client.
 
+</br>
+
+---
 ### **Paste Operation Handler(Incomplete)**
 
 **Purpose**  
@@ -278,6 +324,9 @@ Handles **paste operations** for feature model constraints, allowing users to du
 - Enables **pasting constraints** into the EMF model safely.  
 - Maintains consistency with existing model elements and generates unique identifiers.
 
+</br>
+
+---
 ### **Selection Action Handler**
 
 **Purpose**  
@@ -293,6 +342,9 @@ Handles **selection actions** in the diagram, tracking which feature node is cur
 - Maintains a reference to the **currently selected node** in the EMF model.  
 - Enables other operations (e.g., create child nodes) to use the selected node as a **parent**.
 
+</br>
+
+---
 ### **FeatureModelToolPaletteItemProvider**
 
 **Purpose**  
@@ -309,6 +361,9 @@ Defines and designs the **client-side tool palette**, allowing users to view inf
 - The tool palette improves usability by showing both **actions** (create nodes) and **informational cues** (legend).  
 - Supports consistent and intuitive interaction with the diagram editor.
 
+</br>
+
+---
 ### **Popup Model Factory(Incomplete)**
 
 **Purpose**  
@@ -326,6 +381,9 @@ Generates **popup tooltips** for feature nodes to show contextual information.
 
 
 
+</br>
+
+---
 ### **FeatureModelGModelFactory**
 
 **Purpose:**  
@@ -345,15 +403,17 @@ Ensures a consistent and visually organized diagram, linking EMF features to gra
 
 
 
+</br>
 
 
 
-## Client Limitations and Customizations
+
+## Client Customizations
 
 ### Custom Shapes
 - Added **custom SVG shapes** for feature nodes.  
 - **Size cannot be dynamic** because SVG uses absolute paths, so nodes do not scale automatically.  
-- Custom shapes work visually, but resizing is limited.
+- Custom shapes work visually.
 
 ### Icons and Images
 - Tried to render **icons using SVG or image files**, but they did not appear correctly on the client.  
@@ -373,10 +433,15 @@ Ensures a consistent and visually organized diagram, linking EMF features to gra
 
 
 
-## Server–Client Integration
+</br>
+
+
+
+
+## Multi-Client Integration Support
 
 ### Purpose
-To connect the **GLSP server** with two client environments — one in **Visual Studio Code** and one in **Theia** — enabling model editing and visualization across both platforms.
+To provide support for multiple client environments in addition to **eclipse** e.g. **Theia**, **Visual Studio Code** using the same **GLSP server** code base enabling model editing and visualization across both platforms.
 
 ### What we did
 - Set up and configured the **GLSP server** for communication with both clients.  
@@ -392,6 +457,10 @@ To connect the **GLSP server** with two client environments — one in **Visual 
 - Partial integration achieved, with communication working inconsistently.  
 - Identified key issues related to **port configuration** and **server setup** that must be fixed for full client compatibility.  
 - Gained better understanding of the **GLSP communication flow** between server and client environments.
+
+</br>
+
+
 ## **EMF Model**
 
 The **GLSP server** uses an **EMF model** that represents the **FeatJAR model**, currently in a simplified form.  
@@ -409,37 +478,60 @@ Once the class diagram is open, you can generate the model code:
 2. Right-click on **FeatJAR** in the opened tab.  
 3. Select **Generate Model Code**.
 
----
-
-## **Building the Project**
-
-To build the **GLSP** part of the project, execute the following command in the repository root:**yarn build**
-
-The overall project also includes a **Gradle wrapper**, but it is currently not functional.
 
 ---
 
-## **Running and Debugging the Example**
+</br>
 
-To test the **TaskList diagram editor**, a launch configuration is already provided.  
-In your Eclipse workspace, navigate to:  
-`org.eclipse.glsp.example.javaemf.editor`
 
-Then run or debug the example by right-clicking on **TaskListEditor.launch** and selecting:  
-**Run As → TaskListEditor**
+## **Translating between the Different Model Types**
 
-This will open a **second instance of Eclipse** with the GLSP TaskList editor plugins preinstalled.  
-Import the provided example project into this workspace and open the `.tasklist` file to launch the diagram editor.
 
+### Converting between EMF model and GModel
+
+<div align="center">
+
+```mermaid
+graph LR;
+    EMF-Model-->GModel;
+    GModel-->EMF-Model;
+    
+    style GModel fill:#ccffcc,stroke:#66cc66,stroke-width:2px,color:#000000;
+    style EMF-Model fill:#ccccff,stroke:#6666ff,stroke-width:2px,color:#000000;
+```
+</div>
+
+</br>
+
+
+For each feature class in the EMF model, the server generates a corresponding GNode in the GModel, assigns it a unique identifier, parses its textual representation, and displays that on a GLabel. Based on specific attributes (e.g., obligatory, optional, root), the server applies distinct visual styles to the node.
+
+For cross-tree constraints, the server creates a legend containing all defined constraints. Each constraint is represented by a dedicated GLabel, which the server arranges in a clear and visually separated manner.
+
+The resulting GModel is fully interactive and modifiable. Users can create new feature nodes or constraints, delete existing nodes (which also removes their entire subtrees), remove cross-tree constraints, and edit the labels of individual nodes directly.
 
 
 ---
+</br>
 
-## **Translating Between EMF and FeatJAR Models**
+
+### Translating between EMF and FeatJAR Feature Models
+
+<div align="center">
+
+```mermaid
+graph LR;
+    Feature-Model-->EMF-Model;
+    EMF-Model-->Feature-Model;
+    style Feature-Model fill:#ffcccc,stroke:#ff6666,stroke-width:2px,color:#000000;
+    style EMF-Model fill:#ccccff,stroke:#6666ff,stroke-width:2px,color:#000000;
+```
+</div>
+
 
 Under  
 `FeatJAR-gui/src/main/java/de/featjar/gui/`,  
-there are two main translator classes:
+there are two main translator/parser classes:
 
 - **TranslatorToEMF** – Converts a `FeatureModel` into `.featuremodel` and `.notation` files for the GLSP server/client to read.  
 - **TranslatorFromEMF** – Reads a `.featuremodel` file and reconstructs a `FeatureModel`.
@@ -449,19 +541,3 @@ Additional details:
 - The `Gui.java` file creates a `.featuremodel` from this `.uvl` file along with other examples.  
 - **Constraints** are not supported in the current version.  
 - **Groups** are also not included but exist in another branch that supports them.
-
----
-
-## **Bugs and Known Issues**
-
-- **Removing elements** from the EMF model (in Eclipse Modeling Tools) can cause **code generation errors**.  
-  - To fix this, delete the folder `featJAR/src-gen` and regenerate the model code.  
-  - In some cases, you may need to recreate the entire Ecore project.  
-
-- The **auto-layout feature** in the server is **not working as intended**.  
-  - It incorrectly positions feature nodes when a parent node has more than three children.
-
-
----
-
-
